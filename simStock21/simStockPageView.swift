@@ -329,36 +329,6 @@ struct settingForm: View {
     
 }
 
-struct companyInfoSheet: View {
-    @Binding var showProport: Bool
-    @ObservedObject var stock : Stock
-
-    var body: some View {
-        NavigationView {
-            VStack(alignment: .leading){
-                Text("營收比重")
-                    .font(.headline)
-                Text(stock.proport ?? "")
-                    .font(.callout)
-                    .lineLimit(nil)
-                    .padding()
-                Spacer()
-            }
-            .navigationBarTitle("\(stock.sId) \(stock.sName)")
-            .navigationBarItems(trailing: cancel)
-            .padding()
-        }
-            .navigationViewStyle(StackNavigationViewStyle())
-    }
-    
-    var cancel: some View {
-        Button("關閉") {
-            self.showProport = false
-        }
-    }
-}
-
-
 struct tradeHeading:View {
     @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
@@ -404,17 +374,6 @@ struct tradeHeading:View {
                     }
                 }
                 .foregroundColor(list.isRunning ? .gray : .primary)
-//                if let proport = stock.proport {
-//                    Button(action: {self.showProport = true}) {
-//                        Text("[\(firstProport(proport))]")
-//                            .font(.footnote)
-//                            .padding(.top)
-//                    }
-//                    .disabled(list.isRunning ? true : false)
-//                    .sheet(isPresented: $showProport) {
-//                        companyInfoSheet(showProport: $showProport, stock: stock)
-//                    }
-//                }
                 Spacer(minLength: 30)
                 HStack {
                     //== 工具按鈕 0 == 過濾交易模擬
