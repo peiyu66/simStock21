@@ -51,17 +51,17 @@
 
 ### iPad Pro 11吋
 <br>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png" width="45%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png" width="45%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png" width="45%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png" width="45%"></a>
 <br>
 
 ### iPhone 12
 <br>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png" width="30%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png" width="60%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png" width="30%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png" width="60%"></a>
 <br><br>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png" width="30%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png"><img src="https://github.com/peiyu66/simStock21/raw/master/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png" width="60%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png" width="30%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png" width="60%"></a>
 <br>
 
 ## 實戰指南
