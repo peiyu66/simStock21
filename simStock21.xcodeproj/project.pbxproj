@@ -18,6 +18,7 @@
 		E27B62B224A8774600092943 /* simStockPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27B62B124A8774600092943 /* simStockPageView.swift */; };
 		E28C262F265A223E00420A36 /* csvData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C262E265A223E00420A36 /* csvData.swift */; };
 		E28C2630265A230000420A36 /* csvData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C262E265A223E00420A36 /* csvData.swift */; };
+		E2B5F94D265CFF1D00B5494F /* backgroundRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5F94C265CFF1D00B5494F /* backgroundRequest.swift */; };
 		E2C4580C24A36CAA0036791E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4580B24A36CAA0036791E /* AppDelegate.swift */; };
 		E2C4580E24A36CAA0036791E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4580D24A36CAA0036791E /* SceneDelegate.swift */; };
 		E2C4581324A36CAA0036791E /* simStockListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4581224A36CAA0036791E /* simStockListView.swift */; };
@@ -62,6 +63,7 @@
 		E25ED3EB24A40F63006C1332 /* utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utility.swift; sourceTree = "<group>"; };
 		E27B62B124A8774600092943 /* simStockPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simStockPageView.swift; sourceTree = "<group>"; };
 		E28C262E265A223E00420A36 /* csvData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csvData.swift; sourceTree = "<group>"; };
+		E2B5F94C265CFF1D00B5494F /* backgroundRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = backgroundRequest.swift; sourceTree = "<group>"; };
 		E2C4580824A36CAA0036791E /* simStock21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simStock21.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C4580B24A36CAA0036791E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2C4580D24A36CAA0036791E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				E28C262E265A223E00420A36 /* csvData.swift */,
 				E2C4582224A36CC50036791E /* simStock.swift */,
 				E2C4582424A36D1C0036791E /* simStockList.swift */,
+				E2B5F94C265CFF1D00B5494F /* backgroundRequest.swift */,
 				E2C4581224A36CAA0036791E /* simStockListView.swift */,
 				E27B62B124A8774600092943 /* simStockPageView.swift */,
 				E2C4580D24A36CAA0036791E /* SceneDelegate.swift */,
@@ -265,6 +268,7 @@
 				E2C4580C24A36CAA0036791E /* AppDelegate.swift in Sources */,
 				E2C4580E24A36CAA0036791E /* SceneDelegate.swift in Sources */,
 				E22637362659C36B0062AA5B /* Intents.intentdefinition in Sources */,
+				E2B5F94D265CFF1D00B5494F /* backgroundRequest.swift in Sources */,
 				E2C4582724A36D710036791E /* coreData.swift in Sources */,
 				E25ED3EF24A43DD0006C1332 /* utility.swift in Sources */,
 				E2C4581324A36CAA0036791E /* simStockListView.swift in Sources */,
