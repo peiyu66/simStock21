@@ -32,7 +32,7 @@
 
 ### 如何安裝小確幸？
 * 若有加入Apple Developer，就自己在Xcode直接建造直接安裝。
-* 不然只好[向作者登記iPhone或iPad的序號](https://github.com/peiyu66/simStock21/wiki/加入小確幸)作為開發機，再從[[發佈的版本]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/ipa/manifest.plist)下載及安裝(ipa)。
+* 不然只好[向作者登記iPhone或iPad的序號](https://github.com/peiyu66/simStock21/wiki/加入小確幸)作為開發機，再從[[github-pages]](https://peiyu66.github.io/simStock21/)下載及安裝(ipa)。
 * 可以在XCode直接建成mac版本，但只能在macOS Catalina (10.15)以上才能執行。
 
 ### 有些股票找不到？
