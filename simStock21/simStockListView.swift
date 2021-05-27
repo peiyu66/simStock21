@@ -20,7 +20,7 @@ struct simStockListView: View {
             NavigationView {
                 VStack (alignment: .leading) {
                     Spacer()
-                    SearchBar(editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
+                    SearchBar(list: self.list, editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
                         .disabled(self.isChoosing || list.isRunning)
                     HStack(alignment: .bottom){
                         if self.isSearching && list.searchText != nil && !self.list.searchGotResults {
@@ -165,10 +165,11 @@ struct upperRightCommands:View {
                             ])
                         }
                 }
-            }
+            }   // HStack
         }
-            .lineLimit(1)
-            .minimumScaleFactor(0.6)
+        .padding(.trailing, 4)
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
     }
 }
 
@@ -183,48 +184,47 @@ struct chooseCommand:View {
     @State var geometry:GeometryProxy
 
     var body: some View {
-        Group {
+        HStack {
+            Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
+                .foregroundColor(.gray)
             if self.isChoosing || self.list.searchGotResults {
-                HStack {
-                    Text("請勾選")
-                        .foregroundColor(Color(.darkGray))
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
-                    if self.checkedStocks.count > 0 {
-                        stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
-                    } else {
-                        Button("全選") {
-                            print("w:", geometry.size.width)
-                            for stocks in self.list.groupStocks {
-                                if let s = stocks.first, (s.group == "" || !self.list.searchGotResults) {
-                                    for stock in stocks {
-                                        self.checkedStocks.append(stock)
-                                    }
+                Text("請勾選")
+                    .foregroundColor(Color(.darkGray))
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
+                if self.checkedStocks.count > 0 {
+                    stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
+                } else {
+                    Button("全選") {
+                        print("w:", geometry.size.width)
+                        for stocks in self.list.groupStocks {
+                            if let s = stocks.first, (s.group == "" || !self.list.searchGotResults) {
+                                for stock in stocks {
+                                    self.checkedStocks.append(stock)
                                 }
                             }
                         }
                     }
                 }
             } else if !self.isSearching {
-                HStack {
-                    if list.isRunning {
-                        Text(list.runningMsg)
-                            .foregroundColor(.orange)
-                    } else {
-                        Button("選取") {
-                            self.isChoosing = true
-                            self.searchText = ""
-                            self.list.searchText = nil
-                            self.isSearching = false
-                        }
+                if list.isRunning {
+                    Text(list.runningMsg)
+                        .foregroundColor(.orange)
+                } else {
+                    Button("選取") {
+                        self.isChoosing = true
+                        self.searchText = ""
+                        self.list.searchText = nil
+                        self.isSearching = false
                     }
                 }
             }
+            Spacer()
         }
-            .padding(.leading, 4)
-            .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [100,150])) , alignment: .leading)
-            .minimumScaleFactor(0.6)
-            .lineLimit(1)
+        .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [200,200,300,400])))
+        .padding(.leading, 4)
+        .minimumScaleFactor(0.6)
+        .lineLimit(1)
     }
 
 }
@@ -323,10 +323,10 @@ struct stockActionMenu:View {
                                 self.deleteAll  = true
                                 self.showDeleteAlert = true
                             },
-                            .default(Text("[TWSE復驗]")) {
-                                self.list.reviseWithTWSE(self.checkedStocks)
-                                self.isChoosingOff()
-                            },
+//                            .default(Text("[TWSE復驗]")) {
+//                                self.list.reviseWithTWSE(self.checkedStocks)
+//                                self.isChoosingOff()
+//                            },
                             .destructive(Text("沒事，不用了。")) {
                                 self.isChoosingOff()
                             }
@@ -785,15 +785,25 @@ struct lastTrade: View {
 
 
 struct SearchBar: View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @ObservedObject var list: simStockList
     @Binding var editText: String
     @Binding var searchText:[String]?
     @Binding var isSearching:Bool
     @State var isEditing:Bool = false
+    
+    var title:String {
+        if list.widthClass(hClass) != .compact {
+            return "以代號或簡稱來搜尋尚未加入股群的上市股票"
+        } else {
+            return "以代號或簡稱來搜尋上市股票"
+        }
+    }
 
     //來自： https://www.appcoda.com/swiftui-search-bar/
     var body: some View {
         HStack {
-            TextField("以代號或簡稱來搜尋未加入股群的上市股票", text: $editText    /*, onEditingChanged: { editing in
+            TextField(title, text: $editText    /*, onEditingChanged: { editing in
                 if !editing {
                     self.isEditing = false
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)  // Dismiss the keyboard

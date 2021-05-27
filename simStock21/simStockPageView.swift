@@ -367,7 +367,7 @@ struct tradeHeading:View {
             HStack(alignment: .top) {
                 Group {
                     Text("\(stock.sId) \(stock.sName)")
-                    if list.widthClass(hClass) != .compact {
+                    if list.widthClass(hClass) != .compact && stock.proport1.count > 0 {
                         Text("[\(stock.proport1)]")
                             .font(.footnote)
                             .padding(.top)
@@ -417,9 +417,9 @@ struct tradeHeading:View {
                                     self.deleteAll = true
                                     self.showDeleteAlert = true
                                 },
-                                .default(Text("[TWSE復驗]")) {
-                                    self.list.reviseWithTWSE([self.stock])
-                                },
+//                                .default(Text("[TWSE復驗]")) {
+//                                    self.list.reviseWithTWSE([self.stock])
+//                                },
                                 .destructive(Text("沒事，不用了。"))
                             ])
                         }
@@ -782,7 +782,7 @@ struct tradeCell: View {
                                 Text(String(format:"%.2f",trade.tMa20DiffMax9))
                                     .foregroundColor(trade.tMa20DiffMax9 == trade.tMa20Diff ? .red : .primary)
                                 Text(String(format:"%.2f",trade.tMa20DiffMin9))
-                                    .foregroundColor(trade.tMa20DiffMin9 == trade.tMa20Diff ? .red : .primary)
+                                    .foregroundColor(trade.tMa20DiffMin9 == trade.tMa20Diff ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tMa20DiffZ125))
                                 Text(String(format:"%.2f",trade.tMa20DiffZ250))
                             }
@@ -793,7 +793,7 @@ struct tradeCell: View {
                                 Text(String(format:"%.2f",trade.tMa60DiffMax9))
                                 .foregroundColor(trade.tMa60DiffMax9 == trade.tMa60Diff ? .red : .primary)
                                 Text(String(format:"%.2f",trade.tMa60DiffMin9))
-                                .foregroundColor(trade.tMa60DiffMin9 == trade.tMa60Diff ? .red : .primary)
+                                .foregroundColor(trade.tMa60DiffMin9 == trade.tMa60Diff ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tMa60DiffZ125))
                                 Text(String(format:"%.2f",trade.tMa60DiffZ250))
                             }
@@ -806,7 +806,7 @@ struct tradeCell: View {
                                 Text(String(format:"%.2f",trade.tOscMax9))
                                 .foregroundColor(trade.tOscMax9 == trade.tOsc ? .red : .primary)
                                 Text(String(format:"%.2f",trade.tOscMin9))
-                                .foregroundColor(trade.tOscMin9 == trade.tOsc ? .red : .primary)
+                                .foregroundColor(trade.tOscMin9 == trade.tOsc ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tOscZ125))
                                 Text(String(format:"%.2f",trade.tOscZ250))
                             }
@@ -817,7 +817,7 @@ struct tradeCell: View {
                                 Text(String(format:"%.2f",trade.tKdKMax9))
                                 .foregroundColor(trade.tKdKMax9 == trade.tKdK ? .red : .primary)
                                 Text(String(format:"%.2f",trade.tKdKMin9))
-                                .foregroundColor(trade.tKdKMin9 == trade.tKdK ? .red : .primary)
+                                .foregroundColor(trade.tKdKMin9 == trade.tKdK ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tKdKZ125))
                                 Text(String(format:"%.2f",trade.tKdKZ250))
                             }
@@ -845,11 +845,10 @@ struct tradeCell: View {
                             VStack(alignment: .trailing,spacing: 2) {
                                 Text("high")
                                 Text(String(format:"%.2f",trade.tHighDiff))
-                                Group {
-                                    Text(String(format:"%.2f",trade.tHighDiff125))
-                                    Text(String(format:"%.2f",trade.tHighDiff250))
-                                }
-                                .foregroundColor(.gray)
+                                Text(String(format:"%.2f",trade.tHighDiff125))
+                                    .foregroundColor(trade.tHighDiff125 == 0 ? .red : .gray)
+                                Text(String(format:"%.2f",trade.tHighDiff250))
+                                    .foregroundColor(trade.tHighDiff250 == 0 ? .red : .gray)
                                 Text(String(format:"%.2f",trade.tHighDiffZ125))
                                 Text(String(format:"%.2f",trade.tHighDiffZ250))
                             }
@@ -857,11 +856,10 @@ struct tradeCell: View {
                             VStack(alignment: .trailing,spacing: 2) {
                                 Text("low")
                                 Text(String(format:"%.2f",trade.tLowDiff))
-                                Group {
-                                    Text(String(format:"%.2f",trade.tLowDiff125))
-                                    Text(String(format:"%.2f",trade.tLowDiff250))
-                                }
-                                .foregroundColor(.gray)
+                                Text(String(format:"%.2f",trade.tLowDiff125))
+                                    .foregroundColor(trade.tLowDiff125 == 0 ? .green : .gray)
+                                Text(String(format:"%.2f",trade.tLowDiff250))
+                                    .foregroundColor(trade.tLowDiff250 == 0 ? .green : .gray)
                                 Text(String(format:"%.2f",trade.tLowDiffZ125))
                                 Text(String(format:"%.2f",trade.tLowDiffZ250))
                             }
@@ -870,7 +868,9 @@ struct tradeCell: View {
                                 Text("price")
                                 Text(String(format:"%.2f",trade.priceClose))
                                 Text(String(format:"%.2f",trade.tHighMax9))
+                                    .foregroundColor(trade.tHighMax9 == trade.priceClose ? .red : .primary)
                                 Text(String(format:"%.2f",trade.tLowMin9))
+                                    .foregroundColor(trade.tLowMin9 == trade.priceClose ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tPriceZ125))
                                 Text(String(format:"%.2f",trade.tPriceZ250))
                             }
@@ -879,7 +879,9 @@ struct tradeCell: View {
                                 Text("volume")
                                 Text(String(format:"%.0f",trade.priceVolume))
                                 Text(String(format:"%.0f",trade.tVolMax9))
+                                    .foregroundColor(trade.tVolMax9 == trade.priceVolume ? .red : .primary)
                                 Text(String(format:"%.0f",trade.tVolMin9))
+                                    .foregroundColor(trade.tVolMin9 == trade.priceVolume ? .green : .primary)
                                 Text(String(format:"%.2f",trade.tVolZ125))
                                 Text(String(format:"%.2f",trade.tVolZ250))
                             }

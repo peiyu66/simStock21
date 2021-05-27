@@ -45,13 +45,36 @@ public class csvData {
         return Stock.fetch(coreData.shared.context, sId: stockIds)
     }
     
-    static func csvStocksIdName(_ stocks:[Stock]) -> String {
+    static func csvStocksIdName(_ stocks:[Stock], byGroup:Bool=true) -> String {
+        let groupStocks:[[Stock]] = Dictionary(grouping: stocks)
+            { (stock:Stock)  in stock.group}.values
+            .map{$0.map{$0}.sorted{$0.sName < $1.sName}}
+            .sorted {$0[0].group < $1[0].group}
         var csv:String = ""
-        for stock in stocks {
-            if csv.count > 0 {
-                csv += ", "
+        var ids:String = ""
+        for group in groupStocks {
+            if byGroup {
+                ids = ""
             }
-            csv += stock.sId + " " + stock.sName
+            if byGroup {
+                csv += "\(group[0].group)\n"
+            }
+            for stock in group {
+                if csv.count > 0 && csv.suffix(1) != "\n" {
+                    csv += ", "
+                }
+                csv += stock.sId + " " + stock.sName
+                if ids.count > 0 {
+                    ids += ","
+                }
+                ids += "\(stock.sId)"
+            }
+            if byGroup {
+                csv += "\n\n\(ids)\n\n"
+            }
+        }
+        if !byGroup {
+            csv += "\n\n\(ids)\n"
         }
         return csv
     }
@@ -99,7 +122,7 @@ public class csvData {
                     }
                     return rules
                 }
-                let pRule:String = (rule != "" ? close : "")
+                let pRule:String = (rule != "" ? close : "-1")
                 csv += "\(buy),\(inv),\(sell),\(cost),\(invt),\(days),\(rule),\(pRule),"
                 let ma20:String = String(format: "%.2f", trade.tMa20)
                 let ma20d:String = String(format: "%.2f", trade.tMa20Diff)

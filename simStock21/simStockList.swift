@@ -30,6 +30,8 @@ class simStockList:ObservableObject {
         case widePad = 3
     }
     
+    let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape"]
+    
     var currentWidthClass:WidthClass = .compact
     func widthClass(_ hClass:UserInterfaceSizeClass?) -> WidthClass {
         var wClass:WidthClass
@@ -46,7 +48,11 @@ class simStockList:ObservableObject {
             }
         case .compact:
             if isLandscape {
-                wClass = .widePhone
+                if isPad {
+                    wClass = .compact
+                } else {
+                    wClass = .widePhone
+                }
             } else {
                 wClass = .compact
             }
@@ -277,7 +283,7 @@ class simStockList:ObservableObject {
     
     @objc private func onViewWillTransition(_ notification: Notification) {
         self.isLandscape = UIDevice.current.orientation.isLandscape
-         }
+    }
 
     @objc private func setRequestStatus(_ notification: Notification) {
         if let userInfo = notification.userInfo, let msg = userInfo["msg"] as? String {

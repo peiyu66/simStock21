@@ -142,7 +142,7 @@ class simTechnical {
         }
         for stock in stocks {
             allGroup.enter()
-            if stock.proport == nil {
+            if stock.proport == nil && action != .simTesting {
                 self.companyInfo(stock)
             }
             if action == .realtime && self.realtime {
@@ -512,14 +512,10 @@ class simTechnical {
                         let endIndex = downloadedData.index(result.upperBound, offsetBy: 0-trailing.count)
                         let companyInfo = downloadedData[startIndex..<endIndex]
                         if companyInfo != (stock.proport ?? "?") {
-                            let context = coreData.shared.context
-                            let stocks = Stock.fetch(context, sId: [stock.sId])
-                            if let s = stocks.first {
-                                s.proport = String(companyInfo)
-                                try? context.save()
-                            }
+                            updateProport(stock, proport: String(companyInfo))
                         }
                     } else {
+                        updateProport(stock, proport: "")
                         simLog.addLog("\(stock.sId)\(stock.sName) 查無營收比重。")
                     }
                 }  else { //if let downloadedData =
@@ -530,6 +526,15 @@ class simTechnical {
             }   //if error == nil
         })  //let task =
         task.resume()
+        
+        func updateProport(_ stock:Stock, proport:String?) {
+            let context = coreData.shared.context
+            let stocks = Stock.fetch(context, sId: [stock.sId])
+            if let s = stocks.first {
+                s.proport = ""
+                try? context.save()
+            }
+        }
     }
     
     /*
@@ -1672,8 +1677,6 @@ class simTechnical {
 
         wantH += (trade.tKdKZ125 < -0.8 ? -1 : 0)
         wantH += (trade.tOscZ125 < -0.5 ? -1 : 0)
-//        wantH += (trade.tHighDiff125 < -20 ? -1 : 0)
-//        wantH += (trade.tLowDiff125 - trade.tHighDiff125 < 15 ? -1 : 0)
         wantH += (trade.tMa60DiffZ125 < -2 || trade.tMa20DiffZ125 > 3 ? -1 : 0) //Ma60過低, Ma20過高
         wantH += ((trade.tMa60Diff == trade.tMa60DiffMin9 || trade.tMa20Diff == trade.tMa20DiffMin9 || trade.tOsc == trade.tOscMin9 || trade.tKdK == trade.tKdKMin9) && trade.grade >= .low ? -1 : 0)
         wantH += (trade.grade <= .weak && (ma20d > 6 || ma60d > 7) ? -1 : 0)
@@ -1701,12 +1704,13 @@ class simTechnical {
             wantL += (trade.tKdD - trade.tKdK > 20 && trade.tKdK < 40 && trade.grade <= .weak ? 1 : 0)
             wantL += (trade.tVolZ125 < (trade.grade <= .weak ? -0.2 : 0.3) && trade.tOscZ125 < 0 ? 1 : 0) //*** 有效
             wantL += (min9s >= 2 && trade.tMa60DiffZ125 > -0.5 && trade.grade >= .none ? 1 : 0)
+//            wantL += (trade.tHighDiffZ125 < (trade.grade >= .fine ? -2 : -1.5) && trade.tLowDiffZ125 > (trade.grade <= .low ? -1.5 : -2.5) ? 1 : 0)
 
             wantL += (trade.tMa20Days < -30 ? -1 : 0)
             wantL += (trade.tLowDiff >= (trade.grade <= .none ? 9 : 8) && trade.grade >= .weak ? -1 : 0) //或是 >= .low
             wantL += (trade.tMa60Diff == trade.tMa60DiffMin9 && trade.tMa20Diff == trade.tMa20DiffMin9 && trade.tOsc == trade.tOscMin9 && (trade.grade <= .damn || trade.grade >= .wow) ? -1 : 0)   //&& trade.tKdK == trade.tKdKMin9
 
-            if wantL >= 5 {
+            if wantL >= 5 {  //(trade.grade <= .weak ? 5 : 6) {
                 trade.simRule = "L"
             }
         }
@@ -1781,7 +1785,8 @@ class simTechnical {
                 aWant += (z125a >= 2 || trade.grade <= .weak ? 1 : 0)
                 aWant += (min9s >= (trade.grade >= .wow ? 3 : 2) ? 1 : 0)
                 aWant += (trade.simUnitRoi < -35 ? 1 : 0)
-                aWant += (trade.tHighDiff125 < -35 || trade.tPriceZ125 < -1.5 ? 1 : 0)
+//                aWant += (trade.tHighDiff125 < -35 || trade.tPriceZ125 < -1.5 ? 1 : 0)
+                aWant += (trade.tHighDiffZ125 < (trade.grade >= .high ? -2.5 : -2) && trade.tLowDiffZ125 > (trade.grade <= .low ? -1 : -2) ? 1 : 0)
                 aWant += (trade.tMa20Diff < -20 || trade.tMa60Diff < -20 ? 1 : 0)
                 aWant += (trade.tMa20Diff < -8 && trade.tMa60Diff < -8 ? 1 : 0)
                 aWant += (trade.simRule == "L" && trade.simUnitRoi < -25 ? 1 : 0)
