@@ -67,7 +67,7 @@ struct logForm: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                ScrollViewReader { scroller in
+//                ScrollViewReader { scroller in
                     let logArray:[String] = simLog.logReportArray()
                     let end:Int = logArray.count - 1
                     LazyVStack(alignment: .leading) {
@@ -79,16 +79,16 @@ struct logForm: View {
                     }
                         .frame(alignment: .topLeading)
                         .padding()
-                        .onAppear {
-                            scroller.scrollTo(end)
-                        }
-                }   //ScrollViewReader
+//                        .onAppear {
+//                            scroller.scrollTo(end)
+//                        }
+//                }   //ScrollViewReader
             }
                 .navigationBarTitle("Log")
                 .navigationBarItems(trailing: cancel)
                 .padding()
         }
-            .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     
@@ -167,7 +167,7 @@ struct upperRightCommands:View {
                 }
             }   // HStack
         }
-        .padding(.trailing, 4)
+//        .padding(.trailing, 4)
         .lineLimit(1)
         .minimumScaleFactor(0.6)
     }
@@ -186,7 +186,7 @@ struct chooseCommand:View {
     var body: some View {
         HStack {
             Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
-                .foregroundColor(.gray)
+                .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
             if self.isChoosing || self.list.searchGotResults {
                 Text("請勾選")
                     .foregroundColor(Color(.darkGray))
@@ -222,7 +222,7 @@ struct chooseCommand:View {
             Spacer()
         }
         .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [200,200,300,400])))
-        .padding(.leading, 4)
+//        .padding(.leading, 4)
         .minimumScaleFactor(0.6)
         .lineLimit(1)
     }

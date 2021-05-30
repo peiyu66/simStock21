@@ -236,9 +236,10 @@ class simTechnical {
             } else {
                 var tCount:Int = 0
                 var sCount:Int = 0
+                var toResetMoneyLacked:Bool = true
+                let a:[simTechnicalAction] = [.tUpdateAll, .simResetAll, .simTesting, .allTrades]
                 for (index,trade) in trades.enumerated() {
-                    if action == .tUpdateAll || action == .simResetAll || action == .simTesting || action == .allTrades {
-                        //simReset就是清除user的加碼和反轉買賣
+                    if a.contains(action) { //這幾類同simResetAll，要清除user的加碼和反轉買賣
                         trade.simReversed = ""
                         if trade.simInvestByUser != 0 {
                             trade.simInvestByUser = 0
@@ -246,6 +247,10 @@ class simTechnical {
                         }
                         if trade.stock.simReversed {
                             trade.stock.simReversed = false
+                        }
+                        if trade.stock.simMoneyLacked == true && toResetMoneyLacked {
+                            trade.stock.simMoneyLacked = false
+                            toResetMoneyLacked = false
                         }
                     }
                     if trade.tUpdated == false || action == .tUpdateAll {
@@ -1668,9 +1673,9 @@ class simTechnical {
         
         //== 高買 ==================================================
         var wantH:Double = 0
-        wantH += (trade.tMa60DiffZ125 > (trade.grade > .weak ? 0.75 : 0.85) && trade.tMa60DiffZ125 < (trade.grade <= .low ? 2 : 2.5) ? 1 : 0)
+        wantH += (trade.tMa60DiffZ125 > trade.byGrade([0.85,0.75]) && trade.tMa60DiffZ125 < trade.byGrade([2,2.5],L:.low) ? 1 : 0)
         wantH += (trade.tMa20Diff - trade.tMa60Diff > 1 && trade.tMa20Days > 0 ? 1 : 0)
-        wantH += ((trade.tMa60Diff > (trade.grade <= .weak ? -0.5 : 0) && trade.tMa20Diff > (trade.grade <= .weak ? -0.5 : 0)) || trade.grade == .damn ? 1 : 0)
+        wantH += ((trade.tMa60Diff > trade.byGrade([-0.5,0]) && trade.tMa20Diff > trade.byGrade([-0.5,0])) || trade.grade == .damn ? 1 : 0)
         wantH += (trade.tMa60DiffMax9 > 30 && trade.grade <= .fine  ? 1 : 0)
         wantH += (trade.tMa20DiffMax9 > 35 && trade.grade <= .none  ? 1 : 0)    //只有某年1次有效？
         wantH += (trade.tVolZ125 > (trade.grade <= .weak ? 2 : 1.5) && trade.priceClose > trade.priceOpen ? 1 : 0)
@@ -1682,8 +1687,9 @@ class simTechnical {
         wantH += (trade.grade <= .weak && (ma20d > 6 || ma60d > 7) ? -1 : 0)
         wantH += (trade.grade == .damn && (ma20d > 6 || ma60d > 7) ? -1 : 0)
         wantH += (trade.tMa20DiffZ125 > 1.6 && trade.grade <= .damn ? -1 : 0)
-        wantH += (trade.tPriceZ125 < -2 && trade.grade >= .none ? -1 : 0)   //*** 有效的tPriceZ125(兩則)取代高低價差
-        wantH += (trade.tPriceZ125 > 0 && trade.grade >= .none && trade.tPriceZ125 < (trade.grade == .wow ? 1 : 0.5) ? -1 : 0)
+//        wantH += (trade.tPriceZ125 < -2 && trade.grade >= .none ? -1 : 0)   //*** 有效的tPriceZ125(兩則)取代高低價差
+//        wantH += (trade.tPriceZ125 > 0 && trade.grade >= .none && trade.tPriceZ125 < trade.byGrade([1,0.5],H:.wow) ? -1 : 0)
+        wantH += (trade.tHighDiffZ125 > trade.byGrade([0.4,1.1,1.3]) && trade.tLowDiffZ125 > trade.byGrade([0.5,1.2,1.5]) ? -1 : 0)
 
         if wantH >= 1 {
             if (trade.grade <= .weak && prev.priceClose < trade.priceClose) && (prev.simRule == "H" || prev.simRule == "I") {
@@ -1702,12 +1708,12 @@ class simTechnical {
             wantL += (trade.tKdDZ125 < -0.9 && trade.tKdDZ250 < -0.9 ? 1 : 0)
             wantL += (trade.tOscZ125 < -0.9 && trade.tOscZ250 < -0.9 ? 1 : 0)
             wantL += (trade.tKdD - trade.tKdK > 20 && trade.tKdK < 40 && trade.grade <= .weak ? 1 : 0)
-            wantL += (trade.tVolZ125 < (trade.grade <= .weak ? -0.2 : 0.3) && trade.tOscZ125 < 0 ? 1 : 0) //*** 有效
+            wantL += (trade.tVolZ125 < trade.byGrade([-0.2,0.3]) && trade.tOscZ125 < 0 ? 1 : 0) //*** 有效
             wantL += (min9s >= 2 && trade.tMa60DiffZ125 > -0.5 && trade.grade >= .none ? 1 : 0)
-//            wantL += (trade.tHighDiffZ125 < (trade.grade >= .fine ? -2 : -1.5) && trade.tLowDiffZ125 > (trade.grade <= .low ? -1.5 : -2.5) ? 1 : 0)
+            wantL += (trade.tHighDiffZ125 < trade.byGrade([-1.5,-1.35,-1.2]) && trade.tLowDiffZ125 < 1 ? 1 : 0)
 
             wantL += (trade.tMa20Days < -30 ? -1 : 0)
-            wantL += (trade.tLowDiff >= (trade.grade <= .none ? 9 : 8) && trade.grade >= .weak ? -1 : 0) //或是 >= .low
+            wantL += (trade.tLowDiff >= trade.byGrade([9,8],L:Trade.Grade.none) && trade.grade >= .weak ? -1 : 0) //或是 >= .low
             wantL += (trade.tMa60Diff == trade.tMa60DiffMin9 && trade.tMa20Diff == trade.tMa20DiffMin9 && trade.tOsc == trade.tOscMin9 && (trade.grade <= .damn || trade.grade >= .wow) ? -1 : 0)   //&& trade.tKdK == trade.tKdKMin9
 
             if wantL >= 5 {  //(trade.grade <= .weak ? 5 : 6) {
@@ -1723,18 +1729,22 @@ class simTechnical {
             wantS += (trade.tKdKZ125 > 0.9 && (trade.tKdKZ250 > 0.9 || trade.grade >= .weak) ? 1 : 0)
             wantS += (trade.tKdDZ125 > 0.9 && (trade.tKdDZ250 > 0.9 || trade.grade >= .weak) ? 1 : 0)
             wantS += (trade.tOscZ125 > 0.9 && trade.tOscZ250 > 0.9 ? 1 : 0)
-            wantS += (trade.grade > .fine && trade.tHighDiff >= 7.5 ? (trade.grade == .wow ? -1 : -2) : 0)
+//            wantS += (trade.grade > .fine && trade.tHighDiff >= 7.5 ? (trade.grade == .wow ? -1 : -2) : 0)
+            wantS += (trade.grade > .fine && trade.tHighDiff >= 7.5 ? trade.byGrade([-2,-1],H:.wow) : 0)
             wantS += (trade.grade <= .fine  && trade.tHighDiff >= 9 ? -1 : 0)
-            wantS += (trade.tPriceZ125 > 1 || trade.grade <= .fine ? 1 : 0)
+//            wantS += (trade.tPriceZ125 > 1 || trade.grade <= .fine ? 0.5 : 0)
+            wantS += (trade.tHighDiffZ125 > trade.byGrade([-1,-0.5,0]) && trade.tLowDiffZ125 > trade.byGrade([-0.4,0.1,0.8]) ? 1 : 0)
 
             let forRoiH = trade.tMa60DiffZ250 > 0 && trade.tMa60DiffZ125 > 0.5
             let weekendDays:Double = (twDateTime.calendar.component(.weekday, from: trade.dateTime) <= 2 ? 2 : 0)
             let sRoi22 = trade.simUnitRoi > 22.5 && trade.simDays < 60
             let sRoi18 = trade.simUnitRoi > (forRoiH ? 18.5 : 15.5) && trade.simDays < 40
             let sRoi13 = trade.simUnitRoi > (forRoiH ? 13.5 : 9.5) && trade.simDays < 20
-            let sRoi09 = trade.simUnitRoi > (forRoiH ? 9.5 : 6.5) && trade.simDays < (trade.grade <= .weak ? 45 : 10)
+//            let sRoi09 = trade.simUnitRoi > (forRoiH ? 9.5 : 6.5) && trade.simDays < (trade.grade <= .weak ? 45 : 10)
+            let sRoi09 = trade.simUnitRoi > (forRoiH ? 9.5 : 6.5) && trade.simDays < trade.byGrade([45,10])
             let sRoi03 = trade.simUnitRoi > 3.5 && (trade.tKdKZ125 > 1.5 || trade.tKdDZ125 > 1.5)
-            let sRoi02 = trade.simUnitRoi > (trade.grade <= .weak ? 1.5 : 2.5)
+//            let sRoi02 = trade.simUnitRoi > (trade.grade <= .weak ? 1.5 : 2.5)
+            let sRoi02 = trade.simUnitRoi > trade.byGrade([1.5,2.5])
             let sRoi00 = trade.simUnitRoi > 0.45 && trade.simDays > (1 + weekendDays)
             
             let topWantS:Double = 6
@@ -1785,8 +1795,7 @@ class simTechnical {
                 aWant += (z125a >= 2 || trade.grade <= .weak ? 1 : 0)
                 aWant += (min9s >= (trade.grade >= .wow ? 3 : 2) ? 1 : 0)
                 aWant += (trade.simUnitRoi < -35 ? 1 : 0)
-//                aWant += (trade.tHighDiff125 < -35 || trade.tPriceZ125 < -1.5 ? 1 : 0)
-                aWant += (trade.tHighDiffZ125 < (trade.grade >= .high ? -2.5 : -2) && trade.tLowDiffZ125 > (trade.grade <= .low ? -1 : -2) ? 1 : 0)
+                aWant += (trade.tHighDiffZ125 < trade.byGrade([-2,-2.5],H:.high) && trade.tLowDiffZ125 > trade.byGrade([-1,-2],L:.low) ? 1 : 0)
                 aWant += (trade.tMa20Diff < -20 || trade.tMa60Diff < -20 ? 1 : 0)
                 aWant += (trade.tMa20Diff < -8 && trade.tMa60Diff < -8 ? 1 : 0)
                 aWant += (trade.simRule == "L" && trade.simUnitRoi < -25 ? 1 : 0)
@@ -1829,15 +1838,14 @@ class simTechnical {
 
         var buyIt:Bool = false
         if trade.simAmtBalance > 0 && trade.simQtySell == 0 {    //有可能之前賠超過1個本金而不夠買
-            if trade.simRuleBuy == "" && (trade.simRule == "H" || trade.simRule == "L") {
+            if prev.simQtySell > 0 && prev.simReversed == "" {
+                buyIt = false
+                trade.simRuleBuy = ""
+            } else if trade.simRuleBuy == "" && (trade.simRule == "H" || trade.simRule == "L") {
                 trade.simRuleBuy = trade.simRule
                 buyIt = true
             } else if trade.invested > 0 {
                 buyIt = true
-            }
-            if prev.simQtySell > 0 && prev.simReversed == "" {
-                buyIt = false
-                trade.simRuleBuy = ""
             }
         }
         
@@ -1846,6 +1854,9 @@ class simTechnical {
         if buyIt && trade.simAmtBalance < oneCost {
            //錢不夠先清除buyRule以簡化後面反轉的判斷規則
             buyIt = false
+            if trade.stock.simMoneyLacked == false {
+                trade.stock.simMoneyLacked = true
+            }
         }
 
         //== 反轉買 ==

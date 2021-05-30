@@ -57,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E20F7F252660DFE8005F89D0 /* simStock 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "simStock 2.xcdatamodel"; sourceTree = "<group>"; };
 		E22637282659C3220062AA5B /* simStockEx.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = simStockEx.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E226372B2659C3220062AA5B /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		E226372D2659C3220062AA5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -306,7 +307,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -330,7 +331,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -472,7 +473,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;
@@ -500,7 +501,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;
@@ -556,6 +557,7 @@
 		E2B5F94E265D00A000B5494F /* simStock21.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E20F7F252660DFE8005F89D0 /* simStock 2.xcdatamodel */,
 				E2B5F94F265D00A000B5494F /* simStock.xcdatamodel */,
 			);
 			currentVersion = E2B5F94F265D00A000B5494F /* simStock.xcdatamodel */;

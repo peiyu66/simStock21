@@ -164,6 +164,7 @@ public class Stock: NSManagedObject {
     @NSManaged public var simInvestAuto:Double      //自動加碼次數：0～9，10為無限次
     @NSManaged public var simInvestUser:Double      //user變更加碼次數
     @NSManaged public var simMoneyBase: Double      //每次投入本金額度
+    @NSManaged public var simMoneyLacked: Bool        //本金不足？
     @NSManaged public var simReversed:Bool          //反轉買賣
     @NSManaged public var stockTrades: NSSet?
     
@@ -492,25 +493,50 @@ public class Trade: NSManagedObject {
     
     }
     
+    func byGrade (_ values:[Double], L:Grade?=nil, H:Grade?=nil) -> Double {
+        let l = L ?? .weak
+        let h = H ?? .high
+        if self.grade <= l {
+            return values.first ?? 0
+        } else if self.grade >= h {
+            return values.last ?? 0
+        } else if values.count == 3 {
+            return values[1]
+        } else if H != nil && L == nil {
+            return values.first ?? 0    //指定H省略L時，意即H以外都歸第1個數值
+        } else {
+            return values.last ?? 0
+        }
+    }
+
+    
     func gradeIcon(gray:Bool=false) -> some View  {
+        var color:Color {
+            if gray {
+                return .gray
+            } else if self.stock.simMoneyLacked {
+                return Color(.darkGray)
+            } else if self.grade.rawValue > 0 {
+                return .red
+            } else if self.grade.rawValue < 0 {
+                return .green
+            } else {
+                return .gray
+            }
+        }
         switch self.grade {
         case .wow:
-//            if #available(iOS 14.0, *) {
-                return Image(systemName: "star.square.fill")
-                    .foregroundColor(gray ? .gray : .red)
-//            } else {
-//                return Image(systemName: "3.square.fill")
-//                    .foregroundColor(gray ? .gray : .red)
-//            }
+            return Image(systemName: "star.square.fill")
+                .foregroundColor(color)
         case .damn:
             return Image(systemName: "3.square")
-                .foregroundColor(gray ? .gray : .green)
+                .foregroundColor(color)
         case .high, .low:
             return Image(systemName: "2.square")
-                .foregroundColor(gray ? .gray : (self.grade == .high ? .red : .green))
+                .foregroundColor(color)
         case .fine, .weak:
             return Image(systemName: "1.square")
-                .foregroundColor(gray ? .gray : (self.grade == .fine ? .red : .green))
+                .foregroundColor(color)
         default:
             return Image(systemName: "0.square")
                 .foregroundColor(.gray)

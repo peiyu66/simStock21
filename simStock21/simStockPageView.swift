@@ -461,6 +461,10 @@ struct tradeHeading:View {
             Spacer()
             
             VStack(alignment: .trailing) {
+                if stock.simMoneyLacked {
+                    Text("起始本金不足！ ↓↓↓ 模擬結果可能失真！")
+                        .foregroundColor(.red)
+                }
                 HStack {
                     Spacer()
                     Text(String(format:"期間%.1f年", stock.years))
