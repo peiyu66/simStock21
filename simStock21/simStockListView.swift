@@ -187,6 +187,7 @@ struct chooseCommand:View {
         HStack {
             Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
                 .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
+                .rotationEffect(list.isUpdown ? .degrees(180) : .zero)
             if self.isChoosing || self.list.searchGotResults {
                 Text("請勾選")
                     .foregroundColor(Color(.darkGray))
@@ -221,7 +222,7 @@ struct chooseCommand:View {
             }
             Spacer()
         }
-        .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [200,200,300,400])))
+        .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [150,150,250,350])))
 //        .padding(.leading, 4)
         .minimumScaleFactor(0.6)
         .lineLimit(1)

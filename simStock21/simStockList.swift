@@ -22,6 +22,7 @@ class simStockList:ObservableObject {
     private let versionNo:String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     private var isPad  = UIDevice.current.userInterfaceIdiom == .pad
     @Published private var isLandscape:Bool = UIDevice.current.orientation.isLandscape
+    @Published var isUpdown:Bool = UIDevice.current.orientation == .portraitUpsideDown
 
     enum WidthClass:Int {
         case compact = 0
@@ -283,6 +284,7 @@ class simStockList:ObservableObject {
     
     @objc private func onViewWillTransition(_ notification: Notification) {
         self.isLandscape = UIDevice.current.orientation.isLandscape
+        self.isUpdown = UIDevice.current.orientation == .portraitUpsideDown
     }
 
     @objc private func setRequestStatus(_ notification: Notification) {

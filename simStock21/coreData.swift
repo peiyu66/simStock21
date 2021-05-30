@@ -475,11 +475,11 @@ public class Trade: NSManagedObject {
     }
     var grade:Grade {
         if self.rollRounds > 2 || self.days > 360 {
-            if self.days < 80 && self.roi > 20 {
+            if self.days < 65 && self.roi > 20 {
                 return .wow
-            } else if self.days < 80 && self.roi > 10 {
+            } else if self.days < 65 && self.roi > 10 {
                 return .high
-            } else if self.days < 80 && self.roi > 5 {
+            } else if self.days < 70 && self.roi > 5 {
                 return .fine
             } else if self.days > 180 || self.roi < -20 {
                     return .damn
