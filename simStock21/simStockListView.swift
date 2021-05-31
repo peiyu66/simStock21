@@ -16,7 +16,7 @@ struct simStockListView: View {
     @State var editText:String = ""       //輸入的搜尋文字
     
     var body: some View {
-        GeometryReader { g in
+//        GeometryReader { g in
             NavigationView {
                 VStack (alignment: .leading) {
                     Spacer()
@@ -54,10 +54,10 @@ struct simStockListView: View {
                     }   //ScrollViewReader
                 }   //VStack
                 .navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText, geometry: g), trailing: upperRightCommands(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
+                .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: upperRightCommands(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
             }   //NavigationView
             .navigationViewStyle(StackNavigationViewStyle())
-        }   //GeometryReader
+//        }   //GeometryReader
     }   //body
 }
 
@@ -181,13 +181,12 @@ struct chooseCommand:View {
     @Binding var checkedStocks: [Stock]     //已選取的股票們
     @Binding var searchText:String          //輸入的搜尋文字
     @State var showFilter:Bool = false      //顯示pickerGroups
-    @State var geometry:GeometryProxy
 
     var body: some View {
         HStack {
             Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
                 .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
-                .rotationEffect(list.isUpdown ? .degrees(180) : .zero)
+                .rotation3DEffect(.degrees(list.rotated.d), axis: (x: list.rotated.x, y: list.rotated.y, z: 0))
             if self.isChoosing || self.list.searchGotResults {
                 Text("請勾選")
                     .foregroundColor(Color(.darkGray))
@@ -197,7 +196,6 @@ struct chooseCommand:View {
                     stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
                 } else {
                     Button("全選") {
-                        print("w:", geometry.size.width)
                         for stocks in self.list.groupStocks {
                             if let s = stocks.first, (s.group == "" || !self.list.searchGotResults) {
                                 for stock in stocks {
@@ -222,8 +220,7 @@ struct chooseCommand:View {
             }
             Spacer()
         }
-        .frame(width: (geometry.size.width - list.widthCG(hClass, CG: [150,150,250,350])))
-//        .padding(.leading, 4)
+        .frame(width: list.widthCG(hClass, CG: [250,450,500,500]))  //太寬會造成旋轉後位移
         .minimumScaleFactor(0.6)
         .lineLimit(1)
     }

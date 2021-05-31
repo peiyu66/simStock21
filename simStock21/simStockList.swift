@@ -14,15 +14,15 @@ import BackgroundTasks
 class simStockList:ObservableObject {
     @Published private var sim:simStock = simStock()
     @Published var runningMsg:String = ""
-    
+    @Published var orientation:UIDeviceOrientation = UIDevice.current.orientation
+
     var versionNow:String
     var versionLast:String = ""
 
     private let buildNo:String = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
     private let versionNo:String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     private var isPad  = UIDevice.current.userInterfaceIdiom == .pad
-    @Published private var isLandscape:Bool = UIDevice.current.orientation.isLandscape
-    @Published var isUpdown:Bool = UIDevice.current.orientation == .portraitUpsideDown
+    private var isLandScape:Bool = UIDevice.current.orientation.isLandscape
 
     enum WidthClass:Int {
         case compact = 0
@@ -31,14 +31,29 @@ class simStockList:ObservableObject {
         case widePad = 3
     }
     
+    var rotated:(d:Double,x:CGFloat, y:CGFloat) {
+        let orient = UIDevice.current.orientation
+         switch orient {
+        case .portraitUpsideDown:
+            return (180,1,0)
+        case .landscapeLeft:
+            return (0,0,0)
+        case .landscapeRight:
+            return (180,0,1)
+        default:
+            return (0,0,0)
+        }
+    }
+        
+
     let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape"]
     
-    var currentWidthClass:WidthClass = .compact
+//    var currentWidthClass:WidthClass = .compact
     func widthClass(_ hClass:UserInterfaceSizeClass?) -> WidthClass {
         var wClass:WidthClass
         switch hClass {
         case .regular:
-            if isLandscape {
+            if isLandScape {
                 if isPad {
                     wClass = .widePad
                 } else {
@@ -48,7 +63,7 @@ class simStockList:ObservableObject {
                 wClass = .regular
             }
         case .compact:
-            if isLandscape {
+            if isLandScape {
                 if isPad {
                     wClass = .compact
                 } else {
@@ -60,10 +75,10 @@ class simStockList:ObservableObject {
         default:
             wClass = .compact
         }
-        if currentWidthClass != wClass {
-            currentWidthClass = wClass
-            NSLog("widthClass: \(wClass)")
-        }
+//        if currentWidthClass != wClass {
+//            currentWidthClass = wClass
+//            NSLog("widthClass: \(wClass)")
+//        }
         return wClass
     }
     
@@ -283,8 +298,8 @@ class simStockList:ObservableObject {
     }
     
     @objc private func onViewWillTransition(_ notification: Notification) {
-        self.isLandscape = UIDevice.current.orientation.isLandscape
-        self.isUpdown = UIDevice.current.orientation == .portraitUpsideDown
+        self.isLandScape = UIDevice.current.orientation.isLandscape
+        self.orientation = UIDevice.current.orientation
     }
 
     @objc private func setRequestStatus(_ notification: Notification) {

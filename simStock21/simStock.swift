@@ -25,15 +25,15 @@ struct simStock {
         if self.stocks.count == 0 {
             let group1:[(sId:String,sName:String)] = [
                 (sId:"3653", sName:"健策"),
-                (sId:"2327", sName:"國巨"),
-                (sId:"2330", sName:"台積電"),
-                (sId:"8046", sName:"南電")]
+                (sId:"3037", sName:"欣興"),
+                (sId:"8046", sName:"南電"),
+                (sId:"2330", sName:"台積電")]
             self.newStock(stocks: group1, group: "股群_1")
             
             let group2:[(sId:String,sName:String)] = [
                 (sId:"2324", sName:"仁寶"),
                 (sId:"1301", sName:"台塑"),
-                (sId:"2201", sName:"裕隆"),
+                (sId:"1216", sName:"統一"),
                 (sId:"2317", sName:"鴻海")]
             self.newStock(stocks: group2, group: "股群_2")
         }

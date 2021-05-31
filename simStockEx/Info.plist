@@ -32,7 +32,6 @@
 			<array>
 				<string>FindStocksIntent</string>
 				<string>GetTradesCSVIntent</string>
-				<string>UpdateSimsIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

@@ -841,7 +841,8 @@ class simTechnical {
                                                 trade.dataSource   = "yahoo"
                                                 trade.tUpdated  = false
                                                 try? context.save() //由simTechnical執行trade.objectWillChange.send()
-                                                simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo 成交價 \(String(format:"%.2f ",close))" + twDateTime.stringFromDate(dt1, format: "HH:mm:ss"))
+                                                let sName:String? = stock.sName
+                                                simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(sName ?? "????") yahoo 成交價 \(String(format:"%.2f ",close))" + twDateTime.stringFromDate(dt1, format: "HH:mm:ss"))
                                                 self.technicalUpdate(stock: stock, action: .realtime)
                                             } else {
                                                 simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo 未更新 \(String(format:"%.2f",close))")
