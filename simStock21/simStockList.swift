@@ -22,8 +22,7 @@ class simStockList:ObservableObject {
     private let buildNo:String = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
     private let versionNo:String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     private var isPad  = UIDevice.current.userInterfaceIdiom == .pad
-    private var isLandScape:Bool = UIDevice.current.orientation.isLandscape
-
+    private var isLandScape:Bool = UIScreen.main.bounds.width > UIScreen.main.bounds.height
     enum WidthClass:Int {
         case compact = 0
         case widePhone = 1
@@ -44,7 +43,14 @@ class simStockList:ObservableObject {
             return (0,0,0)
         }
     }
+    
+    var doubleColumn:Bool {
+        return isPad && isLandScape && UIApplication.shared.isNotSplitOrSlideOver
+    }
         
+    func doubleColumn(_ hClass:UserInterfaceSizeClass?) -> Bool {
+        return widthClass(hClass) == .widePad && UIApplication.shared.isNotSplitOrSlideOver
+    }
 
     let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape"]
     
@@ -82,8 +88,8 @@ class simStockList:ObservableObject {
         return wClass
     }
     
-    func widthCG(_ hClass:UserInterfaceSizeClass?, CG:[CGFloat]) -> CGFloat {
-        let wClass = widthClass(hClass)
+    func widthCG(_ hClass:UserInterfaceSizeClass?, CG:[CGFloat], double:Bool=false) -> CGFloat {
+        let wClass:WidthClass = (double ? .widePhone : widthClass(hClass))
         if wClass.rawValue <= (CG.count - 1) {
             return CG[wClass.rawValue]
         } else {
@@ -298,8 +304,17 @@ class simStockList:ObservableObject {
     }
     
     @objc private func onViewWillTransition(_ notification: Notification) {
-        self.isLandScape = UIDevice.current.orientation.isLandscape
-        self.orientation = UIDevice.current.orientation
+        if UIDevice.current.orientation.isValidInterfaceOrientation {
+            if UIDevice.current.orientation.isLandscape {
+                self.isLandScape = true
+            } else if !UIDevice.current.orientation.isFlat {
+                self.isLandScape = false
+            }
+            self.orientation = UIDevice.current.orientation
+            NSLog("\(isLandScape ? "LandScape" : "Portrait")")
+        } else {
+            self.isLandScape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
     }
 
     @objc private func setRequestStatus(_ notification: Notification) {
@@ -352,4 +367,11 @@ class simStockList:ObservableObject {
         }
     }
     
+}
+
+extension UIApplication {
+    public var isNotSplitOrSlideOver: Bool {
+        guard let window = self.windows.filter({ $0.isKeyWindow }).first else { return false }
+        return (window.frame.width == window.screen.bounds.width)
+    }
 }

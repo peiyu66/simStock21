@@ -9,26 +9,67 @@
 import SwiftUI
 
 struct stockPageView: View {
+    @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @State var stock : Stock
     @State var prefix: String
     @State var showPrefixMsg:Bool = false
     @State var groupPrefixsOnly:Bool = true
+    @State var filterIsOn = false
+    
+    func pageViewTools(_ geometry:GeometryProxy) -> some View {
+        var view: some View {
+            HStack {
+                if list.doubleColumn(hClass) {
+                    pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn)
+                        .frame(width: (geometry.size.width - 350), alignment: .trailing)
+                } else {
+                    prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
+                        .frame(width: (geometry.size.width - 300), alignment: .trailing)
+                }
+            }
+        }
+        return view
+    }
+    
+    func pageViewTitle(_ geometry:GeometryProxy) -> some View {
+        var view: some View {
+            VStack(alignment:.leading) {
+                if list.isRunning {
+                    Text(list.runningMsg)
+                        .foregroundColor(.orange)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .frame(maxWidth: (list.doubleColumn(hClass) ? 300 : 250), alignment:.leading)
+                    if list.doubleColumn(hClass) {
+                        Spacer()
+                    }
+                }
+                if list.doubleColumn(hClass) {
+                    pageTitle(list: list, stock: $stock)
+//                        .frame(width:400, alignment:.leading)
+                }
+            }
+        }
+        return view
+    }
     
     var body: some View {
         GeometryReader { g in
             VStack (alignment: .center) {
                 let dateLast:Date? = stock.lastTrade(stock.context)?.date
-                tradeListView(list: self.list, stock: self.$stock, prefix: self.$prefix, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly)
-                Spacer()
-                stockPicker(list: self.list, prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
-                    .alert(isPresented: $showPrefixMsg) {
-                                Alert(title: Text("提醒您"), message: Text("有多股的首字相同時，\n於畫面底處可按切換。"), dismissButton: .default(Text("知道了。")))
-                            }
+                tradeListView(list: self.list, stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly)
+                if !list.doubleColumn(hClass) {
+                    Spacer()
+                    stockPicker(list: self.list, prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
+                        .alert(isPresented: $showPrefixMsg) {
+                            Alert(title: Text("提醒您"), message: Text("有多股的首字相同時，\n於畫面底處可按切換。"), dismissButton: .default(Text("知道了。")))
+                        }
+                }
             }
-            .navigationBarItems(trailing:prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, geometry:g))
+            .navigationBarItems(leading: pageViewTitle(g), trailing: pageViewTools(g))
             .onAppear {
-                if list.versionLast == "" && list.prefixStocks(prefix: prefix, group: (groupPrefixsOnly ? stock.group : nil)).count > 1 {
+                if !list.doubleColumn(hClass) && list.versionLast == "" && list.prefixStocks(prefix: prefix, group: (groupPrefixsOnly ? stock.group : nil)).count > 1 {
                     showPrefixMsg = true
                 }
             }
@@ -63,7 +104,7 @@ struct prefixPicker: View {
     @Binding var prefix: String
     @Binding var stock : Stock
     @Binding var groupPrefixsOnly:Bool
-    @State var geometry:GeometryProxy
+//    @State var geometry:GeometryProxy
     
     var allPrefixs:[String] {
         (groupPrefixsOnly ? list.theGroupPrefixs(self.stock) : list.prefixs)
@@ -71,7 +112,7 @@ struct prefixPicker: View {
 
     var prefixs:[String] {
         let prefixIndex = allPrefixs.firstIndex(of: prefix) ?? 0
-        let maxCount = Int(list.widthCG(hClass, CG: [7,15,17,30]))
+        let maxCount = Int(list.widthCG(hClass, CG: [7,11,13]))  //[7,15,17,30]
         let index = pickerIndexRange(index: prefixIndex, count: allPrefixs.count, max: maxCount)
         return Array(allPrefixs[index.from...index.to])
     }
@@ -81,59 +122,63 @@ struct prefixPicker: View {
     }
 
     var body: some View {
-        HStack {
-            Button(action: {
-                self.groupPrefixsOnly = !self.groupPrefixsOnly
-            }) {
-                Text(groupLabel)
-                    .font(.footnote)
-                    .padding(4)
-                    .overlay(RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.blue, lineWidth: 1))
-            }
-            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                .onEnded({ value in
-                    if value.translation.width < 0, groupPrefixsOnly {
-                        self.stock = list.shiftLeftGroup(stock)
-                        self.prefix = self.stock.prefix
-                    }
-                    if value.translation.width > 0, groupPrefixsOnly {
-                        self.stock = list.shiftRightGroup(stock)
-                        self.prefix = self.stock.prefix
-                    }
-                    if value.translation.height < 0 {
-                        // up
-                    }
-                    if value.translation.height > 0 {
-                        // down
-                    }
-                }))
+        if list.doubleColumn(hClass) {
+            EmptyView()
+        } else {
+            HStack {
+                Button(action: {
+                    self.groupPrefixsOnly = !self.groupPrefixsOnly
+                }) {
+                    Text(groupLabel)
+                        .font(.footnote)
+                        .padding(4)
+                        .overlay(RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.blue, lineWidth: 1))
+                }
+                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onEnded({ value in
+                        if value.translation.width < 0, groupPrefixsOnly {
+                            self.stock = list.shiftLeftGroup(stock)
+                            self.prefix = self.stock.prefix
+                        }
+                        if value.translation.width > 0, groupPrefixsOnly {
+                            self.stock = list.shiftRightGroup(stock)
+                            self.prefix = self.stock.prefix
+                        }
+                        if value.translation.height < 0 {
+                            // up
+                        }
+                        if value.translation.height > 0 {
+                            // down
+                        }
+                    }))
 
-            if self.prefixs.first == allPrefixs.first {
-                Text("|").foregroundColor(.gray).fixedSize()
-            } else {
-                Text("-").foregroundColor(.gray).fixedSize()
-            }
-            Picker("", selection: $prefix) {
-                ForEach(self.prefixs, id:\.self) {prefix in
-                    Text(prefix).tag(prefix)
+                if self.prefixs.first == allPrefixs.first {
+                    Text("|").foregroundColor(.gray).fixedSize()
+                } else {
+                    Text("-").foregroundColor(.gray).fixedSize()
                 }
-            }
-                .pickerStyle(SegmentedPickerStyle())
-                .labelsHidden()
-                .fixedSize()
-                .onReceive([self.prefix].publisher.first()) { value in
-                    if self.stock.prefix != self.prefix {
-                        self.stock = self.list.prefixStocks(prefix: value, group: (groupPrefixsOnly ? stock.group : nil))[0]
+                Picker("", selection: $prefix) {
+                    ForEach(self.prefixs, id:\.self) {prefix in
+                        Text(prefix).tag(prefix)
                     }
                 }
-            if self.prefixs.last == allPrefixs.last {
-                Text("|").foregroundColor(.gray).fixedSize()
-            } else {
-                Text("-").foregroundColor(.gray).fixedSize()
+                    .pickerStyle(SegmentedPickerStyle())
+                    .labelsHidden()
+                    .fixedSize()
+                    .onReceive([self.prefix].publisher.first()) { value in
+                        if self.stock.prefix != self.prefix {
+                            self.stock = self.list.prefixStocks(prefix: value, group: (groupPrefixsOnly ? stock.group : nil))[0]
+                        }
+                    }
+                if self.prefixs.last == allPrefixs.last {
+                    Text("|").foregroundColor(.gray).fixedSize()
+                } else {
+                    Text("-").foregroundColor(.gray).fixedSize()
+                }
             }
+//                .frame(width: (geometry.size.width - 50) , alignment: .trailing)
         }
-            .frame(width: (geometry.size.width - 50) , alignment: .trailing)
     }
 }
 
@@ -194,10 +239,11 @@ struct stockPicker: View {
 
 
 struct tradeListView: View {
+    @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @Binding var stock : Stock
     @Binding var prefix: String
-    @State var filterIsOn:Bool = false
+    @Binding var filterIsOn:Bool
     @State var selected: Date?
     @Binding var groupPrefixsOnly:Bool
     
@@ -230,30 +276,32 @@ struct tradeListView: View {
                     }))
             //== 日交易明細列表 ==
             GeometryReader { g in
-                ScrollView {
-                    ScrollViewReader { sv in
-                        LazyVStack {
-                            List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
-                                tradeCell(list: self.list, stock: self.$stock, trade: trade, selected: self.$selected)
-                                    .onTapGesture {
-                                        if self.selected == trade.date {
-                                            self.selected = nil
-                                        } else {
-                                            self.selected = trade.date
-                                        }
-                                     }
-                            }
-                            .frame(width: g.size.width, height: g.size.height, alignment: .center)
-                            .listStyle(GroupedListStyle())
+                ScrollViewReader { sv in
+                    LazyVStack {
+                        Divider().padding(0)
+                        List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
+                            tradeCell(list: self.list, stock: self.$stock, trade: trade, selected: self.$selected)
+                                .onTapGesture {
+                                    if self.selected == trade.date {
+                                        self.selected = nil
+                                    } else {
+                                        self.selected = trade.date
+                                    }
+                                 }
                         }
-                        .onChange(of: stock) {_ in
-                            scrollToSelected(sv)
-                        }
-                        .onChange(of: self.filterIsOn) {_ in
-                            scrollToSelected(sv)
-                        }
+                        .listStyle(GroupedListStyle())
+                        .frame(width: g.size.width - (list.doubleColumn(hClass) ? 40 : 0), height: g.size.height, alignment: .center)
+                        .offset(x: 0, y: -5)
+                    }
+                    .background(Color(.systemGroupedBackground))
+                    .onChange(of: stock) {_ in
+                        scrollToSelected(sv)
+                    }
+                    .onChange(of: self.filterIsOn) {_ in
+                        scrollToSelected(sv)
                     }
                 }
+                
             }
         }   //VStack
     }
@@ -329,7 +377,26 @@ struct settingForm: View {
     
 }
 
-struct tradeHeading:View {
+struct pageTitle: View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @ObservedObject var list: simStockList
+    @Binding var stock: Stock
+    var body: some View {
+        HStack {
+            Text("\(stock.sId) \(stock.sName)")
+                .font(.title)
+            if list.widthClass(hClass) != .compact && stock.proport1.count > 0 {
+                Text("[\(stock.proport1)]")
+                    .font(.footnote)
+                    .padding(.top)
+            }
+        }
+        .foregroundColor(list.isRunning ? .gray : .primary)
+
+    }
+}
+
+struct pageTools:View {
     @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @Binding var stock : Stock
@@ -338,7 +405,111 @@ struct tradeHeading:View {
     @State var showDeleteAlert:Bool = false
     @State var showSetting: Bool = false
     @State var showInformation:Bool = false
-    @State var showProport:Bool = false
+    @State var showLog:Bool = false
+    @Binding var filterIsOn:Bool
+
+    private func openUrl(_ url:String) {
+        if let URL = URL(string: url) {
+            if UIApplication.shared.canOpenURL(URL) {
+                UIApplication.shared.open(URL, options:[:], completionHandler: nil)
+            }
+        }
+    }
+    
+    var body: some View {
+        HStack {
+            //== 工具按鈕 1 == 過濾交易模擬
+            Button(action: {self.filterIsOn = !self.filterIsOn}) {
+                if self.filterIsOn {
+                    Image(systemName: "square.2.stack.3d")
+                        .foregroundColor(.red)
+                } else {
+                    Image(systemName: "square.3.stack.3d")
+                }
+            }
+            .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
+                
+            //== 工具按鈕 2 == 查看log
+            Button(action: {self.showLog = true}) {
+                Image(systemName: "doc.text")
+            }
+            .sheet(isPresented: $showLog) {
+                logForm(showLog: self.$showLog)
+            }
+
+            //== 工具按鈕 3 == 設定
+            Button(action: {self.showSetting = true}) {
+                Image(systemName: "wrench")
+            }
+            .disabled(list.isRunning)
+            .sheet(isPresented: $showSetting) {
+                settingForm(list: self.list, stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
+            }
+            
+            //== 工具按鈕 4 == 刪除或重算
+//            Spacer()
+            Button(action: {self.showReload = true}) {
+                Image(systemName: "arrow.clockwise")
+            }
+            .disabled(list.isRunning)
+            .actionSheet(isPresented: $showReload) {
+                ActionSheet(title: Text("立即更新"), message: Text("刪除或重算？"), buttons: [
+                    .default(Text("重算模擬")) {
+                        self.list.reloadNow([self.stock], action: .simResetAll)
+                    },
+                    .default(Text("重算技術數值")) {
+                        self.list.reloadNow([self.stock], action: .tUpdateAll)
+                    },
+                    .default(Text("刪除最後1個月")) {
+                        self.deleteAll = false
+                        self.showDeleteAlert = true
+                    },
+                    .default(Text("刪除全部")) {
+                        self.deleteAll = true
+                        self.showDeleteAlert = true
+                    },
+//                                .default(Text("[TWSE復驗]")) {
+//                                    self.list.reviseWithTWSE([self.stock])
+//                                },
+                    .destructive(Text("沒事，不用了。"))
+                ])
+            }
+            .alert(isPresented: self.$showDeleteAlert) {
+                Alert(title: Text("刪除\(deleteAll ? "全部" : "最後1個月")歷史價"), message: Text("刪除歷史價，再重新下載、計算。"), primaryButton: .default(Text("刪除"), action: {
+                        self.list.deleteTrades([self.stock], oneMonth: !deleteAll)
+                }), secondaryButton: .default(Text("取消"), action: {showDeleteAlert = false}))
+            }
+            
+            //== 工具按鈕 5 == 參考訊息
+//            Spacer()
+            Button(action: {self.showInformation = true}) {
+                Image(systemName: "questionmark.circle")
+            }
+            .actionSheet(isPresented: $showInformation) {
+                ActionSheet(title: Text("參考訊息"), message: Text("小確幸v\(list.versionNow)"),
+                buttons: [
+                    .default(Text("小確幸網站")) {
+                        self.openUrl("https://peiyu66.github.io/simStock21/")
+                    },
+                    .default(Text("鉅亨個股走勢")) {
+                        self.openUrl("https://invest.cnyes.com/twstock/tws/" + self.stock.sId)
+                    },
+                    .default(Text("Yahoo!技術分析")) {
+                        self.openUrl("https://tw.stock.yahoo.com/q/ta?s=" + self.stock.sId)
+                    },
+                    .destructive(Text("沒事，不用了。"))
+                ])
+            }
+        } //工具按鈕的HStack
+        .frame(width: 150, alignment: .trailing)
+        .font(.body)
+    }
+}
+
+struct tradeHeading:View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @ObservedObject var list: simStockList
+    @Binding var stock : Stock
     @Binding var filterIsOn:Bool
     
     var totalSummary: (profit:String, roi:String, days:String) {
@@ -354,140 +525,45 @@ struct tradeHeading:View {
         return ("","","尚無模擬交易")
     }
 
-    private func openUrl(_ url:String) {
-        if let URL = URL(string: url) {
-            if UIApplication.shared.canOpenURL(URL) {
-                UIApplication.shared.open(URL, options:[:], completionHandler: nil)
-            }
-        }
-    }
-
     var body: some View {
-        Group {
+        if !list.doubleColumn {
             HStack(alignment: .top) {
-                Group {
-                    Text("\(stock.sId) \(stock.sName)")
-                    if list.widthClass(hClass) != .compact && stock.proport1.count > 0 {
-                        Text("[\(stock.proport1)]")
-                            .font(.footnote)
-                            .padding(.top)
-                    }
-                }
-                .foregroundColor(list.isRunning ? .gray : .primary)
+                pageTitle(list: list, stock: $stock)
                 Spacer(minLength: 30)
-                HStack {
-                    //== 工具按鈕 0 == 過濾交易模擬
-                        Button(action: {self.filterIsOn = !self.filterIsOn}) {
-                            if self.filterIsOn {
-                                Image(systemName: "square.2.stack.3d")
-                                    .foregroundColor(.red)
-                            } else {
-                                Image(systemName: "square.3.stack.3d")
-                            }
-                        }
-                            .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
-
-                    //== 工具按鈕 1 == 設定
-                    Button(action: {self.showSetting = true}) {
-                        Image(systemName: "wrench")
-                    }
-                        .disabled(list.isRunning)
-                        .sheet(isPresented: $showSetting) {
-                            settingForm(list: self.list, stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
-                        }
-                    //== 工具按鈕 2 == 刪除或重算
-                    Spacer()
-                    Button(action: {self.showReload = true}) {
-                        Image(systemName: "arrow.clockwise")
-                    }
-                        .disabled(list.isRunning)
-                        .actionSheet(isPresented: $showReload) {
-                            ActionSheet(title: Text("立即更新"), message: Text("刪除或重算？"), buttons: [
-                                .default(Text("重算模擬")) {
-                                    self.list.reloadNow([self.stock], action: .simResetAll)
-                                },
-                                .default(Text("重算技術數值")) {
-                                    self.list.reloadNow([self.stock], action: .tUpdateAll)
-                                },
-                                .default(Text("刪除最後1個月")) {
-                                    self.deleteAll = false
-                                    self.showDeleteAlert = true
-                                },
-                                .default(Text("刪除全部")) {
-                                    self.deleteAll = true
-                                    self.showDeleteAlert = true
-                                },
-//                                .default(Text("[TWSE復驗]")) {
-//                                    self.list.reviseWithTWSE([self.stock])
-//                                },
-                                .destructive(Text("沒事，不用了。"))
-                            ])
-                        }
-                        .alert(isPresented: self.$showDeleteAlert) {
-                            Alert(title: Text("刪除\(deleteAll ? "全部" : "最後1個月")歷史價"), message: Text("刪除歷史價，再重新下載、計算。"), primaryButton: .default(Text("刪除"), action: {
-                                    self.list.deleteTrades([self.stock], oneMonth: !deleteAll)
-                                }), secondaryButton: .default(Text("取消"), action: {showDeleteAlert = false}))
-                            }
-
-                    //== 工具按鈕 3 == 參考訊息
-                    Spacer()
-                    Button(action: {self.showInformation = true}) {
-                        Image(systemName: "questionmark.circle")
-                    }
-                        .actionSheet(isPresented: $showInformation) {
-                            ActionSheet(title: Text("參考訊息"), message: Text("小確幸v\(list.versionNow)"),
-                            buttons: [
-                                .default(Text("小確幸網站")) {
-                                    self.openUrl("https://peiyu66.github.io/simStock21/")
-                                },
-                                .default(Text("鉅亨個股走勢")) {
-                                    self.openUrl("https://invest.cnyes.com/twstock/tws/" + self.stock.sId)
-                                },
-                                .default(Text("Yahoo!技術分析")) {
-                                    self.openUrl("https://tw.stock.yahoo.com/q/ta?s=" + self.stock.sId)
-                                },
-                                .destructive(Text("沒事，不用了。"))
-                            ])
-                        }
-                } //工具按鈕的HStack
-                    .frame(width: 100, alignment: .trailing)
-                    .font(.body)
+                pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn)
             }   //sId,sName,工具按鈕的整個HStack
             .font(.title)
             .lineLimit(1)
             .minimumScaleFactor(0.5)
             .padding()
-        
-            Spacer()
-            
-            VStack(alignment: .trailing) {
-                if stock.simMoneyLacked {
-                    Text("起始本金不足！ ↓↓↓ 模擬結果可能失真！")
-                        .foregroundColor(.red)
-                }
-                HStack {
-                    Spacer()
-                    Text(String(format:"期間%.1f年", stock.years))
-                    Text(stock.simMoneyBase > 0 ? String(format:"起始本金%.f萬元",stock.simMoneyBase) : "")
-                    Text(stock.simInvestAuto == 10 ? "自動無限加碼" : (stock.simInvestAuto > 0 ? String(format:"自動%.0f次加碼", stock.simInvestAuto) : "不自動加碼"))
-                        .foregroundColor(stock.simInvestAuto > 0 && stock.simInvestAuto < 10 ? .primary : .red)
-                }
-                HStack {
-                    Spacer()
-                    if let trade = stock.lastTrade(stock.context), trade.days > 0 {
-                        trade.gradeIcon()
-                            .frame(width:25, alignment: .trailing)
-                    } else {
-                        EmptyView()
-                    }
-                    Text("\(totalSummary.roi) \(totalSummary.days) \(totalSummary.profit)")
-                }
-            }
-                .font(.callout)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .padding(.trailing)
         }   //Group （表頭）
+        VStack(alignment: .trailing) {
+            if stock.simMoneyLacked {
+                Text("起始本金不足！ ↓↓↓ 模擬結果可能失真！")
+                    .foregroundColor(.red)
+            }
+            HStack {
+                Spacer()
+                Text(String(format:"期間%.1f年", stock.years))
+                Text(stock.simMoneyBase > 0 ? String(format:"起始本金%.f萬元",stock.simMoneyBase) : "")
+                Text(stock.simInvestAuto == 10 ? "自動無限加碼" : (stock.simInvestAuto > 0 ? String(format:"自動%.0f次加碼", stock.simInvestAuto) : "不自動加碼"))
+                    .foregroundColor(stock.simInvestAuto > 0 && stock.simInvestAuto < 10 ? .primary : .red)
+            }
+            HStack {
+                Spacer()
+                if let trade = stock.lastTrade(stock.context), trade.days > 0 {
+                    trade.gradeIcon()
+                        .frame(width:25, alignment: .trailing)
+                } else {
+                    EmptyView()
+                }
+                Text("\(totalSummary.roi) \(totalSummary.days) \(totalSummary.profit)")
+            }
+        }
+        .font(.callout)
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
+        .padding(.trailing)
     }
 }
 
@@ -627,7 +703,7 @@ struct tradeCell: View {
                         Text("")
                     }
                 }
-                .frame(width: 20, alignment: .center)
+                .frame(width: 40, alignment: .center)
                 //== 2日期,3單價 ==
                 Text(twDateTime.stringFromDate(trade.dateTime))
                     .foregroundColor(trade.color(.time))
@@ -698,12 +774,12 @@ struct tradeCell: View {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("").frame(width: 20.0, alignment: .center)
+                            Text("").frame(width: 40.0, alignment: .center)
                             Text(twDateTime.stringFromDate(trade.dateTime, format: "EEE HH:mm:ss"))
                             .frame(width: list.widthCG(hClass, CG: [80,128]), alignment: .leading)
                         }
                         HStack {
-                            Text("").frame(width: 20.0, alignment: .center)
+                            Text("").frame(width: 40.0, alignment: .center)
                             Text(trade.dataSource)
                             .frame(width: list.widthCG(hClass, CG: [80,128]), alignment: .leading)
                         }
@@ -748,18 +824,18 @@ struct tradeCell: View {
                 if list.widthClass(hClass) == .compact {
                     VStack {
                         HStack {
-                            Text("").frame(width: 20.0, alignment: .center)
+                            Text("").frame(width: 40.0, alignment: .center)
                             self.priceAndKDJ
                         }
                         Spacer()
                         HStack {
-                            Text("").frame(width: 20.0, alignment: .center)
+                            Text("").frame(width: 40.0, alignment: .center)
                             self.simSummary
                         }
                     }
                 } else {
                     HStack (alignment: .center) {
-                        Text("").frame(width: 20.0, alignment: .center)
+                        Text("").frame(width: 40.0, alignment: .center)
                         self.priceAndKDJ
                         self.simSummary
                     }
@@ -767,7 +843,7 @@ struct tradeCell: View {
                 Spacer()    //以下是擴充技術數值
                 if list.widthClass(hClass) != .compact {
                     HStack {
-                        Text("").frame(width: 20.0, alignment: .center)
+                        Text("").frame(width: 40.0, alignment: .center)
                         Group {
                             VStack(alignment: .trailing,spacing: 2) {
                                 Text("")

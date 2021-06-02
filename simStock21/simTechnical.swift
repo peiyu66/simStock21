@@ -341,10 +341,14 @@ class simTechnical {
                 for i in 1...10 {
                     let d = Double(i > 5 ? i - 5 : i - 6) //-5到-1，1到5
                     trade.priceClose = price + (d * diff)
+                    let overHL:Bool = (trade.tHighDiff == 10 && trade.priceClose > trade.priceHigh) || (trade.tLowDiff == 10 && trade.priceClose < trade.priceLow)
+                    if overHL {
+                        continue
+                    }
                     tUpdate(trades, index: trades.count - 1)
                     simUpdate(trades, index: trades.count - 1)
                     let simQty = trade.simQty
-                    if simQty.action == "買" || simQty.action == "賣" {
+                    if (simQty.action == "買" || simQty.action == "賣") {
                         let close = String(format: "%.2f", trade.priceClose)
                         let value = (simQty.action == "買" ? String(format:"%.0f",simQty.qty) : String(format:"%.1f%%",simQty.roi))
                         if trade.priceClose < price {
@@ -1680,6 +1684,7 @@ class simTechnical {
         wantH += (trade.tMa60DiffMax9 > 30 && trade.grade <= .fine  ? 1 : 0)
         wantH += (trade.tMa20DiffMax9 > 35 && trade.grade <= .none  ? 1 : 0)    //只有某年1次有效？
         wantH += (trade.tVolZ125 > (trade.grade <= .weak ? 2 : 1.5) && trade.priceClose > trade.priceOpen ? 1 : 0)
+//        wantH += (trade.tLowDiffZ125 - trade.tHighDiffZ125 > trade.byGrade([1.2,1.5]) && trade.tHighDiffZ125 > trade.byGrade([-0.5,0]) ? 1 : 0)
 
         wantH += (trade.tKdKZ125 < -0.8 ? -1 : 0)
         wantH += (trade.tOscZ125 < -0.5 ? -1 : 0)
@@ -1730,21 +1735,17 @@ class simTechnical {
             wantS += (trade.tKdKZ125 > 0.9 && (trade.tKdKZ250 > 0.9 || trade.grade >= .weak) ? 1 : 0)
             wantS += (trade.tKdDZ125 > 0.9 && (trade.tKdDZ250 > 0.9 || trade.grade >= .weak) ? 1 : 0)
             wantS += (trade.tOscZ125 > 0.9 && trade.tOscZ250 > 0.9 ? 1 : 0)
-//            wantS += (trade.grade > .fine && trade.tHighDiff >= 7.5 ? (trade.grade == .wow ? -1 : -2) : 0)
             wantS += (trade.grade > .fine && trade.tHighDiff >= 7.5 ? trade.byGrade([-2,-1],H:.wow) : 0)
             wantS += (trade.grade <= .fine  && trade.tHighDiff >= 9 ? -1 : 0)
-//            wantS += (trade.tPriceZ125 > 1 || trade.grade <= .fine ? 0.5 : 0)
-            wantS += (trade.tHighDiffZ125 > trade.byGrade([-1,-0.5,0]) && trade.tLowDiffZ125 > trade.byGrade([-0.4,0.1,0.8]) ? 1 : 0)
+            wantS += ((trade.tHighDiffZ125 > trade.byGrade([-1,-0.5,0]) && trade.tLowDiffZ125 > trade.byGrade([-0.4,0.1,0.8])) || trade.tPriceZ125 > trade.byGrade([1.2,1.5]) ? 1 : 0)
 
             let forRoiH = trade.tMa60DiffZ250 > 0 && trade.tMa60DiffZ125 > 0.5
             let weekendDays:Double = (twDateTime.calendar.component(.weekday, from: trade.dateTime) <= 2 ? 2 : 0)
             let sRoi22 = trade.simUnitRoi > 22.5 && trade.simDays < 60
             let sRoi18 = trade.simUnitRoi > (forRoiH ? 18.5 : 15.5) && trade.simDays < 40
             let sRoi13 = trade.simUnitRoi > (forRoiH ? 13.5 : 9.5) && trade.simDays < 20
-//            let sRoi09 = trade.simUnitRoi > (forRoiH ? 9.5 : 6.5) && trade.simDays < (trade.grade <= .weak ? 45 : 10)
             let sRoi09 = trade.simUnitRoi > (forRoiH ? 9.5 : 6.5) && trade.simDays < trade.byGrade([45,10])
             let sRoi03 = trade.simUnitRoi > 3.5 && (trade.tKdKZ125 > 1.5 || trade.tKdDZ125 > 1.5)
-//            let sRoi02 = trade.simUnitRoi > (trade.grade <= .weak ? 1.5 : 2.5)
             let sRoi02 = trade.simUnitRoi > trade.byGrade([1.5,2.5])
             let sRoi00 = trade.simUnitRoi > 0.45 && trade.simDays > (1 + weekendDays)
             

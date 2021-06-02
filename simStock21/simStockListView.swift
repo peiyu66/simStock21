@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct simStockListView: View {
+    @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @State var isChoosing = false           //進入了選取模式
     @State var isSearching:Bool = false     //進入了搜尋模式
@@ -16,9 +17,9 @@ struct simStockListView: View {
     @State var editText:String = ""       //輸入的搜尋文字
     
     var body: some View {
-//        GeometryReader { g in
-            NavigationView {
-                VStack (alignment: .leading) {
+        NavigationView {
+            VStack (alignment: .leading) {
+                if !list.doubleColumn(hClass) {
                     Spacer()
                     SearchBar(list: self.list, editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
                         .disabled(self.isChoosing || list.isRunning)
@@ -41,24 +42,37 @@ struct simStockListView: View {
                         .font(.footnote)
                         .padding(.horizontal, 20)
                     Spacer()
-                    ScrollViewReader { sv in
-                        List{
-                            ForEach(list.groupStocks, id: \.self) { (stocks:[Stock]) in
-                                stockSection(list: self.list, stocks: stocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
-                            }
+                }
+                ScrollViewReader { sv in
+                    List{
+                        ForEach(list.groupStocks, id: \.self) { (stocks:[Stock]) in
+                            stockSection(list: self.list, stocks: stocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
                         }
-                        .listStyle(GroupedListStyle())
-                        .onChange(of: isSearching) {_ in
-                            sv.scrollTo(list.groupStocks[0])
-                        }
-                    }   //ScrollViewReader
-                }   //VStack
-                .navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: upperRightCommands(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
-            }   //NavigationView
-            .navigationViewStyle(StackNavigationViewStyle())
-//        }   //GeometryReader
+                    }
+                    .listStyle(GroupedListStyle())
+                    .onChange(of: isSearching) {_ in
+                        sv.scrollTo(list.groupStocks[0])
+                    }
+                }   //ScrollViewReader
+            }   //VStack
+//            .navigationBarHidden(list.doubleColumn(hClass))
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: upperRightCommands(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
+        }   //NavigationView
+//        .frame(minWidth: 400, idealWidth: 400)
+//        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewSwitch(list.doubleColumn(hClass))
     }   //body
+}
+
+extension View {
+    func navigationViewSwitch(_ doubleColumn:Bool) -> AnyView {
+        if doubleColumn {
+            return AnyView(self.navigationViewStyle(DoubleColumnNavigationViewStyle()))
+        } else {
+            return AnyView(self.navigationViewStyle(StackNavigationViewStyle()))
+        }
+    }
 }
 
 struct logForm: View {
@@ -135,42 +149,41 @@ struct upperRightCommands:View {
                 }
             } else if self.isSearching || self.list.isRunning {
                 EmptyView()
-            } else {
+            } else if !list.doubleColumn {
                 Group {
                     Button(action: {self.showLog = true}) {
                         Image(systemName: "doc.text")
                     }
-                        .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
-                        .sheet(isPresented: $showLog) {
-                            logForm(showLog: self.$showLog)
-                        }
+                    .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
+                    .sheet(isPresented: $showLog) {
+                        logForm(showLog: self.$showLog)
+                    }
                     Spacer()
                     Button(action: {self.showSetting = true}) {
                         Image(systemName: "wrench")
                     }
-                        .sheet(isPresented: $showSetting) {
-                            listSettingForm(list: self.list, showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
-                        }
+                    .sheet(isPresented: $showSetting) {
+                        listSettingForm(list: self.list, showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
+                    }
                     Spacer()
                     Button(action: {self.showInformation = true}) {
                         Image(systemName: "questionmark.circle")
                     }
-                        .actionSheet(isPresented: $showInformation) {
-                            ActionSheet(title: Text("參考訊息"), message: Text("小確幸v\(list.versionNow)"),
-                            buttons: [
-                                .default(Text("小確幸網站")) {
-                                    self.openUrl("https://peiyu66.github.io/simStock21/")
-                                },
-                                .destructive(Text("沒事，不用了。"))
-                            ])
-                        }
+                    .actionSheet(isPresented: $showInformation) {
+                        ActionSheet(title: Text("參考訊息"), message: Text("小確幸v\(list.versionNow)"),
+                        buttons: [
+                            .default(Text("小確幸網站")) {
+                                self.openUrl("https://peiyu66.github.io/simStock21/")
+                            },
+                            .destructive(Text("沒事，不用了。"))
+                        ])
+                    }
                 }
-            }   // HStack
-        }
-//        .padding(.trailing, 4)
+            }
+        }   //HStack
         .lineLimit(1)
         .minimumScaleFactor(0.6)
-    }
+    }   //body
 }
 
 struct chooseCommand:View {
@@ -183,46 +196,51 @@ struct chooseCommand:View {
     @State var showFilter:Bool = false      //顯示pickerGroups
 
     var body: some View {
-        HStack {
-            Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
-                .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
-                .rotation3DEffect(.degrees(list.rotated.d), axis: (x: list.rotated.x, y: list.rotated.y, z: 0))
-            if self.isChoosing || self.list.searchGotResults {
-                Text("請勾選")
-                    .foregroundColor(Color(.darkGray))
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
-                if self.checkedStocks.count > 0 {
-                    stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
-                } else {
-                    Button("全選") {
-                        for stocks in self.list.groupStocks {
-                            if let s = stocks.first, (s.group == "" || !self.list.searchGotResults) {
-                                for stock in stocks {
-                                    self.checkedStocks.append(stock)
+            HStack {
+                if !list.doubleColumn {
+                    Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
+                        .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
+                        .rotation3DEffect(.degrees(list.rotated.d), axis: (x: list.rotated.x, y: list.rotated.y, z: 0))
+                }
+                if self.isChoosing || self.list.searchGotResults {
+                    Text("請勾選")
+                        .foregroundColor(Color(.darkGray))
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                    if self.checkedStocks.count > 0 {
+                        stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
+                    } else {
+                        Button("全選") {
+                            for stocks in self.list.groupStocks {
+                                if let s = stocks.first, (s.group == "" || !self.list.searchGotResults) {
+                                    for stock in stocks {
+                                        self.checkedStocks.append(stock)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            } else if !self.isSearching {
-                if list.isRunning {
-                    Text(list.runningMsg)
-                        .foregroundColor(.orange)
-                } else {
-                    Button("選取") {
-                        self.isChoosing = true
-                        self.searchText = ""
-                        self.list.searchText = nil
-                        self.isSearching = false
+                } else if !self.isSearching {
+                    if list.isRunning {
+                        if !list.doubleColumn {
+                            Text(list.runningMsg)
+                                .foregroundColor(.orange)
+                        }
+                    } else {
+                        Button("選取") {
+                            self.isChoosing = true
+                            self.searchText = ""
+                            self.list.searchText = nil
+                            self.isSearching = false
+                        }
                     }
                 }
-            }
-            Spacer()
-        }
-        .frame(width: list.widthCG(hClass, CG: [250,450,500,500]))  //太寬會造成旋轉後位移
-        .minimumScaleFactor(0.6)
-        .lineLimit(1)
+                Spacer()
+            }   //HStack
+            .frame(width: list.widthCG(hClass, CG: [200,450,500,500]))  //太寬會造成旋轉後位移
+            .minimumScaleFactor(0.6)
+            .lineLimit(1)
+        
     }
 
 }
@@ -298,7 +316,6 @@ struct stockActionMenu:View {
                 .sheet(isPresented: self.$showGroupFilter) {
                     pickerGroups(list: self.list, checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
-
                 Divider()
                 Button((self.list.widthClass(hClass) != .compact ? "刪除或" : "") + "重算") {
                     self.showReload = true
@@ -336,30 +353,32 @@ struct stockActionMenu:View {
                             self.isChoosingOff()
                         }), secondaryButton: .default(Text("取消"), action: {self.isChoosingOff()}))
                     }
-                Divider()
-                Button("匯出" + (self.list.widthClass(hClass) != .compact ? "CSV" : "")) {
-                    self.showExport = true
-                }
-                .actionSheet(isPresented: self.$showExport) {
-                        ActionSheet(title: Text("匯出"), message: Text("文字內容？"), buttons: [
-                            .default(Text("代號和名稱")) {
-                                self.shareText = csvData.csvStocksIdName(self.checkedStocks)
-                                self.showShare = true
-                            },
-                            .default(Text("逐月已實現" + (self.list.widthClass(hClass) != .compact ? "損益" : ""))) {
-                                self.shareText = csvData.csvMonthlyRoi(self.checkedStocks)
-                                self.showShare = true
-                            },
-                            .destructive(Text("沒事，不用了。")) {
+                if !list.doubleColumn {
+                    Divider()
+                    Button("匯出" + (self.list.widthClass(hClass) != .compact ? "CSV" : "")) {
+                        self.showExport = true
+                    }
+                    .actionSheet(isPresented: self.$showExport) {
+                            ActionSheet(title: Text("匯出"), message: Text("文字內容？"), buttons: [
+                                .default(Text("代號和名稱")) {
+                                    self.shareText = csvData.csvStocksIdName(self.checkedStocks)
+                                    self.showShare = true
+                                },
+                                .default(Text("逐月已實現" + (self.list.widthClass(hClass) != .compact ? "損益" : ""))) {
+                                    self.shareText = csvData.csvMonthlyRoi(self.checkedStocks)
+                                    self.showShare = true
+                                },
+                                .destructive(Text("沒事，不用了。")) {
+                                    self.isChoosingOff()
+                                }
+                            ])
+                        }
+                        .sheet(isPresented: self.$showShare) {   //分享窗
+                            ShareSheet(activityItems: [self.shareText]) { (activity, success, items, error) in
                                 self.isChoosingOff()
                             }
-                        ])
-                    }
-                    .sheet(isPresented: self.$showShare) {   //分享窗
-                        ShareSheet(activityItems: [self.shareText]) { (activity, success, items, error) in
-                            self.isChoosingOff()
                         }
-                    }
+                }
             }
         }
     }
@@ -662,6 +681,7 @@ struct stockCell : View {
     @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @ObservedObject var stock : Stock
+    @State private var stock0: Stock?
     @Binding var isChoosing:Bool
     @Binding var isSearching:Bool
     @Binding var checkedStocks:[Stock]
@@ -687,7 +707,7 @@ struct stockCell : View {
                     .font(list.widthClass(hClass) == .compact ? .callout : .body)
                     .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80])), alignment: .leading)
                 Text(stock.sName)
-                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120])), alignment: .leading)
+                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120], double:list.doubleColumn)), alignment: .leading)
             }
                 .lineLimit(2)
                 .foregroundColor(list.isRunning ? .gray : .primary)
@@ -700,15 +720,20 @@ struct stockCell : View {
                     }
                 }
                 if !isChoosing && !isSearching {
-                    NavigationLink(destination: stockPageView(list: self.list, stock: stock, prefix: stock.prefix)) {
-                        Text("")
+                    NavigationLink(destination: stockPageView(list: self.list, stock: stock, prefix: stock.prefix), tag: stock, selection: self.$stock0) {
+                        EmptyView()
                     }
                 }
             }
         }
-            .lineLimit(1)
-            .minimumScaleFactor(0.6)
-            .foregroundColor(self.checkedStocks.contains(stock) ? .orange : (isSearching && stock.group != "" ? .gray : .primary))
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
+        .foregroundColor(self.checkedStocks.contains(stock) ? .orange : (isSearching && stock.group != "" ? .gray : .primary))
+        .onAppear() {
+            if list.doubleColumn {
+                self.stock0 = list.groupStocks[0][0]
+            }
+        }
     }
 }
 
@@ -734,36 +759,40 @@ struct lastTrade: View {
                     Text("  ")
                 }
             }
-                .frame(width: list.widthCG(hClass, CG: [70,90,110]), alignment: .center)
-                .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
-                .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(trade.color(.ruleR, gray: (isChoosing || isSearching)), lineWidth: 1)
-                )
-            if list.widthClass(hClass) != .compact {
-                Text(trade.simQty.action)
-                    .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
-                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
-                    .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
-                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                Text(String(format:"%.1f年",stock.years))
-                    .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
-            } else {
-                EmptyView()
+            .frame(width: list.widthCG(hClass, CG: [70,90,110],double: list.doubleColumn), alignment: .center)
+            .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
+            .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(trade.color(.ruleR, gray: (isChoosing || isSearching)), lineWidth: 1)
+            )
+            if !list.doubleColumn {
+                if list.widthClass(hClass) != .compact {
+                    Text(trade.simQty.action)
+                        .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
+                        .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                    Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
+                        .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
+                        .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                    Text(String(format:"%.1f年",stock.years))
+                        .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
+                } else {
+                    EmptyView()
+                }
             }
             if trade.days > 0 {
-                Text(String(format:"%.f天",trade.days))
-                    .foregroundColor(stock.simReversed ? .blue : .primary)
-                    .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
-                Text(String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
-                    .foregroundColor(stock.simInvestUser > 0 ? .blue : .primary)
-                    .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
-                if list.widthClass(hClass) != .compact {
-                    Text(trade.baseRoi > 0 ? String(format:"%.1f%%",trade.baseRoi) : "")
-                        .foregroundColor(.gray)
-                        .frame(width: 65.0, alignment: .trailing)
+                if !list.doubleColumn {
+                    Text(String(format:"%.f天",trade.days))
+                        .foregroundColor(stock.simReversed ? .blue : .primary)
+                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
+                    Text(String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
+                        .foregroundColor(stock.simInvestUser > 0 ? .blue : .primary)
+                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
+                    if list.widthClass(hClass) != .compact {
+                        Text(trade.baseRoi > 0 ? String(format:"%.1f%%",trade.baseRoi) : "")
+                            .foregroundColor(.gray)
+                            .frame(width: 65.0, alignment: .trailing)
+                    }
                 }
                 trade.gradeIcon(gray:isChoosing || isSearching)
                     .frame(width:25, alignment: .trailing)
@@ -771,11 +800,9 @@ struct lastTrade: View {
                 EmptyView()
             }
             Spacer()
-        }
-            .font(list.widthClass(hClass) == .compact ? .footnote : .body)
-            .foregroundColor(isChoosing || isSearching ? .gray : .primary)
-
-
+        }   //HStack
+        .font(list.widthClass(hClass) == .compact && !list.doubleColumn ? .footnote : .body)
+        .foregroundColor(isChoosing || isSearching ? .gray : .primary)
     }
 }
 
