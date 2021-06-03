@@ -16,49 +16,32 @@ struct stockPageView: View {
     @State var showPrefixMsg:Bool = false
     @State var groupPrefixsOnly:Bool = true
     @State var filterIsOn = false
-    
+
     func pageViewTools(_ geometry:GeometryProxy) -> some View {
-        var view: some View {
-            HStack {
-                if list.doubleColumn(hClass) {
-                    pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn)
-                        .frame(width: (geometry.size.width - 350), alignment: .trailing)
-                } else {
-                    prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
-                        .frame(width: (geometry.size.width - 300), alignment: .trailing)
-                }
+        Group {
+            if list.doubleColumn(hClass) {
+                pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn, cgWidth: geometry.size.width - 450)
+            } else {
+                prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 60)
             }
         }
-        return view
     }
     
     func pageViewTitle(_ geometry:GeometryProxy) -> some View {
-        var view: some View {
-            VStack(alignment:.leading) {
-                if list.isRunning {
-                    Text(list.runningMsg)
-                        .foregroundColor(.orange)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                        .frame(maxWidth: (list.doubleColumn(hClass) ? 300 : 250), alignment:.leading)
-                    if list.doubleColumn(hClass) {
-                        Spacer()
-                    }
-                }
-                if list.doubleColumn(hClass) {
-                    pageTitle(list: list, stock: $stock)
-//                        .frame(width:400, alignment:.leading)
-                }
+        Group {
+            if list.doubleColumn(hClass) {
+                pageTitle(list: list, stock: $stock, cgWidth: 400)
+            } else {
+                EmptyView()
             }
         }
-        return view
     }
     
     var body: some View {
         GeometryReader { g in
             VStack (alignment: .center) {
                 let dateLast:Date? = stock.lastTrade(stock.context)?.date
-                tradeListView(list: self.list, stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly)
+                tradeListView(list: self.list, stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
                 if !list.doubleColumn(hClass) {
                     Spacer()
                     stockPicker(list: self.list, prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
@@ -74,6 +57,21 @@ struct stockPageView: View {
                 }
             }
         }
+    }
+}
+
+struct runningMsg: View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @State var msg:String
+    @State var padding:CGFloat = 0
+    
+    var body: some View {
+        Text(msg)
+            .font(.body)
+            .foregroundColor(.orange)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .padding(.bottom,padding)
     }
 }
 
@@ -104,16 +102,19 @@ struct prefixPicker: View {
     @Binding var prefix: String
     @Binding var stock : Stock
     @Binding var groupPrefixsOnly:Bool
-//    @State var geometry:GeometryProxy
+    @State var cgWidth:CGFloat
     
     var allPrefixs:[String] {
         (groupPrefixsOnly ? list.theGroupPrefixs(self.stock) : list.prefixs)
     }
+    
+    var maxCount:CGFloat {
+        list.widthCG(hClass, CG: [7,15,17,30])
+    }
 
     var prefixs:[String] {
         let prefixIndex = allPrefixs.firstIndex(of: prefix) ?? 0
-        let maxCount = Int(list.widthCG(hClass, CG: [7,11,13]))  //[7,15,17,30]
-        let index = pickerIndexRange(index: prefixIndex, count: allPrefixs.count, max: maxCount)
+        let index = pickerIndexRange(index: prefixIndex, count: allPrefixs.count, max: Int(maxCount))
         return Array(allPrefixs[index.from...index.to])
     }
     
@@ -122,63 +123,59 @@ struct prefixPicker: View {
     }
 
     var body: some View {
-        if list.doubleColumn(hClass) {
-            EmptyView()
-        } else {
-            HStack {
-                Button(action: {
-                    self.groupPrefixsOnly = !self.groupPrefixsOnly
-                }) {
-                    Text(groupLabel)
-                        .font(.footnote)
-                        .padding(4)
-                        .overlay(RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.blue, lineWidth: 1))
-                }
-                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onEnded({ value in
-                        if value.translation.width < 0, groupPrefixsOnly {
-                            self.stock = list.shiftLeftGroup(stock)
-                            self.prefix = self.stock.prefix
-                        }
-                        if value.translation.width > 0, groupPrefixsOnly {
-                            self.stock = list.shiftRightGroup(stock)
-                            self.prefix = self.stock.prefix
-                        }
-                        if value.translation.height < 0 {
-                            // up
-                        }
-                        if value.translation.height > 0 {
-                            // down
-                        }
-                    }))
+        HStack {
+            Button(action: {
+                self.groupPrefixsOnly = !self.groupPrefixsOnly
+            }) {
+                Text(groupLabel)
+                    .font(.footnote)
+                    .padding(4)
+                    .overlay(RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.blue, lineWidth: 1))
+            }
+            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                .onEnded({ value in
+                    if value.translation.width < 0, groupPrefixsOnly {
+                        self.stock = list.shiftLeftGroup(stock)
+                        self.prefix = self.stock.prefix
+                    }
+                    if value.translation.width > 0, groupPrefixsOnly {
+                        self.stock = list.shiftRightGroup(stock)
+                        self.prefix = self.stock.prefix
+                    }
+                    if value.translation.height < 0 {
+                        // up
+                    }
+                    if value.translation.height > 0 {
+                        // down
+                    }
+                }))
 
-                if self.prefixs.first == allPrefixs.first {
-                    Text("|").foregroundColor(.gray).fixedSize()
-                } else {
-                    Text("-").foregroundColor(.gray).fixedSize()
-                }
-                Picker("", selection: $prefix) {
-                    ForEach(self.prefixs, id:\.self) {prefix in
-                        Text(prefix).tag(prefix)
-                    }
-                }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .labelsHidden()
-                    .fixedSize()
-                    .onReceive([self.prefix].publisher.first()) { value in
-                        if self.stock.prefix != self.prefix {
-                            self.stock = self.list.prefixStocks(prefix: value, group: (groupPrefixsOnly ? stock.group : nil))[0]
-                        }
-                    }
-                if self.prefixs.last == allPrefixs.last {
-                    Text("|").foregroundColor(.gray).fixedSize()
-                } else {
-                    Text("-").foregroundColor(.gray).fixedSize()
+            if self.prefixs.first == allPrefixs.first {
+                Text("|").foregroundColor(.gray).fixedSize()
+            } else {
+                Text("-").foregroundColor(.gray).fixedSize()
+            }
+            Picker("", selection: $prefix) {
+                ForEach(self.prefixs, id:\.self) {prefix in
+                    Text(prefix).tag(prefix)
                 }
             }
-//                .frame(width: (geometry.size.width - 50) , alignment: .trailing)
+                .pickerStyle(SegmentedPickerStyle())
+                .labelsHidden()
+                .fixedSize()
+                .onReceive([self.prefix].publisher.first()) { value in
+                    if self.stock.prefix != self.prefix {
+                        self.stock = self.list.prefixStocks(prefix: value, group: (groupPrefixsOnly ? stock.group : nil))[0]
+                    }
+                }
+            if self.prefixs.last == allPrefixs.last {
+                Text("|").foregroundColor(.gray).fixedSize()
+            } else {
+                Text("-").foregroundColor(.gray).fixedSize()
+            }
         }
+        .frame(width: cgWidth, alignment: .trailing)
     }
 }
 
@@ -246,6 +243,7 @@ struct tradeListView: View {
     @Binding var filterIsOn:Bool
     @State var selected: Date?
     @Binding var groupPrefixsOnly:Bool
+    @State var cgWidth:CGFloat
     
     private func scrollToSelected(_ sv: ScrollViewProxy) {
         if let dt = selected {
@@ -256,7 +254,7 @@ struct tradeListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             //== 表頭：股票名稱、模擬摘要 ==
-            tradeHeading(list: self.list, stock: self.$stock, filterIsOn: self.$filterIsOn)
+            tradeHeading(list: self.list, stock: self.$stock, filterIsOn: self.$filterIsOn, cgWidth: cgWidth)
                 .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onEnded({ value in
                         if value.translation.width < 0 {
@@ -381,17 +379,27 @@ struct pageTitle: View {
     @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @Binding var stock: Stock
+    @State var cgWidth:CGFloat
     var body: some View {
-        HStack {
-            Text("\(stock.sId) \(stock.sName)")
-                .font(.title)
-            if list.widthClass(hClass) != .compact && stock.proport1.count > 0 {
-                Text("[\(stock.proport1)]")
-                    .font(.footnote)
-                    .padding(.top)
+        VStack {
+            if list.isRunning {
+                runningMsg(msg: list.runningMsg, padding: 4)
+                    .frame(width:cgWidth, alignment: .leading)
             }
+            HStack {
+                Text("\(stock.sId) \(stock.sName)")
+                    .font(.title)
+                if list.widthClass(hClass) != .compact && stock.proport1.count > 0 {
+                    Text("[\(stock.proport1)]")
+                        .font(.footnote)
+                        .padding(.top)
+                }
+            }
+            .foregroundColor(list.isRunning ? .gray : .primary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .frame(width:cgWidth, alignment: .leading)
         }
-        .foregroundColor(list.isRunning ? .gray : .primary)
 
     }
 }
@@ -407,6 +415,7 @@ struct pageTools:View {
     @State var showInformation:Bool = false
     @State var showLog:Bool = false
     @Binding var filterIsOn:Bool
+    @State var cgWidth:CGFloat
 
     private func openUrl(_ url:String) {
         if let URL = URL(string: url) {
@@ -501,7 +510,7 @@ struct pageTools:View {
                 ])
             }
         } //工具按鈕的HStack
-        .frame(width: 150, alignment: .trailing)
+        .frame(width: cgWidth, alignment: .trailing)
         .font(.body)
     }
 }
@@ -511,7 +520,8 @@ struct tradeHeading:View {
     @ObservedObject var list: simStockList
     @Binding var stock : Stock
     @Binding var filterIsOn:Bool
-    
+    @State var cgWidth:CGFloat
+
     var totalSummary: (profit:String, roi:String, days:String) {
         if let trade = stock.lastTrade(stock.context), trade.rollRounds > 0 {
             let numberFormatter = NumberFormatter()
@@ -526,44 +536,46 @@ struct tradeHeading:View {
     }
 
     var body: some View {
-        if !list.doubleColumn {
-            HStack(alignment: .top) {
-                pageTitle(list: list, stock: $stock)
-                Spacer(minLength: 30)
-                pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn)
-            }   //sId,sName,工具按鈕的整個HStack
-            .font(.title)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .padding()
-        }   //Group （表頭）
-        VStack(alignment: .trailing) {
-            if stock.simMoneyLacked {
-                Text("起始本金不足！ ↓↓↓ 模擬結果可能失真！")
-                    .foregroundColor(.red)
-            }
-            HStack {
-                Spacer()
-                Text(String(format:"期間%.1f年", stock.years))
-                Text(stock.simMoneyBase > 0 ? String(format:"起始本金%.f萬元",stock.simMoneyBase) : "")
-                Text(stock.simInvestAuto == 10 ? "自動無限加碼" : (stock.simInvestAuto > 0 ? String(format:"自動%.0f次加碼", stock.simInvestAuto) : "不自動加碼"))
-                    .foregroundColor(stock.simInvestAuto > 0 && stock.simInvestAuto < 10 ? .primary : .red)
-            }
-            HStack {
-                Spacer()
-                if let trade = stock.lastTrade(stock.context), trade.days > 0 {
-                    trade.gradeIcon()
-                        .frame(width:25, alignment: .trailing)
-                } else {
-                    EmptyView()
+        VStack {
+            if !list.doubleColumn {
+                HStack(alignment: .top) {
+                    pageTitle(list: list, stock: $stock, cgWidth: cgWidth - 200)
+                    Spacer(minLength: 30)
+                    pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn, cgWidth: 120)
+                }   //sId,sName,工具按鈕的整個HStack
+                .font(.title)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .padding()
+            }   //Group （表頭）
+            VStack(alignment: .trailing) {
+                if stock.simMoneyLacked {
+                    Text("起始本金不足 ↓↓↓ 模擬結果可能失真")
+                        .foregroundColor(.red)
                 }
-                Text("\(totalSummary.roi) \(totalSummary.days) \(totalSummary.profit)")
+                HStack {
+                    Spacer()
+                    Text(String(format:"期間%.1f年", stock.years))
+                    Text(stock.simMoneyBase > 0 ? String(format:"起始本金%.f萬元",stock.simMoneyBase) : "")
+                    Text(stock.simInvestAuto == 10 ? "自動無限加碼" : (stock.simInvestAuto > 0 ? String(format:"自動%.0f次加碼", stock.simInvestAuto) : "不自動加碼"))
+                        .foregroundColor(stock.simInvestAuto > 0 && stock.simInvestAuto < 10 ? .primary : .red)
+                }
+                HStack {
+                    Spacer()
+                    if let trade = stock.lastTrade(stock.context), trade.days > 0 {
+                        trade.gradeIcon()
+                            .frame(width:25, alignment: .trailing)
+                    } else {
+                        EmptyView()
+                    }
+                    Text("\(totalSummary.roi) \(totalSummary.days) \(totalSummary.profit)")
+                }
             }
+            .font(.callout)
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            .padding(.trailing)
         }
-        .font(.callout)
-        .lineLimit(1)
-        .minimumScaleFactor(0.6)
-        .padding(.trailing)
     }
 }
 
@@ -703,7 +715,7 @@ struct tradeCell: View {
                         Text("")
                     }
                 }
-                .frame(width: 40, alignment: .center)
+                .frame(width: 20, alignment: .center)
                 //== 2日期,3單價 ==
                 Text(twDateTime.stringFromDate(trade.dateTime))
                     .foregroundColor(trade.color(.time))
@@ -774,12 +786,12 @@ struct tradeCell: View {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("").frame(width: 40.0, alignment: .center)
+                            Text("").frame(width: 20.0, alignment: .center)
                             Text(twDateTime.stringFromDate(trade.dateTime, format: "EEE HH:mm:ss"))
                             .frame(width: list.widthCG(hClass, CG: [80,128]), alignment: .leading)
                         }
                         HStack {
-                            Text("").frame(width: 40.0, alignment: .center)
+                            Text("").frame(width: 20.0, alignment: .center)
                             Text(trade.dataSource)
                             .frame(width: list.widthCG(hClass, CG: [80,128]), alignment: .leading)
                         }
@@ -824,18 +836,18 @@ struct tradeCell: View {
                 if list.widthClass(hClass) == .compact {
                     VStack {
                         HStack {
-                            Text("").frame(width: 40.0, alignment: .center)
+                            Text("").frame(width: 20.0, alignment: .center)
                             self.priceAndKDJ
                         }
                         Spacer()
                         HStack {
-                            Text("").frame(width: 40.0, alignment: .center)
+                            Text("").frame(width: 20.0, alignment: .center)
                             self.simSummary
                         }
                     }
                 } else {
                     HStack (alignment: .center) {
-                        Text("").frame(width: 40.0, alignment: .center)
+                        Text("").frame(width: 20.0, alignment: .center)
                         self.priceAndKDJ
                         self.simSummary
                     }
@@ -843,7 +855,7 @@ struct tradeCell: View {
                 Spacer()    //以下是擴充技術數值
                 if list.widthClass(hClass) != .compact {
                     HStack {
-                        Text("").frame(width: 40.0, alignment: .center)
+                        Text("").frame(width: 20.0, alignment: .center)
                         Group {
                             VStack(alignment: .trailing,spacing: 2) {
                                 Text("")

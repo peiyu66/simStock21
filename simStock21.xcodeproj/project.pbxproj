@@ -307,7 +307,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -331,7 +331,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;

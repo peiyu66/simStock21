@@ -24,6 +24,7 @@ class simStockList:ObservableObject {
     private var isPad  = UIDevice.current.userInterfaceIdiom == .pad
     private var isLandScape:Bool = UIScreen.main.bounds.width > UIScreen.main.bounds.height
     enum WidthClass:Int {
+        case column = -1
         case compact = 0
         case widePhone = 1
         case regular = 2
@@ -52,7 +53,7 @@ class simStockList:ObservableObject {
         return widthClass(hClass) == .widePad && UIApplication.shared.isNotSplitOrSlideOver
     }
 
-    let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape"]
+    let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape","ipad"]
     
 //    var currentWidthClass:WidthClass = .compact
     func widthClass(_ hClass:UserInterfaceSizeClass?) -> WidthClass {
@@ -71,7 +72,7 @@ class simStockList:ObservableObject {
         case .compact:
             if isLandScape {
                 if isPad {
-                    wClass = .compact
+                    wClass = (doubleColumn ? .column : .compact)
                 } else {
                     wClass = .widePhone
                 }
@@ -88,10 +89,10 @@ class simStockList:ObservableObject {
         return wClass
     }
     
-    func widthCG(_ hClass:UserInterfaceSizeClass?, CG:[CGFloat], double:Bool=false) -> CGFloat {
-        let wClass:WidthClass = (double ? .widePhone : widthClass(hClass))
-        if wClass.rawValue <= (CG.count - 1) {
-            return CG[wClass.rawValue]
+    func widthCG(_ hClass:UserInterfaceSizeClass?, CG:[CGFloat]) -> CGFloat {
+        let rawValue = widthClass(hClass).rawValue
+        if rawValue >= 0 && rawValue <= (CG.count - 1) {
+            return CG[rawValue]
         } else {
             if let cg = CG.last {
                 return cg
@@ -311,7 +312,7 @@ class simStockList:ObservableObject {
                 self.isLandScape = false
             }
             self.orientation = UIDevice.current.orientation
-            NSLog("\(isLandScape ? "LandScape" : "Portrait")")
+//            NSLog("\(isLandScape ? "LandScape" : "Portrait")")
         } else {
             self.isLandScape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
         }

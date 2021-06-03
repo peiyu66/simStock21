@@ -603,7 +603,7 @@ public class Trade: NSManagedObject {
                 return .primary
             }
         case .rule:
-            switch (self.simRule) {
+            switch (p10Rule ?? self.simRule) {
             case "L":
                 return .green
             case "H":

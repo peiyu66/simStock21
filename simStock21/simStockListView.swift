@@ -57,7 +57,7 @@ struct simStockListView: View {
             }   //VStack
 //            .navigationBarHidden(list.doubleColumn(hClass))
             .navigationBarTitle("", displayMode: .inline)
-            .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: upperRightCommands(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
+            .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: listTools(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
         }   //NavigationView
 //        .frame(minWidth: 400, idealWidth: 400)
 //        .navigationViewStyle(StackNavigationViewStyle())
@@ -113,7 +113,7 @@ struct logForm: View {
     }
 }
 
-struct upperRightCommands:View {
+struct listTools:View {
     @Environment(\.horizontalSizeClass) var hClass
     @ObservedObject var list: simStockList
     @Binding var isChoosing:Bool            //進入了選取模式
@@ -134,19 +134,22 @@ struct upperRightCommands:View {
 
     var body: some View {
         HStack {
+            Spacer()
             if isChoosing {
-                Button("取消" + (list.widthClass(hClass) != .compact ? "選取模式" : "")) {
+                Button("取消" + (list.widthClass(hClass).rawValue > 1 ? "選取模式" : "")) {
                     self.isChoosing = false
                     self.checkedStocks = []
                 }
+                .frame(minWidth: 80, alignment: .trailing)
             } else if self.list.searchGotResults {
-                Button("放棄" + (list.widthClass(hClass) != .compact ? "搜尋結果" : "")) {
+                Button("放棄" + (list.widthClass(hClass).rawValue > 1 ? "搜尋結果" : "")) {
                     self.searchText = ""
                     self.list.searchText = nil
                     self.isSearching = false
                     self.isChoosing = false
                     self.checkedStocks = []
                 }
+                .frame(minWidth: 80, alignment: .trailing)
             } else if self.isSearching || self.list.isRunning {
                 EmptyView()
             } else if !list.doubleColumn {
@@ -197,16 +200,17 @@ struct chooseCommand:View {
 
     var body: some View {
             HStack {
-                if !list.doubleColumn {
-                    Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
-                        .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
-                        .rotation3DEffect(.degrees(list.rotated.d), axis: (x: list.rotated.x, y: list.rotated.y, z: 0))
-                }
+//                if !list.doubleColumn {
+//                    Image(systemName: list.classIcon[list.widthClass(hClass).rawValue])
+//                        .foregroundColor(isSearching || isChoosing ? Color(.darkGray) : .gray)
+//                        .rotation3DEffect(.degrees(list.rotated.d), axis: (x: list.rotated.x, y: list.rotated.y, z: 0))
+//                }
                 if self.isChoosing || self.list.searchGotResults {
-                    Text("請勾選")
+                    Text(list.widthClass(hClass).rawValue > 1 ? "請勾選" : "勾選")
                         .foregroundColor(Color(.darkGray))
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
+                        .padding(0)
                     if self.checkedStocks.count > 0 {
                         stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
                     } else {
@@ -223,8 +227,7 @@ struct chooseCommand:View {
                 } else if !self.isSearching {
                     if list.isRunning {
                         if !list.doubleColumn {
-                            Text(list.runningMsg)
-                                .foregroundColor(.orange)
+                            runningMsg(msg:list.runningMsg)
                         }
                     } else {
                         Button("選取") {
@@ -236,11 +239,11 @@ struct chooseCommand:View {
                     }
                 }
                 Spacer()
+//                Text("\(UIScreen.main.bounds.width)")
             }   //HStack
-            .frame(width: list.widthCG(hClass, CG: [200,450,500,500]))  //太寬會造成旋轉後位移
-            .minimumScaleFactor(0.6)
+            .frame(minWidth: list.widthCG(hClass, CG: [250,250,450,450,200]), alignment: .leading)  //太寬會造成旋轉後位移
+            .minimumScaleFactor(0.5)
             .lineLimit(1)
-        
     }
 
 }
@@ -271,7 +274,7 @@ struct stockActionMenu:View {
     var body: some View {
         HStack {
 //            if isChoosing {
-//                Button((self.list.widthClass(hClass) != .compact ? "自股群" : "") + "移除") {
+//                Button((self.list.widthClass(hClass).rawValue > 0 ? "自股群" : "") + "移除") {
 //                    self.showMoveAlert = true
 //                }
 //                .alert(isPresented: self.$showMoveAlert) {
@@ -283,7 +286,7 @@ struct stockActionMenu:View {
 //                Divider()
 //            }
             if self.list.searchGotResults {
-                Button("加入" + (self.list.widthClass(hClass) != .compact ? "股群" : "")) {
+                Button("加入" + (self.list.widthClass(hClass).rawValue > 1 ? "股群" : "")) {
                     self.showGroupFilter = true
                 }
                 .sheet(isPresented: self.$showGroupFilter) {
@@ -291,7 +294,7 @@ struct stockActionMenu:View {
                     }
             }
             if isChoosing {
-                Button("股群" + (self.list.widthClass(hClass) != .compact ? "組成" : "")) {
+                Button("股群" + (self.list.widthClass(hClass).rawValue > 1 ? "組成" : "")) {
                     self.showGroupMenu = true
                 }
                 .actionSheet(isPresented: self.$showGroupMenu) {
@@ -317,7 +320,7 @@ struct stockActionMenu:View {
                     pickerGroups(list: self.list, checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
                 Divider()
-                Button((self.list.widthClass(hClass) != .compact ? "刪除或" : "") + "重算") {
+                Button((self.list.widthClass(hClass).rawValue > 1 ? "刪除或" : "") + "重算") {
                     self.showReload = true
                 }
                 .actionSheet(isPresented: self.$showReload) {
@@ -355,7 +358,7 @@ struct stockActionMenu:View {
                     }
                 if !list.doubleColumn {
                     Divider()
-                    Button("匯出" + (self.list.widthClass(hClass) != .compact ? "CSV" : "")) {
+                    Button("匯出" + (self.list.widthClass(hClass).rawValue > 1 ? "CSV" : "")) {
                         self.showExport = true
                     }
                     .actionSheet(isPresented: self.$showExport) {
@@ -364,7 +367,7 @@ struct stockActionMenu:View {
                                     self.shareText = csvData.csvStocksIdName(self.checkedStocks)
                                     self.showShare = true
                                 },
-                                .default(Text("逐月已實現" + (self.list.widthClass(hClass) != .compact ? "損益" : ""))) {
+                                .default(Text("逐月已實現" + (self.list.widthClass(hClass).rawValue > 0 ? "損益" : ""))) {
                                     self.shareText = csvData.csvMonthlyRoi(self.checkedStocks)
                                     self.showShare = true
                                 },
@@ -409,7 +412,7 @@ struct pickerGroups:View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text((list.widthClass(hClass) != .compact ? "選取的股票要" : "") + "加入「新的股群」或「既有股群」？"), footer: Text(self.groupPicked == "新增股群" ? "加入新增的[\(self.newGroup)]。" : "加入[\(self.groupPicked)]。")) {
+                Section(header: Text((list.widthClass(hClass).rawValue > 0 ? "選取的股票要" : "") + "加入「新的股群」或「既有股群」？"), footer: Text(self.groupPicked == "新增股群" ? "加入新增的[\(self.newGroup)]。" : "加入[\(self.groupPicked)]。")) {
                     Group {
                         ForEach(self.list.groups, id: \.self) { (gName:String) in
                             HStack {
@@ -705,9 +708,9 @@ struct stockCell : View {
             Group {
                 Text(stock.sId)
                     .font(list.widthClass(hClass) == .compact ? .callout : .body)
-                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80])), alignment: .leading)
+                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80,80,50])), alignment: .leading)
                 Text(stock.sName)
-                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120], double:list.doubleColumn)), alignment: .leading)
+                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120,120,80])), alignment: .leading)
             }
                 .lineLimit(2)
                 .foregroundColor(list.isRunning ? .gray : .primary)
@@ -759,36 +762,32 @@ struct lastTrade: View {
                     Text("  ")
                 }
             }
-            .frame(width: list.widthCG(hClass, CG: [70,90,110],double: list.doubleColumn), alignment: .center)
+            .frame(width: list.widthCG(hClass, CG: [70,90,110,110,90]), alignment: .center)
             .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
             .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(trade.color(.ruleR, gray: (isChoosing || isSearching)), lineWidth: 1)
             )
-            if !list.doubleColumn {
-                if list.widthClass(hClass) != .compact {
-                    Text(trade.simQty.action)
-                        .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
-                        .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                    Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
-                        .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
-                        .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                    Text(String(format:"%.1f年",stock.years))
-                        .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
-                } else {
-                    EmptyView()
-                }
+            if list.widthClass(hClass).rawValue > 0 {
+                Text(trade.simQty.action)
+                    .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
+                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
+                    .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
+                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                Text(String(format:"%.1f年",stock.years))
+                    .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
             }
             if trade.days > 0 {
-                if !list.doubleColumn {
+                if list.widthClass(hClass).rawValue >= 0 {
                     Text(String(format:"%.f天",trade.days))
                         .foregroundColor(stock.simReversed ? .blue : .primary)
                         .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
                     Text(String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
                         .foregroundColor(stock.simInvestUser > 0 ? .blue : .primary)
                         .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
-                    if list.widthClass(hClass) != .compact {
+                    if list.widthClass(hClass).rawValue > 0 {
                         Text(trade.baseRoi > 0 ? String(format:"%.1f%%",trade.baseRoi) : "")
                             .foregroundColor(.gray)
                             .frame(width: 65.0, alignment: .trailing)
@@ -818,7 +817,7 @@ struct SearchBar: View {
     @State var isEditing:Bool = false
     
     var title:String {
-        if list.widthClass(hClass) != .compact {
+        if list.widthClass(hClass).rawValue > 0 {
             return "以代號或簡稱來搜尋尚未加入股群的上市股票"
         } else {
             return "以代號或簡稱來搜尋上市股票"
