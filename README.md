@@ -51,17 +51,21 @@
 
 ### iPad Pro 11吋
 <br>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.33.35.png" width="45%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-02-19%20at%2011.34.12.png" width="45%"></a>
+
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.12.55.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.12.55.png" width="45%"></a> 
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.13.02.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.13.02.png" width="45%"></a><br>
+
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.13.26.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(11-inch)%20(2nd%20generation)%20-%202021-06-03%20at%2010.13.26.png" width="90%"></a>
 <br>
 
-### iPhone 12
+### iPhone 12 mini
 <br>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.37.57.png" width="30%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.01.png" width="60%"></a>
-<br><br>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.06.png" width="30%"></a>
-<a href="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png"><img src="https://github.com/peiyu66/simStock21/raw/main/screenshot/Simulator%20Screen%20Shot%20-%20iPhone%2012%20-%202021-02-19%20at%2011.38.30.png" width="60%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.16.47.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.16.47.png" width="30%"></a> 
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.16.52.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.16.52.png" width="60%"></a>
+<br>
+
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.04.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.04.png" width="30%"></a> 
+<a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.16.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.16.png" width="60%"></a>
 <br>
 
 ## 實戰指南
