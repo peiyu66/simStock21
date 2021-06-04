@@ -237,6 +237,7 @@ class simTechnical {
                 var tCount:Int = 0
                 var sCount:Int = 0
                 var toResetMoneyLacked:Bool = true
+                var toResetInvestExceed:Bool = true
                 let a:[simTechnicalAction] = [.tUpdateAll, .simResetAll, .simTesting, .allTrades]
                 for (index,trade) in trades.enumerated() {
                     if a.contains(action) { //這幾類同simResetAll，要清除user的加碼和反轉買賣
@@ -252,6 +253,14 @@ class simTechnical {
                             trade.stock.simMoneyLacked = false
                             toResetMoneyLacked = false
                         }
+                        if trade.stock.simInvestExceed != 0 && toResetInvestExceed {
+                            trade.stock.simInvestExceed = 0
+                            toResetInvestExceed = false
+                        }
+                    }
+                    if action == .simUpdateAll && trade.stock.simInvestExceed != 0 && toResetInvestExceed {
+                        trade.stock.simInvestExceed = 0
+                        toResetInvestExceed = false
                     }
                     if trade.tUpdated == false || action == .tUpdateAll {
                         //tUpdated == false代表newTrades,allTrades。但newTrades不用從頭重算，怎麼排除呢？
@@ -322,7 +331,8 @@ class simTechnical {
                 } else if stock.p10Action != nil {
                     DispatchQueue.main.async {
                         stock.p10Reset()
-                        try? stock.context.save()   //好像不用 stock.objectWillChange.send()
+                        try? stock.context.save()
+                        stock.objectWillChange.send()
                     }
                 }
             }
@@ -1819,9 +1829,15 @@ class simTechnical {
                     trade.simRuleInvest = ""
                 }
                 if trade.simRuleInvest == "A" {
-                    if trade.stock.simInvestAuto > 9 || trade.simInvestTimes <= trade.stock.simInvestAuto  { //自動加碼
-                        if noInvested45 || (trade.simUnitRoi < -45 && trade.grade >= .fine) || trade.simUnitRoi < -55 {
-                            trade.simInvestAdded = 1
+//                    if trade.stock.simInvestAuto > 9 || trade.simInvestTimes <= trade.stock.simInvestAuto  { //自動加碼
+//                        if noInvested45 || (trade.simUnitRoi < -45 && trade.grade >= .fine) || trade.simUnitRoi < -55 {
+//                            trade.simInvestAdded = 1
+//                        }
+//                    }
+                    if trade.simUnitRoi < -50 || ((noInvested45 || (trade.simUnitRoi < -45 && trade.grade >= .fine)) && (trade.stock.simInvestAuto > 9 || trade.simInvestTimes <= trade.stock.simInvestAuto)) { //自動加碼
+                        trade.simInvestAdded = 1
+                        if trade.stock.simInvestAuto < 10 && trade.simInvestTimes > trade.stock.simInvestAuto {
+                            trade.stock.simInvestExceed += 1
                         }
                     }
                 } else {

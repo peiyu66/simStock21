@@ -12,7 +12,6 @@
         <attribute name="proport" optional="YES" attributeType="String"/>
         <attribute name="sId" attributeType="String" defaultValueString=""/>
         <attribute name="simInvestAuto" attributeType="Double" defaultValueString="2" usesScalarValueType="YES"/>
-        <attribute name="simInvestExceed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="simInvestUser" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="simMoneyBase" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="simMoneyLacked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -105,7 +104,7 @@
         <relationship name="stock" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="stockTrades" inverseEntity="Stock"/>
     </entity>
     <elements>
-        <element name="Stock" positionX="-29.0859375" positionY="-540.51953125" width="128" height="299"/>
+        <element name="Stock" positionX="-29.0859375" positionY="-540.51953125" width="128" height="284"/>
         <element name="Trade" positionX="400.90625" positionY="-308.765625" width="128" height="1259"/>
     </elements>
 </model>

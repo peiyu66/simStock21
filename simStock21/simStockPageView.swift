@@ -453,6 +453,7 @@ struct pageTools:View {
             .disabled(list.isRunning)
             .sheet(isPresented: $showSetting) {
                 settingForm(stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
+                    .environmentObject(list)
             }
             
             //== 工具按鈕 4 == 刪除或重算
@@ -557,8 +558,23 @@ struct tradeHeading:View {
                     Spacer()
                     Text(String(format:"期間%.1f年", stock.years))
                     Text(stock.simMoneyBase > 0 ? String(format:"起始本金%.f萬元",stock.simMoneyBase) : "")
-                    Text(stock.simInvestAuto == 10 ? "自動無限加碼" : (stock.simInvestAuto > 0 ? String(format:"自動%.0f次加碼", stock.simInvestAuto) : "不自動加碼"))
-                        .foregroundColor(stock.simInvestAuto > 0 && stock.simInvestAuto < 10 ? .primary : .red)
+                    HStack {
+                        if stock.simInvestAuto == 10 {
+                            Text("自動無限加碼")
+                                .foregroundColor(.red)
+                        } else if stock.simInvestAuto > 0 {
+                            if stock.simInvestExceed > 0 {
+                                Text(String(format:"自動%.0f", stock.simInvestAuto))
+                                Text(String(format:"+%.0f", stock.simInvestExceed))
+                                        .foregroundColor(.red)
+                                Text("次加碼")
+                            } else {
+                                Text(String(format:"自動%.0f次加碼", stock.simInvestAuto))
+                            }
+                        } else {
+                            Text("不自動加碼")
+                        }
+                    }
                 }
                 HStack {
                     Spacer()

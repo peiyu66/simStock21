@@ -162,6 +162,7 @@ public class Stock: NSManagedObject {
     @NSManaged public var dateFirst: Date   //歷史價格起始
     @NSManaged public var dateStart: Date   //模擬交易起始
     @NSManaged public var simInvestAuto:Double      //自動加碼次數：0～9，10為無限次
+    @NSManaged public var simInvestExceed:Double    //自動加碼超次：跌太深自動超次加碼
     @NSManaged public var simInvestUser:Double      //user變更加碼次數
     @NSManaged public var simMoneyBase: Double      //每次投入本金額度
     @NSManaged public var simMoneyLacked: Bool        //本金不足？
@@ -359,7 +360,7 @@ public class Trade: NSManagedObject {
     @NSManaged public var simDays: Double           //持股日數
     @NSManaged public var simInvestAdded: Double    //自動加碼
     @NSManaged public var simInvestByUser: Double   //玩家變更加碼
-    @NSManaged public var simInvestTimes: Double    //加碼次數
+    @NSManaged public var simInvestTimes: Double    //本金倍數：初始1倍+加碼次數
     @NSManaged public var simQtyBuy: Double         //買入張數
     @NSManaged public var simQtyInventory: Double   //庫存張數
     @NSManaged public var simQtySell: Double        //賣出張數
