@@ -40,8 +40,7 @@ struct stockPageView: View {
     var body: some View {
         GeometryReader { g in
             VStack (alignment: .center) {
-                let dateLast:Date? = stock.lastTrade(stock.context)?.date
-                tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
+                tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
                 if !list.doubleColumn(hClass) {
                     Spacer()
                     stockPicker(prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
@@ -241,12 +240,11 @@ struct tradeListView: View {
     @Binding var stock : Stock
     @Binding var prefix: String
     @Binding var filterIsOn:Bool
-    @State var selected: Date?
     @Binding var groupPrefixsOnly:Bool
     @State var cgWidth:CGFloat
     
     private func scrollToSelected(_ sv: ScrollViewProxy) {
-        if let dt = selected {
+        if let dt = list.selected {
             sv.scrollTo(dt)
         }
     }
@@ -278,12 +276,12 @@ struct tradeListView: View {
                     LazyVStack {
                         Divider().padding(0)
                         List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
-                            tradeCell(stock: self.$stock, trade: trade, selected: self.$selected)
+                            tradeCell(stock: self.$stock, trade: trade)
                                 .onTapGesture {
-                                    if self.selected == trade.date {
-                                        self.selected = nil
+                                    if list.selected == trade.date {
+                                        list.selected = nil
                                     } else {
-                                        self.selected = trade.date
+                                        list.selected = trade.date
                                     }
                                  }
                         }
@@ -302,6 +300,11 @@ struct tradeListView: View {
                 
             }
         }   //VStack
+        .onAppear() {
+            if list.selected == nil {
+                list.selected = stock.lastTrade(stock.context)?.date
+            }
+        }
     }
 }
 
@@ -564,10 +567,10 @@ struct tradeHeading:View {
                                 .foregroundColor(.red)
                         } else if stock.simInvestAuto > 0 {
                             if stock.simInvestExceed > 0 {
-                                Text(String(format:"自動%.0f", stock.simInvestAuto))
-                                Text(String(format:"+%.0f", stock.simInvestExceed))
-                                        .foregroundColor(.red)
-                                Text("次加碼")
+                                Text(String(format:"自動"))
+                                + Text(String(format:"%.0f+%.0f", stock.simInvestAuto, stock.simInvestExceed))
+                                    .foregroundColor(.red)
+                                + Text("次加碼")
                             } else {
                                 Text(String(format:"自動%.0f次加碼", stock.simInvestAuto))
                             }
@@ -601,7 +604,6 @@ struct tradeCell: View {
     @EnvironmentObject var list: simStockList
     @Binding var stock: Stock    //用@State會造成P10更新怪異
     @ObservedObject var trade:Trade
-    @Binding var selected: Date?
     
     private func textSize(textStyle: UIFont.TextStyle) -> CGFloat {
        return UIFont.preferredFont(forTextStyle: textStyle).pointSize
@@ -798,7 +800,7 @@ struct tradeCell: View {
                 }
             }   //HStack
                 .font(.body)
-            if self.selected == trade.date {
+            if list.selected == trade.date {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {

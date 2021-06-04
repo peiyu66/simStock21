@@ -15,6 +15,7 @@ class simStockList:ObservableObject {
     @Published private var sim:simStock = simStock()
     @Published var runningMsg:String = ""
     @Published var orientation:UIDeviceOrientation = UIDevice.current.orientation
+    @Published var selected:Date?
 
     var versionNow:String
     var versionLast:String = ""
@@ -315,6 +316,9 @@ class simStockList:ObservableObject {
 //            NSLog("\(isLandScape ? "LandScape" : "Portrait")")
         } else {
             self.isLandScape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
+        if !self.isLandScape {
+            self.selected = nil
         }
     }
 
