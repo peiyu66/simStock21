@@ -1820,7 +1820,7 @@ class simTechnical {
                 }
                 if trade.simRuleInvest == "A" {
                     if trade.stock.simInvestAuto > 9 || trade.simInvestTimes <= trade.stock.simInvestAuto  { //自動加碼
-                        if noInvested45 || (trade.simUnitRoi < -50 && trade.grade >= .fine) {
+                        if noInvested45 || (trade.simUnitRoi < -45 && trade.grade >= .fine) || trade.simUnitRoi < -55 {
                             trade.simInvestAdded = 1
                         }
                     }

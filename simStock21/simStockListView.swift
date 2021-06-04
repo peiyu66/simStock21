@@ -10,7 +10,7 @@ import SwiftUI
 
 struct simStockListView: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @StateObject var list: simStockList
     @State var isChoosing = false           //進入了選取模式
     @State var isSearching:Bool = false     //進入了搜尋模式
     @State var checkedStocks: [Stock] = []  //已選取的股票們
@@ -21,7 +21,7 @@ struct simStockListView: View {
             VStack (alignment: .leading) {
                 if !list.doubleColumn(hClass) {
                     Spacer()
-                    SearchBar(list: self.list, editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
+                    SearchBar(editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
                         .disabled(self.isChoosing || list.isRunning)
                     HStack(alignment: .bottom){
                         if self.isSearching && list.searchText != nil && !self.list.searchGotResults {
@@ -46,7 +46,7 @@ struct simStockListView: View {
                 ScrollViewReader { sv in
                     List{
                         ForEach(list.groupStocks, id: \.self) { (stocks:[Stock]) in
-                            stockSection(list: self.list, stocks: stocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                            stockSection(stocks: stocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
                         }
                     }
                     .listStyle(GroupedListStyle())
@@ -55,13 +55,11 @@ struct simStockListView: View {
                     }
                 }   //ScrollViewReader
             }   //VStack
-//            .navigationBarHidden(list.doubleColumn(hClass))
             .navigationBarTitle("", displayMode: .inline)
-            .navigationBarItems(leading: chooseCommand(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: listTools(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
+            .navigationBarItems(leading: chooseCommand(isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: listTools(isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
         }   //NavigationView
-//        .frame(minWidth: 400, idealWidth: 400)
-//        .navigationViewStyle(StackNavigationViewStyle())
         .navigationViewSwitch(list.doubleColumn(hClass))
+        .environmentObject(list)
     }   //body
 }
 
@@ -110,7 +108,7 @@ struct logForm: View {
 
 struct listTools:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var isChoosing:Bool            //進入了選取模式
     @Binding var isSearching:Bool           //進入了搜尋模式
     @Binding var checkedStocks: [Stock]     //已選取的股票們
@@ -161,7 +159,7 @@ struct listTools:View {
                         Image(systemName: "wrench")
                     }
                     .sheet(isPresented: $showSetting) {
-                        listSettingForm(list: self.list, showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
+                        listSettingForm(showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
                     }
                     Spacer()
                     Button(action: {self.showInformation = true}) {
@@ -186,7 +184,7 @@ struct listTools:View {
 
 struct chooseCommand:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var isChoosing:Bool            //進入了選取模式
     @Binding var isSearching:Bool           //進入了搜尋模式
     @Binding var checkedStocks: [Stock]     //已選取的股票們
@@ -207,7 +205,7 @@ struct chooseCommand:View {
                         .foregroundColor(.gray)
                         .padding(0)
                     if self.checkedStocks.count > 0 {
-                        stockActionMenu(list: self.list, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
+                        stockActionMenu(isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$searchText)
                     } else {
                         Button("全選") {
                             for stocks in self.list.groupStocks {
@@ -245,7 +243,7 @@ struct chooseCommand:View {
 
 struct stockActionMenu:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var isChoosing:Bool            //進入了選取模式
     @Binding var isSearching:Bool           //進入了搜尋模式
     @Binding var checkedStocks: [Stock]     //已選取的股票們
@@ -285,7 +283,7 @@ struct stockActionMenu:View {
                     self.showGroupFilter = true
                 }
                 .sheet(isPresented: self.$showGroupFilter) {
-                    pickerGroups(list: self.list, checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
+                    pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
             }
             if isChoosing {
@@ -312,7 +310,7 @@ struct stockActionMenu:View {
                         }), secondaryButton: .default(Text("取消"), action: {self.isChoosingOff()}))
                     }
                 .sheet(isPresented: self.$showGroupFilter) {
-                    pickerGroups(list: self.list, checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
+                    pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
                 Divider()
                 Button((self.list.widthClass(hClass).rawValue > 1 ? "刪除或" : "") + "重算") {
@@ -385,7 +383,7 @@ struct stockActionMenu:View {
 
 struct pickerGroups:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var checkedStocks: [Stock]
     @Binding var isChoosing:Bool            //進入了選取模式
     @Binding var isSearching:Bool           //進入了搜尋模式
@@ -537,7 +535,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 }
 
 struct listSettingForm: View {
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var showSetting: Bool
     @State var dateStart:Date
     @State var moneyBase:Double
@@ -615,7 +613,7 @@ struct listSettingForm: View {
 
 
 struct stockSection : View {
-    @State var list: simStockList   //用ObservedObject會因section numbers混亂當掉
+    @EnvironmentObject var list: simStockList   //用ObservedObject會因section numbers混亂當掉
     @State var stocks: [Stock]
     @Binding var isChoosing:Bool
     @Binding var isSearching:Bool
@@ -638,7 +636,7 @@ struct stockSection : View {
     var body: some View {
         Section(header: header,footer: footer) {
             ForEach(stocks, id: \.self) {stock in
-                stockCell(list: self.list, stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                stockCell(stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
             }
             .onDelete(perform: { indexSet in
                 let s = indexSet.map{self.stocks[$0]}
@@ -677,7 +675,7 @@ struct groupCheckbox: View {
 
 struct stockCell : View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @ObservedObject var stock : Stock
     @State private var stock0: Stock?
     @Binding var isChoosing:Bool
@@ -712,13 +710,13 @@ struct stockCell : View {
             if stock.group != "" {
                 Group {
                     if let trade = stock.lastTrade(stock.context) {
-                        lastTrade(list: self.list, stock: self.stock, trade: trade, isChoosing: self.$isChoosing, isSearching: self.$isSearching)
+                        lastTrade(stock: self.stock, trade: trade, isChoosing: self.$isChoosing, isSearching: self.$isSearching)
                     } else {
                         EmptyView()
                     }
                 }
                 if !isChoosing && !isSearching {
-                    NavigationLink(destination: stockPageView(list: self.list, stock: stock, prefix: stock.prefix), tag: stock, selection: self.$stock0) {
+                    NavigationLink(destination: stockPageView(stock: stock, prefix: stock.prefix), tag: stock, selection: self.$stock0) {
                         EmptyView()
                     }
                 }
@@ -737,7 +735,7 @@ struct stockCell : View {
 
 struct lastTrade: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @ObservedObject var stock : Stock
     @ObservedObject var trade:Trade
     @Binding var isChoosing:Bool
@@ -805,7 +803,7 @@ struct lastTrade: View {
 
 struct SearchBar: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var editText: String
     @Binding var searchText:[String]?
     @Binding var isSearching:Bool

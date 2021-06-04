@@ -10,7 +10,7 @@ import SwiftUI
 
 struct stockPageView: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @State var stock : Stock
     @State var prefix: String
     @State var showPrefixMsg:Bool = false
@@ -20,9 +20,9 @@ struct stockPageView: View {
     func pageViewTools(_ geometry:GeometryProxy) -> some View {
         Group {
             if list.doubleColumn(hClass) {
-                pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn, cgWidth: geometry.size.width - 450)
+                pageTools(stock: $stock, filterIsOn: $filterIsOn, cgWidth: geometry.size.width - 450)
             } else {
-                prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 50)
+                prefixPicker(prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 50)
             }
         }
     }
@@ -30,7 +30,7 @@ struct stockPageView: View {
     func pageViewTitle(_ geometry:GeometryProxy) -> some View {
         Group {
             if list.doubleColumn(hClass) {
-                pageTitle(list: list, stock: $stock, cgWidth: 350)
+                pageTitle(stock: $stock, cgWidth: 350)
             } else {
                 EmptyView()
             }
@@ -41,10 +41,10 @@ struct stockPageView: View {
         GeometryReader { g in
             VStack (alignment: .center) {
                 let dateLast:Date? = stock.lastTrade(stock.context)?.date
-                tradeListView(list: self.list, stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
+                tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, selected: dateLast, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
                 if !list.doubleColumn(hClass) {
                     Spacer()
-                    stockPicker(list: self.list, prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
+                    stockPicker(prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
                         .alert(isPresented: $showPrefixMsg) {
                             Alert(title: Text("提醒您"), message: Text("有多股的首字相同時，\n於畫面底處可按切換。"), dismissButton: .default(Text("知道了。")))
                         }
@@ -98,7 +98,7 @@ private func pickerIndexRange(index:Int, count:Int, max: Int) -> (from:Int, to:I
 
 struct prefixPicker: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var prefix: String
     @Binding var stock : Stock
     @Binding var groupPrefixsOnly:Bool
@@ -181,7 +181,7 @@ struct prefixPicker: View {
 
 struct stockPicker: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var prefix:String
     @Binding var stock :Stock
     @Binding var groupPrefixsOnly:Bool
@@ -237,7 +237,7 @@ struct stockPicker: View {
 
 struct tradeListView: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock : Stock
     @Binding var prefix: String
     @Binding var filterIsOn:Bool
@@ -254,7 +254,7 @@ struct tradeListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             //== 表頭：股票名稱、模擬摘要 ==
-            tradeHeading(list: self.list, stock: self.$stock, filterIsOn: self.$filterIsOn, cgWidth: cgWidth)
+            tradeHeading(stock: self.$stock, filterIsOn: self.$filterIsOn, cgWidth: cgWidth)
                 .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onEnded({ value in
                         if value.translation.width < 0 {
@@ -278,7 +278,7 @@ struct tradeListView: View {
                     LazyVStack {
                         Divider().padding(0)
                         List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
-                            tradeCell(list: self.list, stock: self.$stock, trade: trade, selected: self.$selected)
+                            tradeCell(stock: self.$stock, trade: trade, selected: self.$selected)
                                 .onTapGesture {
                                     if self.selected == trade.date {
                                         self.selected = nil
@@ -306,7 +306,7 @@ struct tradeListView: View {
 }
 
 struct settingForm: View {
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock:Stock
     @Binding var showSetting: Bool
     @State var dateStart:Date
@@ -377,7 +377,7 @@ struct settingForm: View {
 
 struct pageTitle: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock: Stock
     @State var cgWidth:CGFloat
     var body: some View {
@@ -406,7 +406,7 @@ struct pageTitle: View {
 
 struct pageTools:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock : Stock
     @State var showReload:Bool = false
     @State var deleteAll:Bool = false
@@ -452,7 +452,7 @@ struct pageTools:View {
             }
             .disabled(list.isRunning)
             .sheet(isPresented: $showSetting) {
-                settingForm(list: self.list, stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
+                settingForm(stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
             }
             
             //== 工具按鈕 4 == 刪除或重算
@@ -517,7 +517,7 @@ struct pageTools:View {
 
 struct tradeHeading:View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock : Stock
     @Binding var filterIsOn:Bool
     @State var cgWidth:CGFloat
@@ -539,9 +539,9 @@ struct tradeHeading:View {
         VStack {
             if !list.doubleColumn {
                 HStack(alignment: .top) {
-                    pageTitle(list: list, stock: $stock, cgWidth: cgWidth - 200)
+                    pageTitle(stock: $stock, cgWidth: cgWidth - 200)
                     Spacer(minLength: 30)
-                    pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn, cgWidth: 120)
+                    pageTools(stock: $stock, filterIsOn: $filterIsOn, cgWidth: 120)
                 }   //sId,sName,工具按鈕的整個HStack
                 .font(.title)
                 .lineLimit(1)
@@ -582,7 +582,7 @@ struct tradeHeading:View {
 
 struct tradeCell: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @ObservedObject var list: simStockList
+    @EnvironmentObject var list: simStockList
     @Binding var stock: Stock    //用@State會造成P10更新怪異
     @ObservedObject var trade:Trade
     @Binding var selected: Date?
