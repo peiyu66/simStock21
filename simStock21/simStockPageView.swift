@@ -22,7 +22,7 @@ struct stockPageView: View {
             if list.doubleColumn(hClass) {
                 pageTools(list: self.list, stock: $stock, filterIsOn: $filterIsOn, cgWidth: geometry.size.width - 450)
             } else {
-                prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 60)
+                prefixPicker(list:self.list, prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 50)
             }
         }
     }
@@ -30,7 +30,7 @@ struct stockPageView: View {
     func pageViewTitle(_ geometry:GeometryProxy) -> some View {
         Group {
             if list.doubleColumn(hClass) {
-                pageTitle(list: list, stock: $stock, cgWidth: 400)
+                pageTitle(list: list, stock: $stock, cgWidth: 350)
             } else {
                 EmptyView()
             }
@@ -398,7 +398,7 @@ struct pageTitle: View {
             .foregroundColor(list.isRunning ? .gray : .primary)
             .lineLimit(1)
             .minimumScaleFactor(0.5)
-            .frame(width:cgWidth, alignment: .leading)
+            .frame(minWidth:cgWidth, alignment: .leading)
         }
 
     }

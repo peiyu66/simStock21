@@ -81,22 +81,17 @@ struct logForm: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-//                ScrollViewReader { scroller in
-                    let logArray:[String] = simLog.logReportArray()
-                    let end:Int = logArray.count - 1
-                    LazyVStack(alignment: .leading) {
-                        ForEach(0..<end, id:\.self) { i in
-                            Text(logArray[i])
-                        }
-                            .font(.footnote)
-                            .lineLimit(nil)
+                let logArray:[String] = simLog.logReportArray()
+                let end:Int = logArray.count - 1
+                LazyVStack(alignment: .leading) {
+                    ForEach(0..<end, id:\.self) { i in
+                        Text(logArray[i])
                     }
-                        .frame(alignment: .topLeading)
-                        .padding()
-//                        .onAppear {
-//                            scroller.scrollTo(end)
-//                        }
-//                }   //ScrollViewReader
+                        .font(.footnote)
+                        .lineLimit(nil)
+                }
+                    .frame(alignment: .topLeading)
+                    .padding()
             }
                 .navigationBarTitle("Log")
                 .navigationBarItems(trailing: cancel)
