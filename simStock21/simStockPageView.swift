@@ -245,7 +245,7 @@ struct tradeListView: View {
     
     private func scrollToSelected(_ sv: ScrollViewProxy) {
         if let dt = list.selected {
-            sv.scrollTo(dt)
+            sv.scrollTo(dt, anchor: .center)
         }
     }
 
@@ -296,15 +296,16 @@ struct tradeListView: View {
                     .onChange(of: self.filterIsOn) {_ in
                         scrollToSelected(sv)
                     }
+                    .onAppear() {
+                        if list.selected == nil {
+                            list.selected = stock.lastTrade(stock.context)?.date
+                        } else {
+                            scrollToSelected(sv)
+                        }
+                    }
                 }
-                
             }
         }   //VStack
-        .onAppear() {
-            if list.selected == nil {
-                list.selected = stock.lastTrade(stock.context)?.date
-            }
-        }
     }
 }
 
