@@ -220,7 +220,7 @@ struct chooseCommand:View {
                 } else if !self.isSearching {
                     if list.isRunning {
                         if !list.doubleColumn {
-                            runningMsg(msg:list.runningMsg)
+                            runningMsg()
                         }
                     } else {
                         Button("選取") {

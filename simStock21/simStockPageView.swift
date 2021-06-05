@@ -61,11 +61,11 @@ struct stockPageView: View {
 
 struct runningMsg: View {
     @Environment(\.horizontalSizeClass) var hClass
-    @State var msg:String
+    @EnvironmentObject var list: simStockList
     @State var padding:CGFloat = 0
     
     var body: some View {
-        Text(msg)
+        Text(list.runningMsg)
             .font(.body)
             .foregroundColor(.orange)
             .lineLimit(1)
@@ -386,7 +386,7 @@ struct pageTitle: View {
     var body: some View {
         VStack {
             if list.isRunning {
-                runningMsg(msg: list.runningMsg, padding: 4)
+                runningMsg(padding: 4)
                     .frame(width:cgWidth, alignment: .leading)
             }
             HStack {

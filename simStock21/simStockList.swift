@@ -310,15 +310,15 @@ class simStockList:ObservableObject {
             if UIDevice.current.orientation.isLandscape {
                 self.isLandScape = true
             } else if !UIDevice.current.orientation.isFlat {
+                if self.isLandScape {
+                    self.selected = nil
+                }
                 self.isLandScape = false
             }
             self.orientation = UIDevice.current.orientation
 //            NSLog("\(isLandScape ? "LandScape" : "Portrait")")
         } else {
             self.isLandScape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
-        }
-        if !self.isLandScape {
-            self.selected = nil
         }
     }
 
