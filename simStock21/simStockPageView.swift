@@ -20,9 +20,9 @@ struct stockPageView: View {
     func pageViewTools(_ geometry:GeometryProxy) -> some View {
         Group {
             if list.doubleColumn(hClass) {
-                pageTools(stock: $stock, filterIsOn: $filterIsOn, cgWidth: geometry.size.width - 450)
+                pageTools(stock: $stock, filterIsOn: $filterIsOn, geometry: geometry)
             } else {
-                prefixPicker(prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: geometry.size.width - 50)
+                prefixPicker(prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, geometry: geometry)
             }
         }
     }
@@ -40,7 +40,7 @@ struct stockPageView: View {
     var body: some View {
         GeometryReader { g in
             VStack (alignment: .center) {
-                tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, groupPrefixsOnly: self.$groupPrefixsOnly, cgWidth: g.size.width)
+                tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, groupPrefixsOnly: self.$groupPrefixsOnly, geometry: g)
                 if !list.doubleColumn(hClass) {
                     Spacer()
                     stockPicker(prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
@@ -101,7 +101,7 @@ struct prefixPicker: View {
     @Binding var prefix: String
     @Binding var stock : Stock
     @Binding var groupPrefixsOnly:Bool
-    @State var cgWidth:CGFloat
+    @State var geometry:GeometryProxy
     
     var allPrefixs:[String] {
         (groupPrefixsOnly ? list.theGroupPrefixs(self.stock) : list.prefixs)
@@ -174,7 +174,7 @@ struct prefixPicker: View {
                 Text("-").foregroundColor(.gray).fixedSize()
             }
         }
-        .frame(width: cgWidth, alignment: .trailing)
+        .frame(width: geometry.size.width - 50, alignment: .trailing)
     }
 }
 
@@ -241,7 +241,7 @@ struct tradeListView: View {
     @Binding var prefix: String
     @Binding var filterIsOn:Bool
     @Binding var groupPrefixsOnly:Bool
-    @State var cgWidth:CGFloat
+    @State var geometry:GeometryProxy
     
     private func scrollToSelected(_ sv: ScrollViewProxy) {
         if let dt = list.selected {
@@ -252,7 +252,7 @@ struct tradeListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             //== 表頭：股票名稱、模擬摘要 ==
-            tradeHeading(stock: self.$stock, filterIsOn: self.$filterIsOn, cgWidth: cgWidth)
+            tradeHeading(stock: self.$stock, filterIsOn: self.$filterIsOn, geometry: geometry)
                 .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
                     .onEnded({ value in
                         if value.translation.width < 0 {
@@ -419,7 +419,7 @@ struct pageTools:View {
     @State var showInformation:Bool = false
     @State var showLog:Bool = false
     @Binding var filterIsOn:Bool
-    @State var cgWidth:CGFloat
+    @State var geometry:GeometryProxy
 
     private func openUrl(_ url:String) {
         if let URL = URL(string: url) {
@@ -515,7 +515,7 @@ struct pageTools:View {
                 ])
             }
         } //工具按鈕的HStack
-        .frame(width: cgWidth, alignment: .trailing)
+        .frame(width: geometry.size.width - 450, alignment: .trailing)
         .font(.body)
     }
 }
@@ -525,7 +525,7 @@ struct tradeHeading:View {
     @EnvironmentObject var list: simStockList
     @Binding var stock : Stock
     @Binding var filterIsOn:Bool
-    @State var cgWidth:CGFloat
+    @State var geometry:GeometryProxy
 
     var totalSummary: (profit:String, roi:String, days:String) {
         if let trade = stock.lastTrade(stock.context), trade.rollRounds > 0 {
@@ -541,12 +541,12 @@ struct tradeHeading:View {
     }
 
     var body: some View {
-        VStack {
+        VStack (alignment: .trailing) {
             if !list.doubleColumn {
                 HStack(alignment: .top) {
-                    pageTitle(stock: $stock, cgWidth: cgWidth - 200)
+                    pageTitle(stock: $stock, cgWidth: geometry.size.width - 200)
                     Spacer(minLength: 30)
-                    pageTools(stock: $stock, filterIsOn: $filterIsOn, cgWidth: 120)
+                    pageTools(stock: $stock, filterIsOn: $filterIsOn, geometry: geometry)
                 }   //sId,sName,工具按鈕的整個HStack
                 .font(.title)
                 .lineLimit(1)
@@ -738,19 +738,22 @@ struct tradeCell: View {
                 //== 2日期,3單價 ==
                 Text(twDateTime.stringFromDate(trade.dateTime))
                     .foregroundColor(trade.color(.time))
-                    .frame(width: list.widthCG(hClass, CG: [80,128]), alignment: .leading)
+                    .frame(width: list.widthCG(hClass, CG: [70,128]), alignment: .leading)
                 HStack (spacing:2){
                     Text("  ")
                     Text(String(format:"%.2f",trade.priceClose))
-                    if trade.tLowDiff == 10 && trade.priceClose == trade.priceLow {
-                        Image(systemName: "arrow.down.to.line")
-                    } else if trade.tHighDiff == 10 && trade.priceClose == trade.priceHigh {
-                        Image(systemName: "arrow.up.to.line")
-                    } else {
-                        Text("  ")
+                    Group {
+                        if trade.tLowDiff == 10 && trade.priceClose == trade.priceLow {
+                            Image(systemName: "arrow.down.to.line")
+                        } else if trade.tHighDiff == 10 && trade.priceClose == trade.priceHigh {
+                            Image(systemName: "arrow.up.to.line")
+                        } else {
+                            Text("  ")
+                        }
                     }
+                    .font(list.widthClass(hClass) == .compact ? .footnote : .body)
                 }
-                    .frame(width: list.widthCG(hClass, CG: [70,110]), alignment: .center)
+                    .frame(width: list.widthCG(hClass, CG: [68,110]), alignment: .center)
                     .foregroundColor(trade.color(.price))
                     .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB)))
                     .overlay(
@@ -764,12 +767,12 @@ struct tradeCell: View {
                     .frame(width: list.widthCG(hClass, CG: [16,24]), alignment: .center)
                     .foregroundColor(trade.color(.qty))
                 Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
-                    .frame(width: list.widthCG(hClass, CG: [32,56]), alignment: .center)
+                    .frame(width: list.widthCG(hClass, CG: [28,56]), alignment: .center)
                     .foregroundColor(trade.color(.qty))
                 //== 6天數,7成本價,8報酬率 ==
                 if trade.simQtyInventory > 0 || trade.simQtySell > 0 {
                     Text(String(format:"%.f天",trade.simDays))
-                        .frame(width: list.widthCG(hClass, CG: [44,56]), alignment: .trailing)
+                        .frame(width: list.widthCG(hClass, CG: [36,56]), alignment: .trailing)
                     if self.list.widthClass(hClass) != .compact {
                         Text(String(format:"%.2f",trade.simUnitCost))
                             .frame(width: 56.0, alignment: .trailing)
@@ -778,7 +781,7 @@ struct tradeCell: View {
                     }
                     if self.list.widthClass(hClass) != .compact || trade.simQtySell > 0 {
                         Text(String(format:"%.1f%%",trade.simAmtRoi))
-                            .frame(width: list.widthCG(hClass, CG: [44,56]), alignment: .trailing)
+                            .frame(width: list.widthCG(hClass, CG: [40,56]), alignment: .trailing)
                             .foregroundColor(trade.simQtySell > 0 ? trade.color(.qty) : .gray)
                             .font(trade.simQtySell > 0 ? .body : .callout)
                     }
@@ -787,10 +790,10 @@ struct tradeCell: View {
                 }
                 //== 9加碼 ==
                 if trade.simRuleInvest == "A" {
-                    Text((trade.invested > 0 ? "已加碼" + (list.widthClass(hClass) != .compact ? String(format:"(%.f)",trade.simInvestTimes - 1) : "") : "請加碼") + (trade.simInvestByUser > 0 ? "+" : (trade.simInvestByUser < 0 ? "-" : " ")))
-                        .foregroundColor(self.list.isRunning ? .gray : .blue)
+                    Text((trade.invested > 0 ? "已加碼" + String(format:"(%.f)",trade.simInvestTimes - 1) : "請加碼   ") + (trade.simInvestByUser > 0 ? "+" : (trade.simInvestByUser < 0 ? "-" : " ")))
+                        .foregroundColor(self.list.isRunning ? .gray : (trade.simInvestByUser != 0 || (trade.simInvestAdded != 0 && trade.simInvestTimes > trade.stock.simInvestAuto + 1) ? .red : .blue))
                         .font(.callout)
-                        .frame(width: list.widthCG(hClass, CG: [44,88]), alignment: .leading)
+                        .frame(width: list.widthCG(hClass, CG: [58,88]), alignment: .leading)
                         .onTapGesture {
                             if !self.list.isRunning {
                                 self.list.addInvest(self.trade)

@@ -15,7 +15,21 @@ struct simStockListView: View {
     @State var isSearching:Bool = false     //進入了搜尋模式
     @State var checkedStocks: [Stock] = []  //已選取的股票們
     @State var editText:String = ""       //輸入的搜尋文字
+
+    func sectionHeader(_ stocks:[Stock]) -> some View {
+        HStack {
+            if isChoosing {
+                groupCheckbox(stocks: stocks, checkedStocks: self.$checkedStocks)
+            }
+            Text((stocks[0].group == "" ? "<搜尋結果>" : "[\(stocks[0].group)]"))
+                .font(.headline)
+        }
+    }
     
+    func sectionFooter(_ stocks:[Stock]) -> some View {
+        Text(list.stocksSummary(stocks))
+    }
+
     var body: some View {
         NavigationView {
             VStack (alignment: .leading) {
@@ -44,9 +58,18 @@ struct simStockListView: View {
                     Spacer()
                 }
                 ScrollViewReader { sv in
-                    List{
+                    List {
                         ForEach(list.groupStocks, id: \.self) { (stocks:[Stock]) in
-                            stockSection(stocks: stocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                            Section(header: sectionHeader(stocks),footer: sectionFooter(stocks)) {
+                                ForEach(stocks, id: \.self) { (stock:Stock) in
+                                    stockCell(stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                                }
+                                .onDelete(perform: { indexSet in
+                                    let s = indexSet.map{stocks[$0]}
+                                    self.list.moveStocks(s)
+                                })
+                                .deleteDisabled(isSearching || isChoosing || list.isRunning)
+                            }
                         }
                     }
                     .listStyle(GroupedListStyle())
@@ -161,6 +184,7 @@ struct listTools:View {
                     .sheet(isPresented: $showSetting) {
                         listSettingForm(showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
                     }
+                    .environmentObject(list)
                     Spacer()
                     Button(action: {self.showInformation = true}) {
                         Image(systemName: "questionmark.circle")
@@ -260,24 +284,13 @@ struct stockActionMenu:View {
     @State var showReload:Bool = false
 
     private func isChoosingOff() {
+        self.isSearching = false
         self.isChoosing = false
         self.checkedStocks = []
     }
 
     var body: some View {
         HStack {
-//            if isChoosing {
-//                Button((self.list.widthClass(hClass).rawValue > 0 ? "自股群" : "") + "移除") {
-//                    self.showMoveAlert = true
-//                }
-//                .alert(isPresented: self.$showMoveAlert) {
-//                        Alert(title: Text("自股群移除"), message: Text("移除不會刪去歷史價，\n只不再更新、計算或復驗。"), primaryButton: .default(Text("移除"), action: {
-//                            self.list.moveStocks(self.checkedStocks)
-//                            self.isChoosingOff()
-//                        }), secondaryButton: .default(Text("取消"), action: {self.isChoosingOff()}))
-//                    }
-//                Divider()
-//            }
             if self.list.searchGotResults {
                 Button("加入" + (self.list.widthClass(hClass).rawValue > 1 ? "股群" : "")) {
                     self.showGroupFilter = true
@@ -285,6 +298,7 @@ struct stockActionMenu:View {
                 .sheet(isPresented: self.$showGroupFilter) {
                     pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
+                    .environmentObject(list)
             }
             if isChoosing {
                 Button("股群" + (self.list.widthClass(hClass).rawValue > 1 ? "組成" : "")) {
@@ -312,6 +326,7 @@ struct stockActionMenu:View {
                 .sheet(isPresented: self.$showGroupFilter) {
                     pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
+                    .environmentObject(list)
                 Divider()
                 Button((self.list.widthClass(hClass).rawValue > 1 ? "刪除或" : "") + "重算") {
                     self.showReload = true
@@ -393,7 +408,7 @@ struct pickerGroups:View {
     @State   var newGroup:String //= "股群_"
     @State   var groupPicked:String = "新增股群"
     
-    func allOneGroup(_ group:String) -> Bool {  //選取的股都來自同股群，就別讓該股群被重選為要加入的股群
+    func allOneGroup(_ group:String) -> Bool {  //選取的股都來自同股群，就別讓原股群被重複選為將要加入的股群
         for stock in checkedStocks {
             if stock.group != group  {
                 return false
@@ -612,46 +627,11 @@ struct listSettingForm: View {
 
 
 
-struct stockSection : View {
-    @EnvironmentObject var list: simStockList   //用ObservedObject會因section numbers混亂當掉
-    @State var stocks: [Stock]
-    @Binding var isChoosing:Bool
-    @Binding var isSearching:Bool
-    @Binding var checkedStocks: [Stock]
-
-    var header:some View {
-        HStack {
-            if isChoosing {
-                groupCheckbox(checkedStocks: self.$checkedStocks, stocks: self.$stocks)
-            }
-            Text((stocks[0].group == "" ? "<搜尋結果>" : "[\(stocks[0].group)]"))
-                .font(.headline)
-        }
-    }
-    
-    var footer:some View {
-        Text(list.stocksSummary(stocks))
-    }
-
-    var body: some View {
-        Section(header: header,footer: footer) {
-            ForEach(stocks, id: \.self) {stock in
-                stockCell(stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
-            }
-            .onDelete(perform: { indexSet in
-                let s = indexSet.map{self.stocks[$0]}
-                self.list.moveStocks(s)
-            })
-            .deleteDisabled(isSearching || list.isRunning || isChoosing)
-        }
-    }
-    
-}
 
 struct groupCheckbox: View {
     @State var isChecked:Bool = false
+    @State var stocks : [Stock]
     @Binding var checkedStocks:[Stock]
-    @Binding var stocks : [Stock]
     
     
     private func checkGroup() {

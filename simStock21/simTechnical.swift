@@ -253,12 +253,12 @@ class simTechnical {
                             trade.stock.simMoneyLacked = false
                             toResetMoneyLacked = false
                         }
-                        if trade.stock.simInvestExceed != 0 && toResetInvestExceed {
+                        if toResetInvestExceed {
                             trade.stock.simInvestExceed = 0
                             toResetInvestExceed = false
                         }
                     }
-                    if action == .simUpdateAll && trade.stock.simInvestExceed != 0 && toResetInvestExceed {
+                    if action == .simUpdateAll && toResetInvestExceed {
                         trade.stock.simInvestExceed = 0
                         toResetInvestExceed = false
                     }
@@ -550,7 +550,7 @@ class simTechnical {
             let context = coreData.shared.context
             let stocks = Stock.fetch(context, sId: [stock.sId])
             if let s = stocks.first {
-                s.proport = ""
+                s.proport = proport
                 try? context.save()
             }
         }
@@ -1694,7 +1694,6 @@ class simTechnical {
         wantH += (trade.tMa60DiffMax9 > 30 && trade.grade <= .fine  ? 1 : 0)
         wantH += (trade.tMa20DiffMax9 > 35 && trade.grade <= .none  ? 1 : 0)    //只有某年1次有效？
         wantH += (trade.tVolZ125 > (trade.grade <= .weak ? 2 : 1.5) && trade.priceClose > trade.priceOpen ? 1 : 0)
-//        wantH += (trade.tLowDiffZ125 - trade.tHighDiffZ125 > trade.byGrade([1.2,1.5]) && trade.tHighDiffZ125 > trade.byGrade([-0.5,0]) ? 1 : 0)
 
         wantH += (trade.tKdKZ125 < -0.8 ? -1 : 0)
         wantH += (trade.tOscZ125 < -0.5 ? -1 : 0)
@@ -1703,6 +1702,7 @@ class simTechnical {
         wantH += (trade.grade <= .weak && (ma20d > 6 || ma60d > 7) ? -1 : 0)
         wantH += (trade.grade == .damn && (ma20d > 6 || ma60d > 7) ? -1 : 0)
         wantH += (trade.tMa20DiffZ125 > 1.6 && trade.grade <= .damn ? -1 : 0)
+//        wantH += (trade.tLowDiffZ125 - trade.tHighDiffZ125 > trade.byGrade([1.5,2]) ? -1 : 0)
 //        wantH += (trade.tPriceZ125 < -2 && trade.grade >= .none ? -1 : 0)   //*** 有效的tPriceZ125(兩則)取代高低價差
 //        wantH += (trade.tPriceZ125 > 0 && trade.grade >= .none && trade.tPriceZ125 < trade.byGrade([1,0.5],H:.wow) ? -1 : 0)
         wantH += (trade.tHighDiffZ125 > trade.byGrade([0.4,1.1,1.3]) && trade.tLowDiffZ125 > trade.byGrade([0.5,1.2,1.5]) ? -1 : 0)
