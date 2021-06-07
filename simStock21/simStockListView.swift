@@ -15,6 +15,7 @@ struct simStockListView: View {
     @State var isSearching:Bool = false     //進入了搜尋模式
     @State var checkedStocks: [Stock] = []  //已選取的股票們
     @State var editText:String = ""       //輸入的搜尋文字
+    @State var stock0:Stock?
 
     func sectionHeader(_ stocks:[Stock]) -> some View {
         HStack {
@@ -33,28 +34,10 @@ struct simStockListView: View {
     var body: some View {
         NavigationView {
             VStack (alignment: .leading) {
-                if !list.doubleColumn(hClass) {
+                if !list.doubleColumn {
                     Spacer()
-                    SearchBar(editText: self.$editText, searchText: $list.searchText, isSearching: self.$isSearching)
+                    SearchBar(editText: self.$editText, isSearching: self.$isSearching)
                         .disabled(self.isChoosing || list.isRunning)
-                    HStack(alignment: .bottom){
-                        if self.isSearching && list.searchText != nil && !self.list.searchGotResults {
-                            if list.searchTextInGroup {
-                                Text("\(list.searchText?[0] ?? "搜尋的股票")已在股群中。")
-                                    .foregroundColor(.orange)
-                            } else {
-                                Text("查無符合者，試以部分的代號或簡稱來查詢？")
-                                    .foregroundColor(.orange)
-                            }
-                            Button("[知道了]") {
-                                self.editText = ""
-                                self.list.searchText = nil
-                                self.isSearching = false
-                            }
-                        }
-                    }
-                        .font(.footnote)
-                        .padding(.horizontal, 20)
                     Spacer()
                 }
                 ScrollViewReader { sv in
@@ -62,26 +45,38 @@ struct simStockListView: View {
                         ForEach(list.groupStocks, id: \.self) { (stocks:[Stock]) in
                             Section(header: sectionHeader(stocks),footer: sectionFooter(stocks)) {
                                 ForEach(stocks, id: \.self) { (stock:Stock) in
-                                    stockCell(stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                                    HStack {
+                                        stockCell(stock: stock, isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks)
+                                        if stock.group != "" && !isChoosing && !isSearching {
+                                            NavigationLink(destination: stockPageView(stock: stock, prefix: stock.prefix), tag: stock, selection: self.$stock0) {
+                                                Text("")    //用EmptyView()不會出現">"
+                                            }
+                                        }
+                                    }
                                 }
                                 .onDelete(perform: { indexSet in
                                     let s = indexSet.map{stocks[$0]}
                                     self.list.moveStocks(s)
                                 })
                                 .deleteDisabled(isSearching || isChoosing || list.isRunning)
-                            }
-                        }
-                    }
+                                .onAppear() {
+                                    if list.doubleColumn {
+                                        self.stock0 = list.groupStocks[0][0]
+                                    }
+                                }   //onAppear
+                            }  //Section
+                        }   //ForEach
+                    }   //List
                     .listStyle(GroupedListStyle())
                     .onChange(of: isSearching) {_ in
                         sv.scrollTo(list.groupStocks[0])
-                    }
+                    }   //onChange
                 }   //ScrollViewReader
             }   //VStack
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(leading: chooseCommand(isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText), trailing: listTools(isChoosing: self.$isChoosing, isSearching: self.$isSearching, checkedStocks: self.$checkedStocks, searchText: self.$editText))
         }   //NavigationView
-        .navigationViewSwitch(list.doubleColumn(hClass))
+        .navigationViewSwitch(list.doubleColumn)
         .environmentObject(list)
     }   //body
 }
@@ -96,38 +91,180 @@ extension View {
     }
 }
 
-struct logForm: View {
-    @Binding var showLog: Bool
-
-    var body: some View {
-        NavigationView {
-            ScrollView(.vertical) {
-                let logArray:[String] = simLog.logReportArray()
-                let end:Int = logArray.count - 1
-                LazyVStack(alignment: .leading) {
-                    ForEach(0..<end, id:\.self) { i in
-                        Text(logArray[i])
-                    }
-                        .font(.footnote)
-                        .lineLimit(nil)
-                }
-                    .frame(alignment: .topLeading)
-                    .padding()
-            }
-                .navigationBarTitle("Log")
-                .navigationBarItems(trailing: cancel)
-                .padding()
+struct groupCheckbox: View {
+    @State var isChecked:Bool = false
+    @State var stocks : [Stock]
+    @Binding var checkedStocks:[Stock]
+    
+    
+    private func checkGroup() {
+        self.isChecked = !self.isChecked
+        if self.isChecked {
+            self.checkedStocks += stocks
+        } else {
+            self.checkedStocks = self.checkedStocks.filter{!stocks.contains($0)}
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 
-    
-    var cancel: some View {
-        Button("關閉") {
-            self.showLog = false
+    var body: some View {
+        Group {
+            Button(action: checkGroup) {
+                Image(systemName: isChecked ? "checkmark.square" : "square")
+            }
         }
     }
 }
+
+
+struct stockCell : View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @EnvironmentObject var list: simStockList
+    @ObservedObject var stock : Stock
+    @Binding var isChoosing:Bool
+    @Binding var isSearching:Bool
+    @Binding var checkedStocks:[Stock]
+    @State   var prefix:String = ""
+    
+    private func checkStock() {
+        if self.checkedStocks.contains(self.stock) {
+            self.checkedStocks.removeAll(where: {$0 == stock})
+        } else {
+            self.checkedStocks.append(stock)
+        }
+    }
+    
+    var body: some View {
+        Group {
+            if isChoosing || (isSearching && stock.group == "") {
+                Button(action: checkStock) {
+                    Image(systemName: self.checkedStocks.contains(self.stock) ? "checkmark.square" : "square")
+                }
+            }
+            Group {
+                Text(stock.sId)
+                    .font(list.widthClass(hClass) == .compact ? .callout : .body)
+                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80,80,50])), alignment: .leading)
+                Text(stock.sName)
+                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120,120,80])), alignment: .leading)
+            }
+                .lineLimit(2)
+                .foregroundColor(list.isRunning ? .gray : .primary)
+            if stock.group != "" {
+                if let trade = stock.lastTrade(stock.context) {
+                    lastTrade(stock: self.stock, trade: trade, isChoosing: self.$isChoosing, isSearching: self.$isSearching)
+                } else {
+                    EmptyView()
+                }
+            }
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
+        .foregroundColor(self.checkedStocks.contains(stock) ? .orange : (isSearching && stock.group != "" ? .gray : .primary))
+    }
+}
+
+struct lastTrade: View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @EnvironmentObject var list: simStockList
+    @ObservedObject var stock : Stock
+    @ObservedObject var trade:Trade
+    @Binding var isChoosing:Bool
+    @Binding var isSearching:Bool
+    
+
+    var body: some View {
+        Group {
+            HStack (spacing:2){
+                Text("  ")
+                Text(String(format:"%.2f",trade.priceClose))
+                if trade.tLowDiff == 10 && trade.priceClose == trade.priceLow {
+                    Image(systemName: "arrow.down.to.line")
+                } else if trade.tHighDiff == 10 && trade.priceClose == trade.priceHigh {
+                    Image(systemName: "arrow.up.to.line")
+                } else {
+                    Text("  ")
+                }
+            }
+            .frame(width: list.widthCG(hClass, CG: [70,90,110,110,90]), alignment: .center)
+            .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
+            .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(trade.color(.ruleR, gray: (isChoosing || isSearching)), lineWidth: 1)
+            )
+            if list.widthClass(hClass).rawValue > 0 {
+                Text(trade.simQty.action)
+                    .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
+                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
+                    .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
+                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
+                Text(String(format:"%.1f年",stock.years))
+                    .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
+            }
+            if trade.days > 0 {
+                if list.widthClass(hClass).rawValue >= 0 {
+                    Text(String(format:"%.f天",trade.days))
+                        .foregroundColor(stock.simReversed ? .blue : .primary)
+                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
+                    Text(String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
+                        .foregroundColor(stock.simInvestUser > 0 ? .blue : .primary)
+                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
+                    if list.widthClass(hClass).rawValue > 0 {
+                        Text(trade.baseRoi > 0 ? String(format:"%.1f%%",trade.baseRoi) : "")
+                            .foregroundColor(.gray)
+                            .frame(width: 65.0, alignment: .trailing)
+                    }
+                }
+                trade.gradeIcon(gray:isChoosing || isSearching)
+                    .frame(width:25, alignment: .trailing)
+            } else {
+                EmptyView()
+            }
+            Spacer()
+        }   //HStack
+        .font(list.widthClass(hClass) == .compact && !list.doubleColumn ? .footnote : .body)
+        .foregroundColor(isChoosing || isSearching ? .gray : .primary)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct listTools:View {
     @Environment(\.horizontalSizeClass) var hClass
@@ -175,14 +312,14 @@ struct listTools:View {
                     }
                     .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
                     .sheet(isPresented: $showLog) {
-                        logForm(showLog: self.$showLog)
+                        sheetLog(showLog: self.$showLog)
                     }
                     Spacer()
                     Button(action: {self.showSetting = true}) {
                         Image(systemName: "wrench")
                     }
                     .sheet(isPresented: $showSetting) {
-                        listSettingForm(showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
+                        sheetListSetting(showSetting: self.$showSetting, dateStart: self.list.simDefaults.start, moneyBase: self.list.simDefaults.money, autoInvest: self.list.simDefaults.invest)
                     }
                     .environmentObject(list)
                     Spacer()
@@ -296,7 +433,7 @@ struct stockActionMenu:View {
                     self.showGroupFilter = true
                 }
                 .sheet(isPresented: self.$showGroupFilter) {
-                    pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
+                    sheetGroupPicker(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
                     .environmentObject(list)
             }
@@ -324,7 +461,7 @@ struct stockActionMenu:View {
                         }), secondaryButton: .default(Text("取消"), action: {self.isChoosingOff()}))
                     }
                 .sheet(isPresented: self.$showGroupFilter) {
-                    pickerGroups(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
+                    sheetGroupPicker(checkedStocks: self.$checkedStocks, isChoosing: self.$isChoosing, isSearching: self.$isSearching, isMoving: self.$isChoosing, isPresented: self.$showGroupFilter, searchText: self.$searchText, newGroup: list.newGroupName)
                     }
                     .environmentObject(list)
                 Divider()
@@ -385,7 +522,7 @@ struct stockActionMenu:View {
                             ])
                         }
                         .sheet(isPresented: self.$showShare) {   //分享窗
-                            ShareSheet(activityItems: [self.shareText]) { (activity, success, items, error) in
+                            sheetShare(activityItems: [self.shareText]) { (activity, success, items, error) in
                                 self.isChoosingOff()
                             }
                         }
@@ -396,7 +533,69 @@ struct stockActionMenu:View {
 }
 
 
-struct pickerGroups:View {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct sheetLog: View {
+    @Binding var showLog: Bool
+
+    var body: some View {
+        NavigationView {
+            ScrollView(.vertical) {
+                let logArray:[String] = simLog.logReportArray()
+                let end:Int = logArray.count - 1
+                LazyVStack(alignment: .leading) {
+                    ForEach(0..<end, id:\.self) { i in
+                        Text(logArray[i])
+                    }
+                        .font(.footnote)
+                        .lineLimit(nil)
+                }
+                    .frame(alignment: .topLeading)
+                    .padding()
+            }
+                .navigationBarTitle("Log")
+                .navigationBarItems(trailing: cancel)
+                .padding()
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    
+    var cancel: some View {
+        Button("關閉") {
+            self.showLog = false
+        }
+    }
+}
+
+struct sheetGroupPicker:View {
     @Environment(\.horizontalSizeClass) var hClass
     @EnvironmentObject var list: simStockList
     @Binding var checkedStocks: [Stock]
@@ -508,7 +707,7 @@ struct pickerGroups:View {
 
 }
 
-struct ShareSheet: UIViewControllerRepresentable {
+struct sheetShare: UIViewControllerRepresentable {
     typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
 
     let activityItems: [Any]
@@ -549,7 +748,7 @@ struct ShareSheet: UIViewControllerRepresentable {
     }
 }
 
-struct listSettingForm: View {
+struct sheetListSetting: View {
     @EnvironmentObject var list: simStockList
     @Binding var showSetting: Bool
     @State var dateStart:Date
@@ -628,155 +827,7 @@ struct listSettingForm: View {
 
 
 
-struct groupCheckbox: View {
-    @State var isChecked:Bool = false
-    @State var stocks : [Stock]
-    @Binding var checkedStocks:[Stock]
-    
-    
-    private func checkGroup() {
-        self.isChecked = !self.isChecked
-        if self.isChecked {
-            self.checkedStocks += stocks
-        } else {
-            self.checkedStocks = self.checkedStocks.filter{!stocks.contains($0)}
-        }
-    }
 
-    var body: some View {
-        Group {
-            Button(action: checkGroup) {
-                Image(systemName: isChecked ? "checkmark.square" : "square")
-            }
-        }
-    }
-}
-
-
-struct stockCell : View {
-    @Environment(\.horizontalSizeClass) var hClass
-    @EnvironmentObject var list: simStockList
-    @ObservedObject var stock : Stock
-    @State private var stock0: Stock?
-    @Binding var isChoosing:Bool
-    @Binding var isSearching:Bool
-    @Binding var checkedStocks:[Stock]
-    @State   var prefix:String = ""
-    
-    private func checkStock() {
-        if self.checkedStocks.contains(self.stock) {
-            self.checkedStocks.removeAll(where: {$0 == stock})
-        } else {
-            self.checkedStocks.append(stock)
-        }
-    }
-    
-    var body: some View {
-        HStack {
-            if isChoosing || (isSearching && stock.group == "") {
-                Button(action: checkStock) {
-                    Image(systemName: self.checkedStocks.contains(self.stock) ? "checkmark.square" : "square")
-                }
-            }
-            Group {
-                Text(stock.sId)
-                    .font(list.widthClass(hClass) == .compact ? .callout : .body)
-                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80,80,50])), alignment: .leading)
-                Text(stock.sName)
-                    .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120,120,80])), alignment: .leading)
-            }
-                .lineLimit(2)
-                .foregroundColor(list.isRunning ? .gray : .primary)
-            if stock.group != "" {
-                Group {
-                    if let trade = stock.lastTrade(stock.context) {
-                        lastTrade(stock: self.stock, trade: trade, isChoosing: self.$isChoosing, isSearching: self.$isSearching)
-                    } else {
-                        EmptyView()
-                    }
-                }
-                if !isChoosing && !isSearching {
-                    NavigationLink(destination: stockPageView(stock: stock, prefix: stock.prefix), tag: stock, selection: self.$stock0) {
-                        EmptyView()
-                    }
-                }
-            }
-        }
-        .lineLimit(1)
-        .minimumScaleFactor(0.6)
-        .foregroundColor(self.checkedStocks.contains(stock) ? .orange : (isSearching && stock.group != "" ? .gray : .primary))
-        .onAppear() {
-            if list.doubleColumn {
-                self.stock0 = list.groupStocks[0][0]
-            }
-        }
-    }
-}
-
-struct lastTrade: View {
-    @Environment(\.horizontalSizeClass) var hClass
-    @EnvironmentObject var list: simStockList
-    @ObservedObject var stock : Stock
-    @ObservedObject var trade:Trade
-    @Binding var isChoosing:Bool
-    @Binding var isSearching:Bool
-    
-
-    var body: some View {
-        HStack{
-            HStack (spacing:2){
-                Text("  ")
-                Text(String(format:"%.2f",trade.priceClose))
-                if trade.tLowDiff == 10 && trade.priceClose == trade.priceLow {
-                    Image(systemName: "arrow.down.to.line")
-                } else if trade.tHighDiff == 10 && trade.priceClose == trade.priceHigh {
-                    Image(systemName: "arrow.up.to.line")
-                } else {
-                    Text("  ")
-                }
-            }
-            .frame(width: list.widthCG(hClass, CG: [70,90,110,110,90]), alignment: .center)
-            .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
-            .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(trade.color(.ruleR, gray: (isChoosing || isSearching)), lineWidth: 1)
-            )
-            if list.widthClass(hClass).rawValue > 0 {
-                Text(trade.simQty.action)
-                    .frame(width: list.widthCG(hClass, CG: [0,20,30]), alignment: .center)
-                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                Text(trade.simQty.qty > 0 ? String(format:"%.f",trade.simQty.qty) : "")
-                    .frame(width: list.widthCG(hClass, CG: [0,30,40]), alignment: .center)
-                    .foregroundColor(trade.color(.qty, gray: (isChoosing || isSearching)))
-                Text(String(format:"%.1f年",stock.years))
-                    .frame(width: list.widthCG(hClass, CG: [0,40,65]), alignment: .trailing)
-            }
-            if trade.days > 0 {
-                if list.widthClass(hClass).rawValue >= 0 {
-                    Text(String(format:"%.f天",trade.days))
-                        .foregroundColor(stock.simReversed ? .blue : .primary)
-                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
-                    Text(String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
-                        .foregroundColor(stock.simInvestUser > 0 ? .blue : .primary)
-                        .frame(width: list.widthCG(hClass, CG: [40,50,65]), alignment: .trailing)
-                    if list.widthClass(hClass).rawValue > 0 {
-                        Text(trade.baseRoi > 0 ? String(format:"%.1f%%",trade.baseRoi) : "")
-                            .foregroundColor(.gray)
-                            .frame(width: 65.0, alignment: .trailing)
-                    }
-                }
-                trade.gradeIcon(gray:isChoosing || isSearching)
-                    .frame(width:25, alignment: .trailing)
-            } else {
-                EmptyView()
-            }
-            Spacer()
-        }   //HStack
-        .font(list.widthClass(hClass) == .compact && !list.doubleColumn ? .footnote : .body)
-        .foregroundColor(isChoosing || isSearching ? .gray : .primary)
-    }
-}
 
 
 
@@ -785,7 +836,6 @@ struct SearchBar: View {
     @Environment(\.horizontalSizeClass) var hClass
     @EnvironmentObject var list: simStockList
     @Binding var editText: String
-    @Binding var searchText:[String]?
     @Binding var isSearching:Bool
     @State var isEditing:Bool = false
     
@@ -799,65 +849,85 @@ struct SearchBar: View {
 
     //來自： https://www.appcoda.com/swiftui-search-bar/
     var body: some View {
-        HStack {
-            TextField(title, text: $editText    /*, onEditingChanged: { editing in
-                if !editing {
-                    self.isEditing = false
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)  // Dismiss the keyboard
-                }
-            } */, onCommit: {
-                self.searchText = self.editText.replacingOccurrences(of: ",", with: " ").replacingOccurrences(of: "  ", with: " ").replacingOccurrences(of: "  ", with: " ").components(separatedBy: " ")
-                self.isEditing = false
-                self.isSearching = true
-            })
-                .padding(7)
-                .padding(.horizontal, 25)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.8)
-                .background(Color(.systemGray6))
-//                .keyboardType(.webSearch)
-                .cornerRadius(8)
-                .onTapGesture {
-                    self.isEditing = true
-                    self.isSearching = true
-                }
-                .overlay(
-                   HStack {
-                       Image(systemName: "magnifyingglass")
-                           .foregroundColor(.gray)
-                           .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                           .padding(.leading, 8)
-                
-                       if isEditing {
-                            Button(action: {
-                                self.editText = ""
-                                self.searchText = nil
-                                self.isSearching = true
-                           })
-                           {
-                                Image(systemName: "multiply.circle.fill")
-                                   .foregroundColor(.gray)
-                                   .padding(.trailing, 8)
+        VStack (alignment: .leading) {
+            HStack {
+                TextField(title, text: $editText    /*, onEditingChanged: { editing in
+                    if !editing {
+                        isEditing = false
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)  // Dismiss the keyboard
+                    }
+                } */, onCommit: {
+                    list.searchText = editText.replacingOccurrences(of: ",", with: " ").replacingOccurrences(of: "  ", with: " ").replacingOccurrences(of: "  ", with: " ").components(separatedBy: " ")
+                    isEditing = false
+                    isSearching = true
+                })
+                    .padding(7)
+                    .padding(.horizontal, 25)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.8)
+                    .background(Color(.systemGray6))
+    //                .keyboardType(.webSearch)
+                    .cornerRadius(8)
+                    .onTapGesture {
+                        isEditing = true
+                        isSearching = true
+                    }
+                    .overlay(
+                       HStack {
+                           Image(systemName: "magnifyingglass")
+                               .foregroundColor(.gray)
+                               .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                               .padding(.leading, 8)
+                    
+                           if isEditing {
+                                Button(action: {
+                                    editText = ""
+                                    isSearching = true
+                                    list.searchText = nil
+                               })
+                               {
+                                    Image(systemName: "multiply.circle.fill")
+                                       .foregroundColor(.gray)
+                                       .padding(.trailing, 8)
+                               }
                            }
                        }
-                   }
-                )
-                .padding(.horizontal, 10)
-            if isEditing && isSearching {
-                Button(action: {
-                    self.isSearching = false
-                    self.isEditing = false
-                    self.editText = ""
-                    self.searchText = nil
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)  // Dismiss the keyboard
-                })
-                {
-                    Text("取消")
+                    )
+                    .padding(.horizontal, 10)
+                if isEditing && isSearching {
+                    Button(action: {
+                        editText = ""
+                        isEditing = false
+                        isSearching = false
+                        list.searchText = nil
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)  // Dismiss the keyboard
+                    })
+                    {
+                        Text("取消")
+                    }
+                    .padding(.trailing, 10)
+                    .transition(.move(edge: .trailing))
+                    .animation(.default)
                 }
-                .padding(.trailing, 10)
-                .transition(.move(edge: .trailing))
-                .animation(.default)
+            }   //HStack
+            HStack(alignment: .bottom){
+                if isSearching && list.searchText != nil && !list.searchGotResults {
+                    if list.searchTextInGroup {
+                        Text("\(list.searchText?[0] ?? "搜尋的股票")已在股群中。")
+                            .foregroundColor(.orange)
+                    } else {
+                        Text("查無符合者，試以部分的代號或簡稱來查詢？")
+                            .foregroundColor(.orange)
+                    }
+                    Button("[知道了]") {
+                        editText = ""
+                        isSearching = false
+                        list.searchText = nil
+                    }
+                }
             }
-        }
+            .font(.footnote)
+            .padding(.horizontal, 20)
+        }   //VStack
     }
 }

@@ -19,7 +19,7 @@ struct stockPageView: View {
 
     func pageViewTools(_ geometry:GeometryProxy) -> some View {
         Group {
-            if list.doubleColumn(hClass) {
+            if list.pageColumn(hClass) {
                 pageTools(stock: $stock, filterIsOn: $filterIsOn, geometry: geometry)
             } else {
                 prefixPicker(prefix:self.$prefix, stock:self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly, geometry: geometry)
@@ -29,7 +29,7 @@ struct stockPageView: View {
     
     func pageViewTitle(_ geometry:GeometryProxy) -> some View {
         Group {
-            if list.doubleColumn(hClass) {
+            if list.pageColumn(hClass) {
                 pageTitle(stock: $stock, cgWidth: 350)
             } else {
                 EmptyView()
@@ -41,7 +41,7 @@ struct stockPageView: View {
         GeometryReader { g in
             VStack (alignment: .center) {
                 tradeListView(stock: self.$stock, prefix: self.$prefix, filterIsOn: $filterIsOn, groupPrefixsOnly: self.$groupPrefixsOnly, geometry: g)
-                if !list.doubleColumn(hClass) {
+                if !list.pageColumn(hClass) {
                     Spacer()
                     stockPicker(prefix: self.$prefix, stock: self.$stock, groupPrefixsOnly: self.$groupPrefixsOnly)
                         .alert(isPresented: $showPrefixMsg) {
@@ -51,7 +51,7 @@ struct stockPageView: View {
             }
             .navigationBarItems(leading: pageViewTitle(g), trailing: pageViewTools(g))
             .onAppear {
-                if !list.doubleColumn(hClass) && list.versionLast == "" && list.prefixStocks(prefix: prefix, group: (groupPrefixsOnly ? stock.group : nil)).count > 1 {
+                if !list.pageColumn(hClass) && list.versionLast == "" && list.prefixStocks(prefix: prefix, group: (groupPrefixsOnly ? stock.group : nil)).count > 1 {
                     showPrefixMsg = true
                 }
             }
@@ -73,6 +73,105 @@ struct runningMsg: View {
             .padding(.bottom,padding)
     }
 }
+
+struct tradeListView: View {
+    @Environment(\.horizontalSizeClass) var hClass
+    @EnvironmentObject var list: simStockList
+    @Binding var stock : Stock
+    @Binding var prefix: String
+    @Binding var filterIsOn:Bool
+    @Binding var groupPrefixsOnly:Bool
+    @State var geometry:GeometryProxy
+    
+    private func scrollToSelected(_ sv: ScrollViewProxy) {
+        if let dt = list.selected {
+            sv.scrollTo(dt, anchor: .center)
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            //== 表頭：股票名稱、模擬摘要 ==
+            tradeHeading(stock: self.$stock, filterIsOn: self.$filterIsOn, geometry: geometry)
+                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onEnded({ value in
+                        if value.translation.width < 0 {
+                            self.stock = list.shiftLeftStock(stock, groupStocks: (groupPrefixsOnly ? list.theGroupStocks(self.stock) : nil))
+                            self.prefix = self.stock.prefix
+                        }
+                        if value.translation.width > 0 {
+                            self.stock = list.shiftRightStock(stock, groupStocks: (groupPrefixsOnly ? list.theGroupStocks(self.stock) : nil))
+                            self.prefix = self.stock.prefix
+                        }
+                        if value.translation.height < 0 {
+                            // up
+                        }
+                        if value.translation.height > 0 {
+                            // down
+                        }
+                    }))
+            //== 日交易明細列表 ==
+            GeometryReader { geo in
+                ScrollViewReader { sv in
+                    LazyVStack {
+                        Divider()
+                        List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
+                            tradeCell(stock: self.$stock, trade: trade)
+                                .onTapGesture {
+                                    if list.selected == trade.date {
+                                        list.selected = nil
+                                    } else {
+                                        list.selected = trade.date
+                                    }
+                                 }
+                        }
+                        .offset(x: 0, y: -8)
+                        .listStyle(GroupedListStyle())
+                        .frame(width: geo.size.width, height: geo.size.height + 8, alignment: .center)
+                    }
+                    .background(Color(.systemGroupedBackground))
+                    .onChange(of: stock) {_ in
+                        scrollToSelected(sv)
+                    }
+                    .onChange(of: self.filterIsOn) {_ in
+                        scrollToSelected(sv)
+                    }
+                    .onAppear() {
+                        if list.selected == nil {
+                            list.selected = stock.lastTrade(stock.context)?.date
+                        } else {
+                            scrollToSelected(sv)
+                        }
+                    }
+                }
+            }
+        }   //VStack
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 private func pickerIndexRange(index:Int, count:Int, max: Int) -> (from:Int, to:Int) {
     var from:Int = 0
@@ -229,87 +328,45 @@ struct stockPicker: View {
                 }
             }
 		}
-    }
-    
+    }    
 }
 
 
-struct tradeListView: View {
-    @Environment(\.horizontalSizeClass) var hClass
-    @EnvironmentObject var list: simStockList
-    @Binding var stock : Stock
-    @Binding var prefix: String
-    @Binding var filterIsOn:Bool
-    @Binding var groupPrefixsOnly:Bool
-    @State var geometry:GeometryProxy
-    
-    private func scrollToSelected(_ sv: ScrollViewProxy) {
-        if let dt = list.selected {
-            sv.scrollTo(dt, anchor: .center)
-        }
-    }
 
-    var body: some View {
-        VStack(alignment: .leading) {
-            //== 表頭：股票名稱、模擬摘要 ==
-            tradeHeading(stock: self.$stock, filterIsOn: self.$filterIsOn, geometry: geometry)
-                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onEnded({ value in
-                        if value.translation.width < 0 {
-                            self.stock = list.shiftLeftStock(stock, groupStocks: (groupPrefixsOnly ? list.theGroupStocks(self.stock) : nil))
-                            self.prefix = self.stock.prefix
-                        }
-                        if value.translation.width > 0 {
-                            self.stock = list.shiftRightStock(stock, groupStocks: (groupPrefixsOnly ? list.theGroupStocks(self.stock) : nil))
-                            self.prefix = self.stock.prefix
-                        }
-                        if value.translation.height < 0 {
-                            // up
-                        }
-                        if value.translation.height > 0 {
-                            // down
-                        }
-                    }))
-            //== 日交易明細列表 ==
-            GeometryReader { g in
-                ScrollViewReader { sv in
-                    LazyVStack {
-                        Divider().padding(0)
-                        List (stock.trades.filter{self.filterIsOn == false || $0.simQtySell > 0 || $0.simQtyBuy > 0 || $0.simRuleInvest != "" || $0.date == $0.stock.dateFirst || $0.date == twDateTime.startOfDay()}, id:\.self.date) { trade in
-                            tradeCell(stock: self.$stock, trade: trade)
-                                .onTapGesture {
-                                    if list.selected == trade.date {
-                                        list.selected = nil
-                                    } else {
-                                        list.selected = trade.date
-                                    }
-                                 }
-                        }
-                        .listStyle(GroupedListStyle())
-                        .frame(width: g.size.width - (list.doubleColumn(hClass) ? 40 : 0), height: g.size.height, alignment: .center)
-                        .offset(x: 0, y: -5)
-                    }
-                    .background(Color(.systemGroupedBackground))
-                    .onChange(of: stock) {_ in
-                        scrollToSelected(sv)
-                    }
-                    .onChange(of: self.filterIsOn) {_ in
-                        scrollToSelected(sv)
-                    }
-                    .onAppear() {
-                        if list.selected == nil {
-                            list.selected = stock.lastTrade(stock.context)?.date
-                        } else {
-                            scrollToSelected(sv)
-                        }
-                    }
-                }
-            }
-        }   //VStack
-    }
-}
 
-struct settingForm: View {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct sheetPageSetting: View {
     @EnvironmentObject var list: simStockList
     @Binding var stock:Stock
     @Binding var showSetting: Bool
@@ -429,6 +486,14 @@ struct pageTools:View {
         }
     }
     
+    var cgWidth:CGFloat {
+        if list.pageColumn(hClass) {
+            return geometry.size.width - 400
+        } else {
+            return 150
+        }
+    }
+    
     var body: some View {
         HStack {
             //== 工具按鈕 1 == 過濾交易模擬
@@ -447,7 +512,7 @@ struct pageTools:View {
                 Image(systemName: "doc.text")
             }
             .sheet(isPresented: $showLog) {
-                logForm(showLog: self.$showLog)
+                sheetLog(showLog: self.$showLog)
             }
 
             //== 工具按鈕 3 == 設定
@@ -456,7 +521,7 @@ struct pageTools:View {
             }
             .disabled(list.isRunning)
             .sheet(isPresented: $showSetting) {
-                settingForm(stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
+                sheetPageSetting(stock: self.$stock, showSetting: self.$showSetting, dateStart: self.stock.dateStart, moneyBase: self.stock.simMoneyBase, autoInvest: self.stock.simInvestAuto)
                     .environmentObject(list)
             }
             
@@ -499,6 +564,7 @@ struct pageTools:View {
             Button(action: {self.showInformation = true}) {
                 Image(systemName: "questionmark.circle")
             }
+            .padding(.trailing, list.widthCG(hClass, CG: [2,8]))
             .actionSheet(isPresented: $showInformation) {
                 ActionSheet(title: Text("參考訊息"), message: Text("小確幸v\(list.versionNow)"),
                 buttons: [
@@ -515,10 +581,41 @@ struct pageTools:View {
                 ])
             }
         } //工具按鈕的HStack
-        .frame(width: geometry.size.width - 450, alignment: .trailing)
+        .frame(width: cgWidth, alignment: .trailing)
         .font(.body)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct tradeHeading:View {
     @Environment(\.horizontalSizeClass) var hClass
@@ -854,7 +951,7 @@ struct tradeCell: View {
                     }
                 }
                 Spacer()
-                //== 單價和模擬摘要 ==
+                //== 模擬摘要 ==
                 if list.widthClass(hClass) == .compact {
                     VStack {
                         HStack {

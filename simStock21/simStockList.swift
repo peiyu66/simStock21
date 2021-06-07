@@ -50,8 +50,8 @@ class simStockList:ObservableObject {
         return isPad && isLandScape && UIApplication.shared.isNotSplitOrSlideOver
     }
         
-    func doubleColumn(_ hClass:UserInterfaceSizeClass?) -> Bool {
-        return widthClass(hClass) == .widePad && UIApplication.shared.isNotSplitOrSlideOver
+    func pageColumn(_ hClass:UserInterfaceSizeClass?) -> Bool {
+        return hClass == .regular && doubleColumn
     }
 
     let classIcon:[String] = ["iphone","iphone.landscape","ipad","ipad.landscape","ipad"]
@@ -310,7 +310,7 @@ class simStockList:ObservableObject {
             if UIDevice.current.orientation.isLandscape {
                 self.isLandScape = true
             } else if !UIDevice.current.orientation.isFlat {
-                if self.isLandScape {
+                if self.isLandScape {   //由橫轉直時
                     self.selected = nil
                 }
                 self.isLandScape = false
