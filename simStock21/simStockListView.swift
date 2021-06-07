@@ -143,7 +143,7 @@ struct stockCell : View {
             Group {
                 Text(stock.sId)
                     .font(list.widthClass(hClass) == .compact ? .callout : .body)
-                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80,80,50])), alignment: .leading)
+                    .frame(width : (isSearching && stock.group == "" ? 80.0 : list.widthCG(hClass, CG: [40,60,80,80,45])), alignment: .leading)
                 Text(stock.sName)
                     .frame(width : (isSearching && stock.group == "" ? 120.0 : list.widthCG(hClass, CG: [70,90,120,120,80])), alignment: .leading)
             }
