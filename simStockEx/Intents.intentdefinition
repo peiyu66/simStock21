@@ -9,7 +9,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>k1Eu8V</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>20E241</string>
+	<string>20F71</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>12E262</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -22,11 +22,11 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>以文字尋找小確幸股群中的股票，回傳其&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;符合文字的股票聯集。
+			<string>以文字尋找小確幸股群中的股票，回傳其&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;任一符合文字的股票聯集。
 
-文字可有多組，亦可用逗號或空白隔開。部分符合即納入。
+文字可有多組，可用逗號或空白隔開。部分符合即納入。
 
-例如：以空白間格0-9搜尋時，即"0 1 2 3 4 5 6 7 8 9"，得全股群的全部股。
+例如：以空白間格0-9搜尋，"0 1 2 3 4 5 6 7 8 9"，即得全股群的全部股。
 
 股票(StockInfo)內有：代號、簡稱、股群、主要營收、起始日。</string>
 			<key>INIntentDescriptionID</key>
@@ -46,7 +46,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>尋找小確幸中&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;符合${keywords}的股票</string>
+					<string>尋找小確幸中&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;任一符合${keywords}的股票</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>0n0c0C</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
@@ -158,38 +158,43 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>取得指定股票(StockInfo)的每日交易資料（CSV格式）。
+			<string>取得股票(StockInfo)的每日交易資料（CSV格式）。
 
-#欄位：
+# 欄位：
 
 代號：股票代號。
 簡稱：股票簡稱。
 股群：所屬小確幸股群名稱。
 日期：交易日期。
 時間：交易時間（通常是13:30）。
-收盤價：若盤中已更新則為當時成交價。
+
+收盤價：或盤中為當時成交價。
 開盤價：當日開盤價。
 最高價：當日最高價。
 最低價：當日最低價。
 成交量：當日成交量。
 volz：成交量的半年標準差分。
+
 買入：小確幸模擬買的數量。
-庫存：小確幸模擬中本輪買賣的持股數量。
+庫存：小確幸模擬的持股數量。
 賣出：小確幸模擬賣的數量。
-成本價：小確幸模擬中本輪買賣的成本價。
-加碼次：小確幸模擬中本輪買賣的累計加碼次數（含首次買入）。
-持股日數：小確幸模擬中本輪買賣的持股日數（含休市日）。
+成本價：小確幸模擬本輪成本價。
+加碼次：小確幸模擬本輪的累計加碼次數（含首次買入）。
+持股日數：小確幸模擬本輪的持股日數（含休市日）。
 建議：低買、高買、加碼。
 買點：如果有建議買，則為成交價。便於圖表標示建議買的價位。
+
 ma20：20天收盤價的移動平均價。
 ma20d：ma20與當日收盤價差額佔當日收盤價的百分比。
 ma20dz：ma20d的半年標準差分。
 ma60：60天收盤價的移動平均價。
 ma60d：ma60與當日收盤價差額佔當日收盤價的百分比。
 ma60dz：ma60d的半年標準差分。
+
 highdz：半年內最高價與當日收盤價跌幅的半年標準差分。
-lowdz：半年內最低價與當日收盤價跌幅的半年標準差分。
+lowdz：半年內最低價與當日收盤價漲幅的半年標準差分。
 closez：收盤價的半年標準差分。
+
 k：KD指標的K值。
 kz：k的半年標準差分。
 d：KD指標的D值。
@@ -198,13 +203,15 @@ j：KD指標的J值。
 jz：j的半年標準差分。
 osc：MACD指標的OSC值。
 oscz：osc的半年標準差分。
-實年報酬率：加碼備用金不計入成本，用以評估股票的熱門程度或獲益效率。
-真年報酬率：加碼備用金有計入成本，用以評估程式模擬交易的效率。
+
+實年報酬率：加碼備用金不計入成本。
+真年報酬率：加碼備用金有計入成本。
 平均日數：平均每輪買賣持股日數。
 
-#選項：
+# 選項：
 
 只要今天的交易：只傳回今天的交易一筆，如果有的話。預設否。
+
 多股時合併：多支股票(StockInfo)時，將各股交易合併為單一個CSV檔。預設否。</string>
 			<key>INIntentDescriptionID</key>
 			<string>qxdxAT</string>
