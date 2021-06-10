@@ -893,9 +893,9 @@ class simTechnical {
 //                    self.twseRealtime(stock) //, allGroup: allGroup, twseGroup: twseGroup)
 //                }
 //            } else {
-//                self.runP10([stock])
-//                self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
-//                self.allGroup.leave()
+                self.runP10([stock])
+                self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
+                self.allGroup.leave()
 //            }
         })  //let task =
         task.resume()
