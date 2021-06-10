@@ -878,29 +878,25 @@ class simTechnical {
             //== 下載twse的限制 ==
             //* 連續下載完成後，下一批次須間隔??分鐘
             //* 連續下載每??股須間隔??秒
-            var twseCooled:Bool {
-                Date().timeIntervalSince(self.timeTradesUpdated) >= self.requestInterval
-            }
-            let twseGo:Bool = twDateTime.inMarketingTime(delay: 2, forToday: true) && !self.isOffDay && twseCooled
-            if twseGo {
-                let delay:Int = (self.twseCount / 9) * 3
-                self.twseCount += 1
-                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay)) {
-                    self.twseGroup.wait()
-                    self.twseGroup.enter()
-//                    if twseCooled {
-                        self.twseRealtime(stock) //, allGroup: allGroup, twseGroup: twseGroup)
-//                    } else {
-//                        self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
-//                        self.twseGroup.leave()
-//                        self.allGroup.leave()
-//                    }
-                }
-            } else {
-                self.runP10([stock])
-                self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
-                self.allGroup.leave()
-            }
+            
+            //暫停使用，節約連線時間
+//            var twseCooled:Bool {
+//                Date().timeIntervalSince(self.timeTradesUpdated) >= self.requestInterval
+//            }
+//            let twseGo:Bool = twDateTime.inMarketingTime(delay: 2, forToday: true) && !self.isOffDay && twseCooled
+//            if twseGo {
+//                let delay:Int = (self.twseCount / 9) * 3
+//                self.twseCount += 1
+//                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay)) {
+//                    self.twseGroup.wait()
+//                    self.twseGroup.enter()
+//                    self.twseRealtime(stock) //, allGroup: allGroup, twseGroup: twseGroup)
+//                }
+//            } else {
+//                self.runP10([stock])
+//                self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
+//                self.allGroup.leave()
+//            }
         })  //let task =
         task.resume()
     }
