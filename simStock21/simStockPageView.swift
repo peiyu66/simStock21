@@ -30,7 +30,7 @@ struct stockPageView: View {
     func pageViewTitle(_ geometry:GeometryProxy) -> some View {
         Group {
             if list.pageColumn(hClass) {
-                pageTitle(stock: $stock, cgWidth: 320)
+                pageTitle(stock: $stock, cgWidth: (geometry.size.width > 1050 ? 320 : 350))
             } else {
                 EmptyView()
             }
@@ -488,7 +488,7 @@ struct pageTools:View {
     
     var cgWidth:CGFloat {
         if list.pageColumn(hClass) {
-            return geometry.size.width - 420
+            return geometry.size.width - (geometry.size.width > 1050 ? 450 : 420)
         } else {
             return 150
         }

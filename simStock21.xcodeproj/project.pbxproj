@@ -13,7 +13,7 @@
 		E22637352659C3300062AA5B /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E22637342659C3300062AA5B /* Intents.intentdefinition */; };
 		E22637362659C36B0062AA5B /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E22637342659C3300062AA5B /* Intents.intentdefinition */; };
 		E22637372659C3780062AA5B /* coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4582624A36D710036791E /* coreData.swift */; };
-		E22637392659C3820062AA5B /* utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25ED3EB24A40F63006C1332 /* utility.swift */; };
+		E2426D552674339200D2C1E5 /* utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25ED3EB24A40F63006C1332 /* utility.swift */; };
 		E25ED3EF24A43DD0006C1332 /* utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25ED3EB24A40F63006C1332 /* utility.swift */; };
 		E27B62B224A8774600092943 /* simStockPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27B62B124A8774600092943 /* simStockPageView.swift */; };
 		E28C262F265A223E00420A36 /* csvData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28C262E265A223E00420A36 /* csvData.swift */; };
@@ -22,7 +22,6 @@
 		E2B5F950265D00A000B5494F /* simStock21.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2B5F94E265D00A000B5494F /* simStock21.xcdatamodeld */; };
 		E2B5F951265D00A000B5494F /* simStock21.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2B5F94E265D00A000B5494F /* simStock21.xcdatamodeld */; };
 		E2B5F953265D013200B5494F /* simTechnical.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5F952265D013200B5494F /* simTechnical.swift */; };
-		E2B5F954265D013200B5494F /* simTechnical.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5F952265D013200B5494F /* simTechnical.swift */; };
 		E2C4580C24A36CAA0036791E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4580B24A36CAA0036791E /* AppDelegate.swift */; };
 		E2C4580E24A36CAA0036791E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4580D24A36CAA0036791E /* SceneDelegate.swift */; };
 		E2C4581324A36CAA0036791E /* simStockListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4581224A36CAA0036791E /* simStockListView.swift */; };
@@ -261,9 +260,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2426D552674339200D2C1E5 /* utility.swift in Sources */,
 				E22637352659C3300062AA5B /* Intents.intentdefinition in Sources */,
-				E22637392659C3820062AA5B /* utility.swift in Sources */,
-				E2B5F954265D013200B5494F /* simTechnical.swift in Sources */,
 				E28C2630265A230000420A36 /* csvData.swift in Sources */,
 				E226372C2659C3220062AA5B /* IntentHandler.swift in Sources */,
 				E22637372659C3780062AA5B /* coreData.swift in Sources */,
@@ -308,7 +306,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -332,7 +330,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -474,7 +472,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;
@@ -502,7 +500,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;

@@ -799,6 +799,7 @@ class simTechnical {
         var urlRequest = URLRequest(url: url!,timeoutInterval: 30)
         let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/605.1.12 (KHTML, like Gecko) Version/11.1 Safari/605.1.12"
         urlRequest.addValue(userAgent, forHTTPHeaderField: "User-Agent")
+//        urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         
         let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {(data, response, error) in
             if error == nil {
