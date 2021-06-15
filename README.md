@@ -67,29 +67,4 @@
 <a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.04.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.04.png" width="30%"></a> 
 <a href="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.16.png"><img src="https://github.com/peiyu66/simStock21/raw/main/20210603/Simulator%20Screen%20Shot%20-%20iPhone%2012%20mini%20-%202021-06-03%20at%2012.23.16.png" width="60%"></a>
 <br>
-
-## 實戰指南
-
-### 模擬
-把現金實際投入股市之前，應熟知小確幸的操作與模擬結果的意義。<br>
-（小確幸不是自動的程式交易。）
-
-### 股群
-只買1支股票就是賭，股群的組成是為了分類、互補。既可抵銷賠很深的風險，也可縮短收益週期，維持現金在手。
-
-### 本金
-本金須依模擬規則備足，並依模擬提示持續投入，不無謂冒險也勿臨陣退縮。
-
-### 掛單
-依模擬提示掛單。買單在12點半之後再掛才能接近或優於收盤價，賣單則開盤之初即時掛。
-
-掛的價格應考慮[內外盤及五檔現況](https://github.com/peiyu66/simStock21/wiki/五檔及內外盤)，以之推測最佳的成交價格，隨時調整，宜保守，忌追高。<br>
-（依循策略，則賣低了比掛太高沒賣成好，掛低了買不到又比買太高好多了！因為：賺錢的機會一直都有，賠錢的風險我不想要。）
-
-### 結算
-每完成一輪買賣應回顧檢討。每年應結算已實現損益、未實現損益、年報酬率，然後記錄、比較、分析歷年的變化是否符合預期。
-
 <br>
-
-_！！！小確幸不保證提供的資訊正確即時，亦不對你的投資決策負責。！！！_
-
