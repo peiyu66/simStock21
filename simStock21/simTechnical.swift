@@ -147,7 +147,7 @@ class simTechnical {
             }
             if action == .realtime && self.realtime {
                 self.stockAction = (isOffDay ? "休市日" : "查詢盤中價")
-                self.yahooRequest(stock) //, allGroup: allGroup, twseGroup: twseGroup)
+                self.yahooQuote(stock) //, allGroup: allGroup, twseGroup: twseGroup)
             } else if action == .simTesting {
                 self.technicalUpdate(stock: stock, action: action)
                 allGroup.leave()
@@ -165,7 +165,7 @@ class simTechnical {
                     cnyesGroup.wait()
                     self.technicalUpdate(stock: stock, action: cnyesAction)
                     self.progressNotify(1)
-                    self.yahooRequest(stock) //, allGroup: allGroup, twseGroup: twseGroup)
+                    self.yahooQuote(stock) //, allGroup: allGroup, twseGroup: twseGroup)
                 }   //即使已經收盤後也需要yahoo，才收盤時cnyes未及把當日收盤價納入查詢結果
             }
         }
@@ -904,7 +904,7 @@ class simTechnical {
     
     private func matches(for leading: String, with trailing: String, in text: String) -> [String] {
         do {    //依頭尾正規式切割欄位
-            let regex = try NSRegularExpression(pattern: leading+"(.*)"+trailing)
+            let regex = try NSRegularExpression(pattern: leading+"([0-9|,.%]+?)"+trailing)
             let nsString = text as NSString
             let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
             return results.map {nsString.substring(with: $0.range).replacingOccurrences(of: leading, with: "").replacingOccurrences(of: trailing, with: "")}
@@ -914,7 +914,126 @@ class simTechnical {
         }
     }
     
-    
+    private func yahooQuote (_ stock:Stock) { //, allGroup:DispatchGroup, twseGroup:DispatchGroup) {
+        if self.isOffDay {
+            self.runP10([stock])
+            allGroup.leave()
+            return
+        }
+        let url = URL(string: "https://tw.stock.yahoo.com/quote/" + stock.sId)
+        let urlRequest = URLRequest(url: url!,timeoutInterval: 30)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {(data, response, error) in
+            if error == nil {
+                if let downloadedData = String(data:data!, encoding:.utf8) {
+                    
+                    /* sample data
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">開盤</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-up)\">295.0</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">最高</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-up)\">296.5</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">最低</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-down)\">289.0</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">均價</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-up)\">292.9</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">成交</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px)\">1.02</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">昨收</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c)\">290.5</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">漲跌</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-down)\"><span class=\"Mend(4px) Bds(s)\" style=\"border-color:#00ab5e transparent transparent transparent;border-width:7px 5px 0 5px\"></span>0.34%</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">漲跌</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px) D(f) Ai(c) C($c-trend-down)\"><span class=\"Mend(4px) Bds(s)\" style=\"border-color:#00ab5e transparent transparent transparent;border-width:7px 5px 0 5px\"></span>1.0</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">總量</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px)\">348</span></li>
+                     <li class=\"price-detail-item H(32px) Mx(10px) D(f) Jc(sb) Ai(c) Bxz(bb) Px(0px) Py(4px) Bdbs(s) Bdbc($bd-primary-divider) Bdbw(1px)\"><span class=\"C(#232a31) Fz(16px)--mobile Fz(14px)\">昨量</span><span class=\"Fw(600) Fz(16px)--mobile Fz(14px)\">1,340</span></li>
+                     */
+
+                    //取日期 -> yDate
+                    let leading = "<time datatime=\""
+                    let trailing = "\">"
+                    if let yDateRange = downloadedData.range(of: leading+"(.+?)"+trailing, options: .regularExpression) {
+                        let startIndex = downloadedData.index(yDateRange.lowerBound, offsetBy: leading.count)
+                        let endIndex = downloadedData.index(yDateRange.upperBound, offsetBy: 0-trailing.count)
+                        let yDate = String(downloadedData[startIndex..<endIndex])
+
+                        let leading = "<span class=\"[Jc\\(fe\\) ]*?Fw\\(600\\) Fz\\(16px\\)--mobile Fz\\(14px\\).*?\">"
+                        let trailing = "</span></li>"
+                        let yColumn:[String] = self.matches(for: leading, with: trailing, in: downloadedData)
+                        if yColumn.count >= 7 {
+//                            let yTime = yColumn[0]
+                            if let dt =  twDateTime.dateFromString(yDate, format: "yyyy/MM/dd HH:mm") {
+//                                if let dt1 = twDateTime.calendar.date(byAdding: .year, value: 1911, to: dt) {
+                                    //5分鐘給Yahoo!延遲開盤資料
+                                    let time0905 = twDateTime.time0900(delayMinutes: 5)
+                                    if (!twDateTime.isDateInToday(dt)) && Date() > time0905 {
+                                        self.isOffDay = true
+                                        simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo 休市日")
+                                        //不是今天價格，現在又已過今天的開盤時間，那今天就是休市日
+                                    } else {
+                                        self.isOffDay = false
+                                        
+                                        func  yNumber(_ yColumn:String) -> Double {
+                                            if let yDateRange = yColumn.range(of: "<.+>", options: .regularExpression) {
+                                                let startIndex = yColumn.index(yDateRange.upperBound, offsetBy: 0)
+                                                let yString = String(yColumn[startIndex...]).replacingOccurrences(of: ",", with: "").replacingOccurrences(of: "%", with: "")
+                                                if let dNumber = Double(yString), !dNumber.isNaN {
+                                                    return dNumber
+                                                }
+                                            }
+                                            return 0
+                                        }
+                                        
+                                        let close = yNumber(yColumn[0])
+                                        if close > 0 {
+                                            let context = coreData.shared.context
+                                            let trade = Trade.trade(context, stock: stock, date: dt)
+                                            if (dt > trade.dateTime || trade.priceClose != close) && trade.dataSource != "TWSE" {
+                                                self.timeLastTrade = dt
+                                                trade.dateTime = dt
+                                                trade.priceClose = close
+                                                trade.priceOpen = yNumber(yColumn[1])
+                                                trade.priceHigh = yNumber(yColumn[2])
+                                                trade.priceLow  = yNumber(yColumn[3])
+                                                trade.priceVolume = yNumber(yColumn[7])
+                                                trade.dataSource   = "yahoo"
+                                                trade.tUpdated  = false
+                                                try? context.save() //由simTechnical執行trade.objectWillChange.send()
+                                                let sName:String? = stock.sName
+                                                simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(sName ?? "????") yahoo 成交價 \(String(format:"%.2f ",close))" + twDateTime.stringFromDate(dt, format: "HH:mm:ss"))
+                                                self.technicalUpdate(stock: stock, action: .realtime)
+                                            } else {
+                                                simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo 未更新 \(String(format:"%.2f",close))")
+                                            }
+                                        }
+                                    }
+//                                }   //if let dt0
+                            }   //if let dt
+                        }   //if yColumn.count >= 9
+                    } else {  //取quoteTime: if let yDateRange
+                        simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo：解析無交易資料。")
+                    }
+                }  else {//if let downloadedData
+                    simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo：下載無資料。")
+                }
+            } else {
+                simLog.addLog("(\(self.stockProgress)/\(self.stockCount))\(stock.sId)\(stock.sName) yahoo：下載有誤 \(String(describing: error))")
+            }   //if error == nil
+            //== 下載twse的限制 ==
+            //* 連續下載完成後，下一批次須間隔??分鐘
+            //* 連續下載每??股須間隔??秒
+            
+            //暫停使用，節約連線時間
+//            var twseCooled:Bool {
+//                Date().timeIntervalSince(self.timeTradesUpdated) >= self.requestInterval
+//            }
+//            let twseGo:Bool = twDateTime.inMarketingTime(delay: 2, forToday: true) && !self.isOffDay && twseCooled
+//            if twseGo {
+//                let delay:Int = (self.twseCount / 9) * 3
+//                self.twseCount += 1
+//                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(delay)) {
+//                    self.twseGroup.wait()
+//                    self.twseGroup.enter()
+//                    self.twseRealtime(stock) //, allGroup: allGroup, twseGroup: twseGroup)
+//                }
+//            } else {
+                self.runP10([stock])
+                self.progressNotify(self.stockAction == "查詢盤中價" ? 1 : 0)
+                self.allGroup.leave()
+//            }
+        })  //let task =
+        task.resume()
+    }
     
     
     
