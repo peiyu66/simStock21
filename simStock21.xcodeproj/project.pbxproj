@@ -306,7 +306,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -315,7 +315,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 0.93;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mystock.simStock21.simStockEx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -330,7 +330,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStockEx/simStockEx.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				INFOPLIST_FILE = simStockEx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -339,7 +339,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 0.93;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mystock.simStock21.simStockEx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -472,7 +472,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;
@@ -482,7 +482,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.93;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mystock.simStock21;
 				PRODUCT_NAME = simStock21;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -500,7 +500,7 @@
 				CODE_SIGN_ENTITLEMENTS = simStock21/simStock21.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QQP5F43Z2T;
 				ENABLE_PREVIEWS = YES;
@@ -510,7 +510,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.93;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mystock.simStock21;
 				PRODUCT_NAME = simStock21;
 				PROVISIONING_PROFILE_SPECIFIER = "";

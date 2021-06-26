@@ -382,6 +382,7 @@ struct chooseCommand:View {
                     if list.isRunning {
                         if !list.doubleColumn {
                             runningMsg()
+                            .frame(minWidth: list.widthCG(hClass, CG: [200,200,400,400]), alignment: .leading)
                         }
                     } else {
                         Button("選取") {

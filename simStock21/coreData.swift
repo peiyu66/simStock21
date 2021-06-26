@@ -604,7 +604,8 @@ public class Trade: NSManagedObject {
                 return .primary
             }
         case .rule:
-            switch (p10Rule ?? self.simRule) {
+            let rule = (p10Action != "買" || p10Date != self.date ? self.simRule : (p10Rule ?? self.simRule))
+            switch rule {
             case "L":
                 return .green
             case "H":

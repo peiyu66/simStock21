@@ -1787,7 +1787,7 @@ class simTechnical {
             }
         }
 
-//        if twDateTime.stringFromDate(trade.dateTime) == "2020/08/31" && trade.stock.sId == "1515" {
+//        if twDateTime.stringFromDate(trade.dateTime) == "2021/06/24" && trade.stock.sId == "1590" {
 //            NSLog("\(trade.stock.sId)\(trade.stock.sName) tracking... ")
 //        }
         
@@ -2040,6 +2040,10 @@ class simTechnical {
                 trade.simAmtBalance -= cost
                 trade.simAmtCost += cost
                 trade.simQtyInventory += trade.simQtyBuy
+            } else {
+                if trade.stock.simMoneyLacked == false {
+                    trade.stock.simMoneyLacked = true
+                }
             }
         }
         if trade.simQtyInventory > 0 || trade.simQtySell > 0 {  //不管有沒有買賣，因為收盤價變了就需要重算報酬率
