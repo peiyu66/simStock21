@@ -1,7 +1,7 @@
 # simStock 小確幸股票模擬機
 
 ## 最近發佈的版本
-* v0.9：[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)，就會出現確認安裝的對話方塊。
+* v1.0：[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)，就會出現確認安裝的對話方塊。
     * 曾向作者登記為開發機，iOS14以上的iPhone或iPad才能安裝。
     * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[[github-pages]](https://peiyu66.github.io/simStock21/)才能點出確認安裝的對話方塊。
 
