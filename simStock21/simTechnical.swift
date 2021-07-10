@@ -119,7 +119,7 @@ class simTechnical {
 
     private func runRequest(_ stocks:[Stock], action:simTechnicalAction = .realtime, allStocks:[Stock]?=nil) {
         self.stockCount = stocks.count
-        if action != .simTesting {
+//        if action != .simTesting {
             simLog.addLog("\(action)(\(stocks.count)) " + twDateTime.stringFromDate(timeTradesUpdated, format: "上次：yyyy/MM/dd HH:mm:ss") + (isOffDay ? " 今天休市" : " \(self.isMarketingTime ? "盤中待續" : "已收盤")"))
             if self.stockProgress > 0 {
                 simLog.addLog("\t前查價未完？？？(\(self.stockProgress)/\(self.stockCount))")
@@ -130,38 +130,32 @@ class simTechnical {
                 simLog.addLog("暫停查價：網路未連線。")
                 return
             }
-        }
+//        }
         self.twseCount = 0
         self.stockProgress = 1
-        let q = OperationQueue()
-        if action != .simTesting {
-            q.maxConcurrentOperationCount = 1
-        }
         if twDateTime.startOfDay(timeTradesUpdated) != twDateTime.startOfDay() {
             isOffDay = false
         }
         for stock in stocks {
             allGroup.enter()
-            if stock.proport == nil && action != .simTesting {
+            if stock.proport == nil { //&& action != .simTesting {
                 self.companyInfo(stock)
             }
             if action == .realtime && self.realtime {
                 self.stockAction = (isOffDay ? "休市日" : "查詢盤中價")
                 self.yahooQuote(stock) //, allGroup: allGroup, twseGroup: twseGroup)
-            } else if action == .simTesting {
-                self.technicalUpdate(stock: stock, action: action)
-                allGroup.leave()
+//            } else if action == .simTesting {
+//                self.technicalUpdate(stock: stock, action: action)
+//                allGroup.leave()
             } else {    //newTrades, allTrades, tUpdateAll, simResetAll, simUpdateAll
                 self.stockAction = "請等候股群完成歷史資料的計算"
-//                if action != .newTrades {
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name("requestRunning"), object: nil, userInfo: ["msg":"請等候股群完成資料的下載..."])  //通知股群清單要更新了
-                    }
-//                }
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("requestRunning"), object: nil, userInfo: ["msg":"請等候股群完成資料的下載..."])  //通知股群清單要更新了
+                }
                 let cnyesGroup:DispatchGroup = DispatchGroup()  //這是個股專用的group，等候cnyes下載完成才統計技術數值
                 let allTrades = self.cnyesPrice(stock: stock, cnyesGroup: cnyesGroup) //回傳是否需要從頭重算模擬
                 let cnyesAction:simTechnicalAction = (allTrades ? .allTrades : action)
-                q.addOperation {    //q是依序執行simTechnical以避免平行記憶體飆高crash
+                operation.serialQueue.addOperation {    //q是依序執行simTechnical以避免平行造成crash
                     cnyesGroup.wait()
                     self.technicalUpdate(stock: stock, action: cnyesAction)
                     self.progressNotify(1)
@@ -172,7 +166,7 @@ class simTechnical {
         allGroup.notify(queue: .main) {
             self.stockProgress = 0
             self.stockAction = ""
-            if action != .simTesting {
+//            if action != .simTesting {
                 if  action != .realtime || twDateTime.inMarketingTime() || !self.isMarketingTime {
                     self.timeTradesUpdated = Date() //收盤後仍有可能是剛睡醒的收盤前價格？那就維持前timeTradesUpdated不能動
                 }
@@ -184,7 +178,7 @@ class simTechnical {
                 if self.realtime{
                     self.setupTimer(allStocks ?? stocks, timeInterval: self.nextInterval)
                 }
-            }
+//            }
         }
     }
     
@@ -262,7 +256,7 @@ class simTechnical {
                         trade.stock.simInvestExceed = 0
                         toResetInvestExceed = false
                     }
-                    if trade.tUpdated == false || action == .tUpdateAll {
+                    if (trade.tUpdated == false && action != .simTesting) || action == .tUpdateAll {
                         //tUpdated == false代表newTrades,allTrades。但newTrades不用從頭重算，怎麼排除呢？
                         self.tUpdate(trades, index: index)
                         tCount += 1

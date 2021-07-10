@@ -76,6 +76,12 @@ public class netConnect {  // 偵測網路連線是否有效
     }
 }
 
+public class operation {
+    static let serialQueue = OperationQueue()
+    init() {
+        operation.serialQueue.maxConcurrentOperationCount = 1
+    }
+}
 
 public class twDateTime { //用於台灣當地日期時間的一些計算函數，避免不同時區的時差問題
 

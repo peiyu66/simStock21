@@ -15,11 +15,19 @@ public class coreData {
     static var shared = coreData()
 
     private init() {} // Prevent clients from creating another instance.
+    
+    private var dbName:String = "simStock21"
+    
+    public func switchDatabase(_ simTest:Bool) {
+        if simTest {
+            dbName = "simTest"
+        }
+    }
 
     lazy private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "simStock21")
         //********* 為了extension共享此而將資料庫放在app groups
-        let storeURL = URL.storeURL(for: "group.com.mystock.simStock21", databaseName: "simStock21")
+        let storeURL = URL.storeURL(for: "group.com.mystock.simStock21", databaseName: dbName)
         let storeDescription = NSPersistentStoreDescription(url: storeURL)
         container.persistentStoreDescriptions = [storeDescription]
         //********* 以上，不需app groups時可移除
