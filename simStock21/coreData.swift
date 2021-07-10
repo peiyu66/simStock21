@@ -175,7 +175,7 @@ public class Stock: NSManagedObject {
     @NSManaged public var simMoneyBase: Double      //每次投入本金額度
     @NSManaged public var simMoneyLacked: Bool        //本金不足？
     @NSManaged public var simReversed:Bool          //反轉買賣
-    @NSManaged public var stockTrades: NSSet?
+    @NSManaged public var stockTrades: Set<Trade>?
     
     func p10Reset() {
         self.p10Action = nil

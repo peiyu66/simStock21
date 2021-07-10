@@ -71,7 +71,7 @@ struct simStock {
     }
     
     func simUpdateNow(action:simTechnical.simTechnicalAction?=nil) {
-        technical.downloadStocks()    //更新股票代號和簡稱的對照表
+        technical.downloadStocks()    //更新股票代號和簡稱的對照表   doItNow: true
         technical.reviseCompanyInfo(self.stocks)
         DispatchQueue.global().async {
             self.technical.downloadTrades(self.stocks, requestAction: action)
@@ -179,26 +179,24 @@ struct simStock {
     }
     
     func settingStocks(_ stocks:[Stock],dateStart:Date,moneyBase:Double,autoInvest:Double) {
-        if let context = stocks[0].managedObjectContext {
-            var dateChanged:Bool = false
-            for stock in stocks {
-                if dateStart != stock.dateStart {
-                    stock.dateStart = dateStart
-                    let dtFirst = twDateTime.calendar.date(byAdding: .year, value: -1, to: dateStart) ?? stock.dateStart
-                    if dtFirst < stock.dateFirst {
-                        stock.dateFirst = dtFirst
-                    }
-                    dateChanged = true
+        var dateChanged:Bool = false
+        for stock in stocks {
+            if dateStart != stock.dateStart {
+                stock.dateStart = dateStart
+                let dtFirst = twDateTime.calendar.date(byAdding: .year, value: -1, to: dateStart) ?? stock.dateStart
+                if dtFirst < stock.dateFirst {
+                    stock.dateFirst = dtFirst
                 }
-                stock.simMoneyBase = moneyBase
-                stock.simInvestAuto = autoInvest
+                dateChanged = true
             }
-            if !simTesting {
-                DispatchQueue.main.async {
-                    try? context.save()
-                }
-                technical.downloadTrades(stocks, requestAction: (dateChanged ? .allTrades : .simResetAll), allStocks: self.stocks)
+            stock.simMoneyBase = moneyBase
+            stock.simInvestAuto = autoInvest
+            DispatchQueue.main.async {
+                try? stock.context.save()
             }
+        }
+        if !simTesting {
+            technical.downloadTrades(stocks, requestAction: (dateChanged ? .allTrades : .simResetAll), allStocks: self.stocks)
         }
     }
     
@@ -260,8 +258,7 @@ struct simStock {
         var groupDays:String = ""
         for g in 0...(groupStocks.count - 1) {
             let stocks = groupStocks[g]
-            let group  = stocks[0].group
-            let result = testStocks(stocks, group: group, start: start)
+            let result = testStocks(stocks, start: start)
             groupRoi = groupRoi + (groupRoi.count > 0 ? ",, " : "") + result.roi
             groupDays = groupDays + (groupDays.count > 0 ? ",, " : "") + result.days
         }
@@ -273,15 +270,14 @@ struct simStock {
         NSLog("")
     }
     
-    private func testStocks(_ stocks:[Stock], group:String, start:Date) -> (roi:String, days:String) {
+    private func testStocks(_ stocks:[Stock], start:Date) -> (roi:String, days:String) {
         var roi:String = ""
         var days:String = ""
         let years:Int = Int(round(Date().timeIntervalSince(start) / 86400 / 365))
-        print("\n\n\(group)：(\(stocks.count)) 自\(twDateTime.stringFromDate(start,format:"yyyy"))第\(years)年起 ... ", terminator:"")
+        print("\n\n\(stocks[0].group)：(\(stocks.count)) 自\(twDateTime.stringFromDate(start,format:"yyyy"))第\(years)年起 ... ", terminator:"")
         var nextYear:Date = start
         while nextYear <= (twDateTime.calendar.date(byAdding: .year, value: -1, to: twDateTime.startOfDay()) ?? Date.distantPast) {
             let _ = settingStocks(stocks, dateStart: nextYear, moneyBase: 200, autoInvest: 2)
-//            technical.downloadTrades(stocks, requestAction: .simTesting)
             for stock in stocks {
                 technical.technicalUpdate(stock: stock, action: .simTesting)
             }

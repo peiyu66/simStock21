@@ -221,7 +221,7 @@ class simTechnical {
 
     func technicalUpdate (stock:Stock, action:simTechnicalAction) {
         let context = coreData.shared.context
-        let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? (twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) ?? Date.distantFuture) : nil), fetchLimit: (action == .realtime ? 256 : nil), asc:(action == .realtime ? false : true))
+        let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) : nil), fetchLimit: (action == .realtime ? 251 : nil), asc:(action == .realtime ? false : true))
         if trades.count > 0 {
             if action == .realtime {
                 let tr376:[Trade] = trades.reversed()
