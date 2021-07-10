@@ -119,18 +119,16 @@ class simTechnical {
 
     private func runRequest(_ stocks:[Stock], action:simTechnicalAction = .realtime, allStocks:[Stock]?=nil) {
         self.stockCount = stocks.count
-//        if action != .simTesting {
-            simLog.addLog("\(action)(\(stocks.count)) " + twDateTime.stringFromDate(timeTradesUpdated, format: "上次：yyyy/MM/dd HH:mm:ss") + (isOffDay ? " 今天休市" : " \(self.isMarketingTime ? "盤中待續" : "已收盤")"))
-            if self.stockProgress > 0 {
-                simLog.addLog("\t前查價未完？？？(\(self.stockProgress)/\(self.stockCount))")
-                self.nextInterval = 30
-                return
-            }
-            if netConnect.isNotOK() {
-                simLog.addLog("暫停查價：網路未連線。")
-                return
-            }
-//        }
+        simLog.addLog("\(action)(\(stocks.count)) " + twDateTime.stringFromDate(timeTradesUpdated, format: "上次：yyyy/MM/dd HH:mm:ss") + (isOffDay ? " 今天休市" : " \(self.isMarketingTime ? "盤中待續" : "已收盤")"))
+        if self.stockProgress > 0 {
+            simLog.addLog("\t前查價未完？？？(\(self.stockProgress)/\(self.stockCount))")
+            self.nextInterval = 30
+            return
+        }
+        if netConnect.isNotOK() {
+            simLog.addLog("暫停查價：網路未連線。")
+            return
+        }
         self.twseCount = 0
         self.stockProgress = 1
         if twDateTime.startOfDay(timeTradesUpdated) != twDateTime.startOfDay() {
@@ -144,9 +142,6 @@ class simTechnical {
             if action == .realtime && self.realtime {
                 self.stockAction = (isOffDay ? "休市日" : "查詢盤中價")
                 self.yahooQuote(stock) //, allGroup: allGroup, twseGroup: twseGroup)
-//            } else if action == .simTesting {
-//                self.technicalUpdate(stock: stock, action: action)
-//                allGroup.leave()
             } else {    //newTrades, allTrades, tUpdateAll, simResetAll, simUpdateAll
                 self.stockAction = "請等候股群完成歷史資料的計算"
                 DispatchQueue.main.async {
@@ -166,19 +161,17 @@ class simTechnical {
         allGroup.notify(queue: .main) {
             self.stockProgress = 0
             self.stockAction = ""
-//            if action != .simTesting {
-                if  action != .realtime || twDateTime.inMarketingTime() || !self.isMarketingTime {
-                    self.timeTradesUpdated = Date() //收盤後仍有可能是剛睡醒的收盤前價格？那就維持前timeTradesUpdated不能動
-                }
-                defaults.set(self.timeTradesUpdated, forKey: "timeTradesUpdated")
-                simLog.addLog("\(self.isOffDay ? "休市日" : "完成") \(action)\(self.isOffDay ? "" : "(\(stocks.count))") \(twDateTime.stringFromDate(self.timeTradesUpdated, format: "HH:mm:ss")) \(self.isMarketingTime ? "盤中待續" : "已收盤")")
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("requestRunning"), object: nil, userInfo: ["msg":""])  //解除UI「背景作業中」的提示
-                }
-                if self.realtime{
-                    self.setupTimer(allStocks ?? stocks, timeInterval: self.nextInterval)
-                }
-//            }
+            if  action != .realtime || twDateTime.inMarketingTime() || !self.isMarketingTime {
+                self.timeTradesUpdated = Date() //收盤後仍有可能是剛睡醒的收盤前價格？那就維持前timeTradesUpdated不能動
+            }
+            defaults.set(self.timeTradesUpdated, forKey: "timeTradesUpdated")
+            simLog.addLog("\(self.isOffDay ? "休市日" : "完成") \(action)\(self.isOffDay ? "" : "(\(stocks.count))") \(twDateTime.stringFromDate(self.timeTradesUpdated, format: "HH:mm:ss")) \(self.isMarketingTime ? "盤中待續" : "已收盤")")
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name("requestRunning"), object: nil, userInfo: ["msg":""])  //解除UI「背景作業中」的提示
+            }
+            if self.realtime{
+                self.setupTimer(allStocks ?? stocks, timeInterval: self.nextInterval)
+            }
         }
     }
     
@@ -224,9 +217,9 @@ class simTechnical {
         let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) : nil), fetchLimit: (action == .realtime ? 251 : nil), asc:(action == .realtime ? false : true))
         if trades.count > 0 {
             if action == .realtime {
-                let tr376:[Trade] = trades.reversed()
-                tUpdate(tr376, index: trades.count - 1)
-                simUpdate(tr376, index: trades.count - 1)
+                let tr251:[Trade] = trades.reversed()
+                tUpdate(tr251, index: trades.count - 1)
+                simUpdate(tr251, index: trades.count - 1)
             } else {
                 var tCount:Int = 0
                 var sCount:Int = 0
