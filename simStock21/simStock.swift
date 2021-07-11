@@ -17,6 +17,7 @@ struct simStock {
     private let technical:simTechnical = simTechnical()
 
     init() {
+        coreData.shared.switchDatabase(simTesting)
         if defaults.double(forKey: "simMoneyBase") == 0 {
             let dateStart = twDateTime.calendar.date(byAdding: .year, value: -3, to: twDateTime.startOfDay()) ?? Date.distantFuture
             setDefaults(start: dateStart, money: 70.0, invest: 2)

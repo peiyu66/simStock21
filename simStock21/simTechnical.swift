@@ -217,9 +217,11 @@ class simTechnical {
         let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) : nil), fetchLimit: (action == .realtime ? 251 : nil), asc:(action == .realtime ? false : true))
         if trades.count > 0 {
             if action == .realtime {
-                let tr251:[Trade] = trades.reversed()
-                tUpdate(tr251, index: trades.count - 1)
-                simUpdate(tr251, index: trades.count - 1)
+                autoreleasepool {
+                    let tr251:[Trade] = trades.reversed()
+                    tUpdate(tr251, index: trades.count - 1)
+                    simUpdate(tr251, index: trades.count - 1)
+                }
             } else {
                 var tCount:Int = 0
                 var sCount:Int = 0
@@ -249,15 +251,17 @@ class simTechnical {
                         trade.stock.simInvestExceed = 0
                         toResetInvestExceed = false
                     }
-                    if (trade.tUpdated == false && action != .simTesting) || action == .tUpdateAll {
-                        //tUpdated == false代表newTrades,allTrades。但newTrades不用從頭重算，怎麼排除呢？
-                        self.tUpdate(trades, index: index)
-                        tCount += 1
-                        self.simUpdate(trades, index: index)
-                        sCount += 1
-                    } else if action != .newTrades {    //allTrades應重算模擬
-                        self.simUpdate(trades, index: index)
-                        sCount += 1
+                    autoreleasepool {
+                        if (trade.tUpdated == false && action != .simTesting) || action == .tUpdateAll {
+                            //tUpdated == false代表newTrades,allTrades。但newTrades不用從頭重算，怎麼排除呢？
+                            self.tUpdate(trades, index: index)
+                            tCount += 1
+                            self.simUpdate(trades, index: index)
+                            sCount += 1
+                        } else if action != .newTrades {    //allTrades應重算模擬
+                            self.simUpdate(trades, index: index)
+                            sCount += 1
+                        }
                     }
                 }
                 if action != .simTesting {
