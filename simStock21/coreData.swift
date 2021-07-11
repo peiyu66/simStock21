@@ -18,10 +18,8 @@ public class coreData {
     
     private var dbName:String = "simStock21"
     
-    public func switchDatabase(_ simTest:Bool) {
-        if simTest {
-            dbName = "simTest"
-        }
+    public func switchDatabase() {
+        dbName = "simTest"
     }
 
     lazy private var persistentContainer: NSPersistentContainer = {

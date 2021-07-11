@@ -266,11 +266,9 @@ class simTechnical {
                     simLog.addLog("(\(progress)/\(count))\(stock.sId)\(stock.sName) 歷史價\(trades.count)筆" + (tCount > 0 ? "/技術\(tCount)筆" : "") + (sCount > 0 ? "/模擬\(sCount)筆" : "") + " \(action)")
                 }
             }
-            if action != .simTesting {
-                try? context.save()
-                DispatchQueue.main.async {
-                    stock.objectWillChange.send()
-                }
+            try? context.save()
+            DispatchQueue.main.async {
+                stock.objectWillChange.send()
             }
         }
     }
@@ -329,7 +327,7 @@ class simTechnical {
             
             var p10:P10 = P10()
             let context = coreData.shared.context
-            let trades:[Trade] = Trade.fetch(context, stock: stock, fetchLimit: 376, asc:false).reversed()
+            let trades:[Trade] = Trade.fetch(context, stock: stock, fetchLimit: 251, asc:false).reversed()
             if trades.count > 0 {
                 let trade = trades[trades.count - 1]
                 let price = trade.priceClose
@@ -1429,8 +1427,6 @@ class simTechnical {
             var sum60:Double = 0
             var sum20:Double = 0
             //9天最高價最低價  <-- 要先提供9天高低價計算RSV，然後才能算K,D,J
-//            var highMax9:Double = -1    //minDouble
-//            var lowMin9:Double = maxDouble
             var ma60Sum:Double = 0
             trade.tHighMax9 = trade.priceHigh
             trade.tLowMin9  = trade.priceLow
@@ -1440,12 +1436,6 @@ class simTechnical {
                     sum20 += t.priceClose
                 }
                 if i + d60.thisIndex >= d9.thisIndex {
-//                    if highMax9 < t.priceHigh {
-//                        highMax9 = t.priceHigh
-//                    }
-//                    if lowMin9 > t.priceLow {
-//                        lowMin9 = t.priceLow
-//                    }
                     if t.priceHigh > trade.tHighMax9 {
                         trade.tHighMax9 = t.priceHigh
                     }
@@ -1469,9 +1459,6 @@ class simTechnical {
             
             //9天最高價最低價  <-- 要先提供9天高低價計算RSV，然後才能算K,D,J
             var kdRSV:Double = 50
-//            if highMax9 != lowMin9 {
-//                kdRSV = 100 * (trade.priceClose - lowMin9) / (highMax9 - lowMin9)
-//            }
             if trade.tHighMax9 != trade.tLowMin9 {
                 kdRSV = 100 * (trade.priceClose - trade.tLowMin9) / (trade.tHighMax9 - trade.tLowMin9)
             }

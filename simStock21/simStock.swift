@@ -17,7 +17,6 @@ struct simStock {
     private let technical:simTechnical = simTechnical()
 
     init() {
-//        coreData.shared.switchDatabase(simTesting)
         if defaults.double(forKey: "simMoneyBase") == 0 {
             let dateStart = twDateTime.calendar.date(byAdding: .year, value: -3, to: twDateTime.startOfDay()) ?? Date.distantFuture
             setDefaults(start: dateStart, money: 70.0, invest: 2)
@@ -277,7 +276,7 @@ struct simStock {
         print("\n\n\(stocks[0].group)：(\(stocks.count)) 自\(twDateTime.stringFromDate(start,format:"yyyy"))第\(years)年起 ... ", terminator:"")
         var nextYear:Date = start
         while nextYear <= (twDateTime.calendar.date(byAdding: .year, value: -1, to: twDateTime.startOfDay()) ?? Date.distantPast) {
-            let _ = settingStocks(stocks, dateStart: nextYear, moneyBase: 200, autoInvest: 2)
+            settingStocks(stocks, dateStart: nextYear, moneyBase: 200, autoInvest: 2)
             for stock in stocks {
                 technical.technicalUpdate(stock: stock, action: .simTesting)
             }
