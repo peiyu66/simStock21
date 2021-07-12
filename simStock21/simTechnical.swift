@@ -216,13 +216,11 @@ class simTechnical {
         let context = coreData.shared.context
         let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) : nil), fetchLimit: (action == .realtime ? 251 : nil), asc:(action == .realtime ? false : true))
         if trades.count > 0 {
-            autoreleasepool {
+            autoreleasepool{
                 if action == .realtime {
-                    autoreleasepool {
-                        let tr251:[Trade] = trades.reversed()
-                        tUpdate(tr251, index: trades.count - 1)
-                        simUpdate(tr251, index: trades.count - 1)
-                    }
+                    let tr251:[Trade] = trades.reversed()
+                    tUpdate(tr251, index: trades.count - 1)
+                    simUpdate(tr251, index: trades.count - 1)
                 } else {
                     var tCount:Int = 0
                     var sCount:Int = 0
