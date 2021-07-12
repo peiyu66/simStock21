@@ -216,42 +216,42 @@ class simTechnical {
         let context = coreData.shared.context
         let trades = Trade.fetch(context, stock: stock, end: (action == .simTesting ? twDateTime.calendar.date(byAdding: .year, value: 3, to: stock.dateStart) : nil), fetchLimit: (action == .realtime ? 251 : nil), asc:(action == .realtime ? false : true))
         if trades.count > 0 {
-            if action == .realtime {
-                autoreleasepool {
-                    let tr251:[Trade] = trades.reversed()
-                    tUpdate(tr251, index: trades.count - 1)
-                    simUpdate(tr251, index: trades.count - 1)
-                }
-            } else {
-                var tCount:Int = 0
-                var sCount:Int = 0
-                var toResetMoneyLacked:Bool = true
-                var toResetInvestExceed:Bool = true
-                let a:[simTechnicalAction] = [.tUpdateAll, .simResetAll, .simTesting, .allTrades]
-                for (index,trade) in trades.enumerated() {
-                    if a.contains(action) { //這幾類同simResetAll，要清除user的加碼和反轉買賣
-                        trade.simReversed = ""
-                        if trade.simInvestByUser != 0 {
-                            trade.simInvestByUser = 0
-                            trade.stock.simInvestUser -= 1
+            autoreleasepool {
+                if action == .realtime {
+                    autoreleasepool {
+                        let tr251:[Trade] = trades.reversed()
+                        tUpdate(tr251, index: trades.count - 1)
+                        simUpdate(tr251, index: trades.count - 1)
+                    }
+                } else {
+                    var tCount:Int = 0
+                    var sCount:Int = 0
+                    var toResetMoneyLacked:Bool = true
+                    var toResetInvestExceed:Bool = true
+                    let a:[simTechnicalAction] = [.tUpdateAll, .simResetAll, .simTesting, .allTrades]
+                    for (index,trade) in trades.enumerated() {
+                        if a.contains(action) { //這幾類同simResetAll，要清除user的加碼和反轉買賣
+                            trade.simReversed = ""
+                            if trade.simInvestByUser != 0 {
+                                trade.simInvestByUser = 0
+                                trade.stock.simInvestUser -= 1
+                            }
+                            if trade.stock.simReversed {
+                                trade.stock.simReversed = false
+                            }
+                            if trade.stock.simMoneyLacked == true && toResetMoneyLacked {
+                                trade.stock.simMoneyLacked = false
+                                toResetMoneyLacked = false
+                            }
+                            if toResetInvestExceed {
+                                trade.stock.simInvestExceed = 0
+                                toResetInvestExceed = false
+                            }
                         }
-                        if trade.stock.simReversed {
-                            trade.stock.simReversed = false
-                        }
-                        if trade.stock.simMoneyLacked == true && toResetMoneyLacked {
-                            trade.stock.simMoneyLacked = false
-                            toResetMoneyLacked = false
-                        }
-                        if toResetInvestExceed {
+                        if action == .simUpdateAll && toResetInvestExceed {
                             trade.stock.simInvestExceed = 0
                             toResetInvestExceed = false
                         }
-                    }
-                    if action == .simUpdateAll && toResetInvestExceed {
-                        trade.stock.simInvestExceed = 0
-                        toResetInvestExceed = false
-                    }
-                    autoreleasepool {
                         if (trade.tUpdated == false && action != .simTesting) || action == .tUpdateAll {
                             //tUpdated == false代表newTrades,allTrades。但newTrades不用從頭重算，怎麼排除呢？
                             self.tUpdate(trades, index: index)
@@ -263,16 +263,16 @@ class simTechnical {
                             sCount += 1
                         }
                     }
+                    if action != .simTesting {
+                        let progress = self.progressTWSE ?? self.stockProgress
+                        let count = self.countTWSE ?? self.stockCount
+                        simLog.addLog("(\(progress)/\(count))\(stock.sId)\(stock.sName) 歷史價\(trades.count)筆" + (tCount > 0 ? "/技術\(tCount)筆" : "") + (sCount > 0 ? "/模擬\(sCount)筆" : "") + " \(action)")
+                    }
                 }
-                if action != .simTesting {
-                    let progress = self.progressTWSE ?? self.stockProgress
-                    let count = self.countTWSE ?? self.stockCount
-                    simLog.addLog("(\(progress)/\(count))\(stock.sId)\(stock.sName) 歷史價\(trades.count)筆" + (tCount > 0 ? "/技術\(tCount)筆" : "") + (sCount > 0 ? "/模擬\(sCount)筆" : "") + " \(action)")
+                try? context.save()
+                DispatchQueue.main.async {
+                    stock.objectWillChange.send()
                 }
-            }
-            try? context.save()
-            DispatchQueue.main.async {
-                stock.objectWillChange.send()
             }
         }
     }
