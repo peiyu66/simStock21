@@ -1798,6 +1798,9 @@ class simTechnical {
 //        wantH += (trade.tPriceZ125 < -2 && trade.grade >= .none ? -1 : 0)   //*** 有效的tPriceZ125(兩則)取代高低價差
 //        wantH += (trade.tPriceZ125 > 0 && trade.grade >= .none && trade.tPriceZ125 < trade.byGrade([1,0.5],H:.wow) ? -1 : 0)
         wantH += (trade.tHighDiffZ125 > trade.byGrade([0.4,1.1,1.3]) && trade.tLowDiffZ125 > trade.byGrade([0.5,1.2,1.5]) ? -1 : 0)
+        let mmdd = twDateTime.stringFromDate(trade.dateTime, format: "MMdd")
+        wantH += (mmdd >= (trade.grade <= .weak ? "0726" : "0801") && mmdd <= "0810" ? -1 : 0)
+        
 
         if wantH >= 1 {
             if (trade.grade <= .weak && prev.priceClose < trade.priceClose) && (prev.simRule == "H" || prev.simRule == "I") {
@@ -1823,7 +1826,8 @@ class simTechnical {
             wantL += (trade.tMa20Days < -30 ? -1 : 0)
             wantL += (trade.tLowDiff >= trade.byGrade([9,8],L:Trade.Grade.none) && trade.grade >= .weak ? -1 : 0) //或是 >= .low
             wantL += (trade.tMa60Diff == trade.tMa60DiffMin9 && trade.tMa20Diff == trade.tMa20DiffMin9 && trade.tOsc == trade.tOscMin9 && (trade.grade <= .damn || trade.grade >= .wow) ? -1 : 0)   //&& trade.tKdK == trade.tKdKMin9
-
+            wantL += (mmdd >= (trade.grade <= .weak ? "0726" : "0801") && mmdd <= "0810" ? -1 : 0)
+            
             if wantL >= 5 {  //(trade.grade <= .weak ? 5 : 6) {
                 trade.simRule = "L"
             }
