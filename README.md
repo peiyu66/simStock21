@@ -1,0 +1,98 @@
+# simStock 小確幸股票模擬機
+
+## 最近發佈的版本
+* v1.1：[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)，就會出現確認安裝的對話方塊。
+    * 曾向作者登記為開發機，iOS14以上的iPhone或iPad才能安裝。
+    * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[[github-pages]](https://peiyu66.github.io/simStock21/)才能點出確認安裝的對話方塊。
+
+## 策略規則
+   小確幸的策略是純技術面的短期投機買賣：
+1. [低買高賣](https://github.com/peiyu66/simStock21/wiki/週期)賺取價差，不考慮股息股利。
+1. 致力縮短[買賣週期](https://github.com/peiyu66/simStock21/wiki/週期)（最短2天），但也與提升報酬率取平衡。
+1. 保本小賺維持現金流，不追求偶爾大賺。
+1. 要簡單、容易評估、容易實現。
+
+## 買賣規則
+1. 每次買進只使用現金的三分之一，即「起始本金」及兩次加碼備用金。
+1. 每次買進時一次買足「起始本金」可買到的數量。
+1. 賣時一次全部賣出結清。
+1. 必要時2次加碼。
+
+## 選股原則
+1. 熱門股優於傳統股。
+1. 近3年的模擬，平均[實年報酬率](https://github.com/peiyu66/simStock21/wiki/年報酬率)在20%以上，平均週期在65天以內者（標示為[紅星股](https://github.com/peiyu66/simStock21/wiki/選股評等)）。
+
+## Q&A
+### 誰適合使用小確幸？
+* ✐✐✐ [小確幸適性評估](https://docs.google.com/forms/d/e/1FAIpQLSdzNyfMl5NP1sCSHSxoSCWqqdeAPSQbw4kAiwlCv0pzJkjgrg/viewform?usp=sf_link) ✐✐✐
+
+小確幸的主人是：
+* 幾乎每天看盤、幾乎每月、甚至每週執行買賣的人。
+* 克己、包容隨機的不完美、能忍受幾個月的持續負損。
+* 有閒錢兩年內不虞急用。
+
+閒錢越多越穩。雖然以小資本投入小確幸、依照同樣的邏輯徹底執行，應可得到大約相同的報酬率，但收益額度太小則無感，不成確幸。
+
+### 小確幸沒有在App Store上架？
+* App Store自2017年已不允許「個人」開發者上架含有「模擬賭博」內容的App。
+
+### 如何安裝小確幸？
+* 若有加入Apple Developer，就自己在Xcode直接建造直接安裝。
+* 不然只好[向作者登記iPhone或iPad的序號](https://github.com/peiyu66/simStock21/wiki/加入小確幸)作為開發機，再從[[github-pages]](https://peiyu66.github.io/simStock21/)下載及安裝(ipa)。
+* 可以在XCode直接建成mac版本，但只能在macOS Catalina (10.15)以上才能執行。
+
+### 有些股票找不到？
+* 只有上市股票才能被搜尋到，小確幸不模擬上櫃股票。
+* 如果股票已經在股群之內，就不會重複列在搜尋結果。
+
+### 如何買賣？
+
+小確幸不是程式交易，只能模擬買賣。
+
+小確幸根據模擬規則自動模擬買賣行動，你參考模擬建議的買賣時機，自行決定是否執行買賣。或使用日期左側的圓形按鈕、右側的加碼建議，變更模擬買賣的時機以觀察其後果。
+<br>
+
+### 不是很準確？
+
+小確幸不能準確的買在最低點、賣在最高點。這有兩個觀點：
+* 股價所謂的低點和高點，在未定義[週期](https://github.com/peiyu66/simStock21/wiki/週期)、策略之前，是模糊的，甚至是背離的。
+* 即使在預設的週期內，小確幸也無能買在最低點和賣在最高點，因為那是不可能的任務。
+
+小確幸的任務不是實現神諭般的買賣，而是實現賺錢的買賣。那麼，雖然不是最低買、最高賣，持續賺錢持續形成小確幸，即任務達成。
+
+## 其他說明
+參閱[WIKI](https://github.com/peiyu66/simStock21/wiki)。
+
+## 截圖
+截自XCode simulator 2021/08/30 v1.1(1)。
+
+### iPad Pro 12.9吋 5代
+<br>
+
+#### list: 直向時
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.02.37.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.02.37.png" width="45%"></a>
+
+#### page: 直向時
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.03.06.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.03.06.png" width="45%"></a><br>
+
+#### column: 橫置時
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.02.57.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPad%20Pro%20(12.9-inch)%20(5th%20generation)%20-%202021-08-30%20at%2019.02.57.png" width="90%"></a>
+<br>
+
+### iPhone SE 2代
+<br>
+
+#### list: 直向、橫置
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.57.56.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.57.56.png" width="30%"></a> 
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.06.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.06.png" width="60%"></a>
+<br><br>
+
+#### page: 首筆未展開
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.15.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.15.png" width="30%"></a> 
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.21.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2018.58.21.png" width="60%"></a>
+<br><br>
+
+#### page: 首筆展開
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2019.14.42.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2019.14.42.png" width="30%"></a>
+<a href="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2019.15.38.png"><img src="https://github.com/peiyu66/simStock21/raw/main/doc/20180830/Simulator%20Screen%20Shot%20-%20iPhone%20SE%20(2nd%20generation)%20-%202021-08-30%20at%2019.15.38.png" width="60%"></a>
+<br><br>
