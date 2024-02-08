@@ -1,5 +1,7 @@
 # simStock 小確幸股票模擬機
 
+「小確幸股票模擬機」查詢下載台灣上市股票的歷史股價，計算技術數值，模擬買賣，評估報酬率。
+
 ## 最近發佈的版本
 * v1.1：[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)，就會出現確認安裝的對話方塊。
     * 曾向作者登記為開發機，iOS14以上的iPhone或iPad才能安裝。
