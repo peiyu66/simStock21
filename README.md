@@ -42,7 +42,7 @@
 * 若有加入Apple Developer，就自己在Xcode直接建造直接安裝。
 * 不然只好向作者登記iPhone或iPad的序號作為開發機，再從[[github-pages]](https://peiyu66.github.io/simStock21/)下載及安裝(ipa)。
 * 可以在XCode直接建成mac版本，但只能在macOS Catalina (10.15)以上才能執行。
-* 參閱[加入小確幸](doc/加入小確幸.md)
+* 參閱[加入小確幸](doc/加入小確幸.md)。
 
 ### 有些股票找不到？
 * 只有上市股票才能被搜尋到，小確幸不模擬上櫃股票。
