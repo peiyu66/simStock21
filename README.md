@@ -64,8 +64,8 @@
 - [加入小確幸](doc/加入小確幸.md)
 - [畫面諸元](doc/畫面諸元.md)
 - [實戰指要](doc/實戰指要.md)
-- [五檔及內外盤](五檔及內外盤.md)
-- [捷徑Shortcuts](捷徑Shortcuts.md)
+- [五檔及內外盤](doc/五檔及內外盤.md)
+- [捷徑Shortcuts](doc/捷徑Shortcuts.md)
 
 ## 截圖
 截自XCode simulator 2021/08/30 v1.1(1)。
