@@ -2,7 +2,7 @@
 
 若搭配工具，可便於分析個股強弱或小確幸的模擬績效。如[Charty for Shortcuts](https://apps.apple.com/tw/app/charty-for-shortcuts/id1494386093)可接收小確幸的輸出數值繪製成圖表。
 
-參觀：[Demo](https://github.com/peiyu66/simStock21/issues/1)動畫。
+[觀看展示動畫](https://github.com/peiyu66/simStock21/issues/1#issue-2128120046)
 
 ## 尋找股票
 
