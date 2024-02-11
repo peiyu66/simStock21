@@ -7,7 +7,7 @@
     * 曾向作者登記為開發機，iOS14以上的iPhone或iPad才能安裝。
     * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[[github-pages]](https://peiyu66.github.io/simStock21/)才能點出確認安裝的對話方塊。
 
-## 策略規則
+## 策略要求
    小確幸的策略是純技術面的短期投機買賣：
 1. 低買高賣賺取價差，不考慮股息股利。
 1. 致力縮短買賣週期（最短2天），但也與提升報酬率取平衡。
