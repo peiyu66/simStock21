@@ -5,7 +5,7 @@
 ## 最近發佈的版本
 * v1.1：[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)，就會出現確認安裝的對話方塊。
     * 曾向作者登記為[開發機](doc/加入小確幸.md)，iOS14以上的iPhone或iPad才能安裝。
-    * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[github-pages](https://peiyu66.github.io/simStock21/)才能點出確認安裝的對話方塊。
+    * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[github-pages](https://peiyu66.github.io/simStock21/)，才能點出確認安裝的對話方塊。
 
 ## 策略要求
    小確幸的策略是純技術面的短期投機買賣：
