@@ -1,3 +1,4 @@
+# 捷徑Shortcuts
 小確幸提供iOS的[捷徑(Shortcuts)](https://support.apple.com/zh-tw/guide/shortcuts/welcome/ios)有2個Actions。
 
 若搭配工具，可便於分析個股強弱或小確幸的模擬績效。如[Charty for Shortcuts](https://apps.apple.com/tw/app/charty-for-shortcuts/id1494386093)可接收小確幸的輸出數值繪製成圖表。
