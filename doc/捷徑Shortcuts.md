@@ -1,7 +1,7 @@
 # 捷徑Shortcuts
 小確幸提供iOS的[捷徑(Shortcuts)](https://support.apple.com/zh-tw/guide/shortcuts/welcome/ios)有「尋找股票」和「取得股票日交易資料」這2個Actions。
 
-若搭配工具如EXCEL，可便於分析個股強弱或小確幸的模擬績效。
+若搭配工具如EXCEL這類試算表，可便於分析個股強弱或小確幸的模擬績效。
 
 如[Charty for Shortcuts](https://apps.apple.com/tw/app/charty-for-shortcuts/id1494386093)可接收小確幸的輸出CSV數值，繪製成圖表。
 
