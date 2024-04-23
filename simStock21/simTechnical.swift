@@ -240,7 +240,8 @@ class simTechnical {
                 var toResetInvestExceed:Bool = true
                 let a:[simTechnicalAction] = [.tUpdateAll, .simResetAll, .simTesting, .allTrades]
                 for (index,trade) in trades.enumerated() {
-                    if a.contains(action) { //這幾類同simResetAll，要清除user的加碼和反轉買賣
+                    if a.contains(action) && action != .allTrades { //這幾類同simResetAll，要清除user的加碼和反轉買賣
+                        //20240530 價格期間變更時，不要清除反轉買賣，否則就價格起日無交易會造成再也不能反轉
                         trade.simReversed = ""
                         if trade.simInvestByUser != 0 {
 //                            trade.simInvestByUser = 0
