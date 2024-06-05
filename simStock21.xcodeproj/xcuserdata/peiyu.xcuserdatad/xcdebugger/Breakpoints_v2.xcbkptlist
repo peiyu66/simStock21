@@ -14,8 +14,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "818"
+            endingLineNumber = "818"
             landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "573"
+            endingLineNumber = "573"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
             <Locations>
@@ -78,8 +78,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "585"
-            endingLineNumber = "585"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -9,18 +9,16 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>k1Eu8V</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>20F71</string>
+	<string>23F79</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>12E262</string>
+	<string>15A507</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>12.5</string>
+	<string>15.0.1</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
 			<string>search</string>
-			<key>INIntentConfigurable</key>
-			<true/>
 			<key>INIntentDescription</key>
 			<string>以文字尋找小確幸股群中的股票，回傳其&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;任一符合文字的股票聯集。
 
@@ -31,28 +29,12 @@
 股票(StockInfo)內有：代號、簡稱、股群、主要營收、起始日。</string>
 			<key>INIntentDescriptionID</key>
 			<string>jqN2NT</string>
-			<key>INIntentEligibleForWidgets</key>
-			<true/>
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentInput</key>
 			<string>keywords</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>2</integer>
-			<key>INIntentManagedParameterCombinations</key>
-			<dict>
-				<key>keywords</key>
-				<dict>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string>尋找小確幸中&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;任一符合${keywords}的股票</string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>0n0c0C</string>
-					<key>INIntentParameterCombinationUpdatesLinked</key>
-					<true/>
-				</dict>
-			</dict>
 			<key>INIntentName</key>
 			<string>FindStocks</string>
 			<key>INIntentParameters</key>
@@ -155,8 +137,6 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>download</string>
-			<key>INIntentConfigurable</key>
-			<true/>
 			<key>INIntentDescription</key>
 			<string>取得股票(StockInfo)的每日交易資料（CSV格式）。
 
@@ -221,31 +201,6 @@ oscz：osc的半年標準差分。
 			<string>stocks</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>7</integer>
-			<key>INIntentManagedParameterCombinations</key>
-			<dict>
-				<key>stocks</key>
-				<dict>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string>取得${stocks}的日交易資料</string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>neJSL4</string>
-					<key>INIntentParameterCombinationUpdatesLinked</key>
-					<true/>
-				</dict>
-				<key>stocks,inToday,combine</key>
-				<dict>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string>取得${stocks}的日交易資料</string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>1EKucV</string>
-					<key>INIntentParameterCombinationUpdatesLinked</key>
-					<true/>
-				</dict>
-			</dict>
 			<key>INIntentName</key>
 			<string>GetTradesCSV</string>
 			<key>INIntentParameters</key>
