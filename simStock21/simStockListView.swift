@@ -436,7 +436,7 @@ struct stockActionMenu:View {
                     .environmentObject(list)
             }
             if isChoosing {
-                if !list.doubleColumn {
+//                if !list.doubleColumn {
                     Button("股群" + (list.widthClass(hClass) > .widePhone ? "組成" : "")) {
                         self.showGroupMenu = true
                     }
@@ -464,7 +464,7 @@ struct stockActionMenu:View {
                         }
                         .environmentObject(list)
                     Divider()
-                }
+//                }
                 Button((list.widthClass(hClass) > .widePhone ? "刪除或" : "") + "重算") {
                     self.showReload = true
                 }
