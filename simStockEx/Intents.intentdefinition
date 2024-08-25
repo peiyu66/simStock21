@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>INEnums</key>
+	<array/>
+	<key>INIntentDefinitionModelVersion</key>
+	<string>1.2</string>
+	<key>INIntentDefinitionNamespace</key>
+	<string>k1Eu8V</string>
+	<key>INIntentDefinitionSystemVersion</key>
+	<string>23F79</string>
+	<key>INIntentDefinitionToolsBuildVersion</key>
+	<string>15A507</string>
+	<key>INIntentDefinitionToolsVersion</key>
+	<string>15.0.1</string>
+	<key>INIntents</key>
+	<array>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>search</string>
+			<key>INIntentDescription</key>
+			<string>以文字尋找小確幸股群中的股票，回傳其&lt;代號&gt;&lt;簡稱&gt;&lt;股群&gt;任一符合文字的股票聯集。
+
+文字可有多組，可用逗號或空白隔開。部分符合即納入。
+
+例如：以空白間格0-9搜尋，"0 1 2 3 4 5 6 7 8 9"，即得全股群的全部股。
+
+股票(StockInfo)內有：代號、簡稱、股群、主要營收、起始日。</string>
+			<key>INIntentDescriptionID</key>
+			<string>jqN2NT</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentInput</key>
+			<string>keywords</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>2</integer>
+			<key>INIntentName</key>
+			<string>FindStocks</string>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>文字</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>ay1PED</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>AllCharacters</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>Vr3hXT</string>
+						<key>INIntentParameterMetadataDisableAutocorrect</key>
+						<true/>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>keywords</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsMultipleValues</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>3</integer>
+				<key>INIntentResponseOutput</key>
+				<string>stocks</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>股票</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>b5xvg1</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>stocks</string>
+						<key>INIntentResponseParameterObjectType</key>
+						<string>StockInfo</string>
+						<key>INIntentResponseParameterObjectTypeNamespace</key>
+						<string>k1Eu8V</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<true/>
+						<key>INIntentResponseParameterTag</key>
+						<integer>3</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Object</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>尋找股票</string>
+			<key>INIntentTitleID</key>
+			<string>ttQgqB</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Find</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>download</string>
+			<key>INIntentDescription</key>
+			<string>取得股票(StockInfo)的每日交易資料（CSV格式）。
+
+# 欄位：
+
+代號：股票代號。
+簡稱：股票簡稱。
+股群：所屬小確幸股群名稱。
+日期：交易日期。
+時間：交易時間（通常是13:30）。
+
+收盤價：或盤中為當時成交價。
+開盤價：當日開盤價。
+最高價：當日最高價。
+最低價：當日最低價。
+成交量：當日成交量。
+volz：成交量的半年標準差分。
+
+買入：小確幸模擬買的數量。
+庫存：小確幸模擬的持股數量。
+賣出：小確幸模擬賣的數量。
+成本價：小確幸模擬本輪成本價。
+加碼次：小確幸模擬本輪的累計加碼次數（含首次買入）。
+持股日數：小確幸模擬本輪的持股日數（含休市日）。
+建議：低買、高買、加碼。
+買點：如果有建議買，則為成交價。便於圖表標示建議買的價位。
+
+ma20：20天收盤價的移動平均價。
+ma20d：ma20與當日收盤價差額佔當日收盤價的百分比。
+ma20dz：ma20d的半年標準差分。
+ma60：60天收盤價的移動平均價。
+ma60d：ma60與當日收盤價差額佔當日收盤價的百分比。
+ma60dz：ma60d的半年標準差分。
+
+highdz：半年內最高價與當日收盤價跌幅的半年標準差分。
+lowdz：半年內最低價與當日收盤價漲幅的半年標準差分。
+closez：收盤價的半年標準差分。
+
+k：KD指標的K值。
+kz：k的半年標準差分。
+d：KD指標的D值。
+dz：d的半年標準差分。
+j：KD指標的J值。
+jz：j的半年標準差分。
+osc：MACD指標的OSC值。
+oscz：osc的半年標準差分。
+
+實年報酬率：加碼備用金不計入成本。
+真年報酬率：加碼備用金有計入成本。
+平均日數：平均每輪買賣持股日數。
+
+# 選項：
+
+只要今天的交易：只傳回今天的交易一筆，如果有的話。預設否。
+
+多股時合併：多支股票(StockInfo)時，將各股交易合併為單一個CSV檔。預設否。</string>
+			<key>INIntentDescriptionID</key>
+			<string>qxdxAT</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentInput</key>
+			<string>stocks</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>7</integer>
+			<key>INIntentName</key>
+			<string>GetTradesCSV</string>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>股票</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>XQQy9j</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterName</key>
+					<string>stocks</string>
+					<key>INIntentParameterObjectType</key>
+					<string>StockInfo</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>k1Eu8V</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsMultipleValues</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>3</integer>
+					<key>INIntentParameterType</key>
+					<string>Object</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>只要今天的交易</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>AIeyhO</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataFalseDisplayName</key>
+						<string>全部交易</string>
+						<key>INIntentParameterMetadataFalseDisplayNameID</key>
+						<string>N2pGUA</string>
+						<key>INIntentParameterMetadataTrueDisplayName</key>
+						<string>只要今天</string>
+						<key>INIntentParameterMetadataTrueDisplayNameID</key>
+						<string>smAM00</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>inToday</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterRelationship</key>
+					<dict>
+						<key>INIntentParameterRelationshipParentName</key>
+						<string>stocks</string>
+						<key>INIntentParameterRelationshipPredicateName</key>
+						<string>HasAnyValue</string>
+					</dict>
+					<key>INIntentParameterTag</key>
+					<integer>5</integer>
+					<key>INIntentParameterType</key>
+					<string>Boolean</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>多股時合併</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>n7dtPs</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>3</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataFalseDisplayName</key>
+						<string>不合併</string>
+						<key>INIntentParameterMetadataFalseDisplayNameID</key>
+						<string>eX9R4H</string>
+						<key>INIntentParameterMetadataTrueDisplayName</key>
+						<string>合併</string>
+						<key>INIntentParameterMetadataTrueDisplayNameID</key>
+						<string>uRpkn3</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>combine</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterRelationship</key>
+					<dict>
+						<key>INIntentParameterRelationshipParentName</key>
+						<string>stocks</string>
+						<key>INIntentParameterRelationshipPredicateName</key>
+						<string>HasAnyValue</string>
+					</dict>
+					<key>INIntentParameterTag</key>
+					<integer>7</integer>
+					<key>INIntentParameterType</key>
+					<string>Boolean</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>7</integer>
+				<key>INIntentResponseOutput</key>
+				<string>trans</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>股票日交易資料</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>JdFT2Q</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>trans</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<true/>
+						<key>INIntentResponseParameterTag</key>
+						<integer>7</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>File</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>取得股票日交易資料</string>
+			<key>INIntentTitleID</key>
+			<string>hC9QOk</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Get</string>
+		</dict>
+	</array>
+	<key>INTypes</key>
+	<array>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>StockInfo</string>
+			<key>INTypeDisplayNameID</key>
+			<string>60P8aw</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>106</integer>
+			<key>INTypeName</key>
+			<string>StockInfo</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>代號</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>vNMezO</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>id</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>簡稱</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>dtIYSK</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>name</string>
+					<key>INTypePropertyTag</key>
+					<integer>104</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>5</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>6</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>股群</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>raix9N</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>7</integer>
+					<key>INTypePropertyName</key>
+					<string>group</string>
+					<key>INTypePropertyTag</key>
+					<integer>100</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>主要營收</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>cEUIe4</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>8</integer>
+					<key>INTypePropertyName</key>
+					<string>proport1</string>
+					<key>INTypePropertyTag</key>
+					<integer>101</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>起始日</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>XFORUw</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>9</integer>
+					<key>INTypePropertyMetadata</key>
+					<dict>
+						<key>INTypePropertyMetadataDateStyle</key>
+						<string>Full</string>
+						<key>INTypePropertyMetadataFormat</key>
+						<string>Style</string>
+						<key>INTypePropertyMetadataTemplate</key>
+						<string>yyyy/MM/dd</string>
+						<key>INTypePropertyMetadataTemplateID</key>
+						<string>Nm23Qj</string>
+						<key>INTypePropertyMetadataTimeStyle</key>
+						<string>Full</string>
+						<key>INTypePropertyMetadataType</key>
+						<string>Date</string>
+					</dict>
+					<key>INTypePropertyName</key>
+					<string>dateStart</string>
+					<key>INTypePropertyTag</key>
+					<integer>106</integer>
+					<key>INTypePropertyType</key>
+					<string>DateComponents</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
