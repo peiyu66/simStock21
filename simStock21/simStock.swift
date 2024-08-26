@@ -11,7 +11,7 @@ import Foundation
 struct simStock {
     
     let simTesting:Bool = false
-    let simTestStart:Date? = twDateTime.dateFromString("2009/08/25")
+    let simTestStart:Date? = twDateTime.dateFromString("2008/09/01")
 
     private(set) var stocks:[Stock] = []
     private let technical:simTechnical = simTechnical()
@@ -303,7 +303,7 @@ struct simStock {
         print("\n\n\(stocks[0].group)：(\(stocks.count)) 自\(twDateTime.stringFromDate(start,format:"yyyy"))第\(years)年起 ... ", terminator:"")
         var nextYear:Date = start
         while nextYear <= (twDateTime.calendar.date(byAdding: .year, value: -1, to: twDateTime.startOfDay()) ?? Date.distantPast) {
-            settingStocks(stocks, dateStart: nextYear, moneyBase: 200, autoInvest: 2)
+            settingStocks(stocks, dateStart: nextYear, moneyBase: 500, autoInvest: 2)
             for stock in stocks {
                 technical.technicalUpdate(stock: stock, action: .simTesting)
             }
