@@ -899,7 +899,7 @@ struct tradeCell: View {
                     }
                     .font(list.widthClass(hClass) == .compact ? .footnote : .body)
                 }
-                    .frame(width: widthCG([18,15]), alignment: .center)
+                    .frame(width: widthCG([20,15]), alignment: .center)
                     .foregroundColor(trade.color(.price))
                     .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB)))
                     .overlay(

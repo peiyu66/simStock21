@@ -1866,6 +1866,8 @@ class simTechnical {
         let mmdd = twDateTime.stringFromDate(trade.dateTime, format: "MMdd")
         wantH += (mmdd >= (trade.grade <= .weak ? "0726" : "0801") && mmdd <= "0810" ? -1 : 0)
         wantH += (mmdd >= (trade.grade <= .weak ? "0221" : "0226") && mmdd <= "0305" ? -1 : 0)
+        wantH += (mmdd >= "0801" && mmdd <= "0831" ? 1 : 0)
+        wantH += (mmdd >= "0301" && mmdd <= "0331" ? 1 : 0)
 //        wantH += (trade.tLowDiff125 > 200 && trade.tHighDiff125 > -15 && trade.grade >= .high ? -1 : 0)
 //        wantH += (trade.tLowDiffZ125 > 3.5 && trade.tHighDiffZ125 > 1.5 ? -1 : 0)
 //        wantH += (trade.tHighDiffZ125 > 1 ? -1 : 0)
@@ -1873,7 +1875,7 @@ class simTechnical {
 //        wantH += (mmdd >= "0710" && mmdd <= "0810" ? -1 : 0)
 //        wantH += (trade.priceHigh == trade.tHighMax9 && trade.tHighDiff < 7.5 && trade.grade <= .damn ? -1 : 0)
 
-        if wantH >= 1 {
+        if wantH >= 0 {
             trade.simRule = "H"
 //            if (trade.grade <= .weak && prev.priceClose < trade.priceClose) && (prev.simRule == "H" || prev.simRule == "I") {
 //                trade.simRule = "I"
@@ -1901,6 +1903,9 @@ class simTechnical {
             wantL += (trade.tMa60Diff == trade.tMa60DiffMin9 && trade.tMa20Diff == trade.tMa20DiffMin9 && trade.tOsc == trade.tOscMin9 && (trade.grade <= .damn || trade.grade >= .wow) ? -1 : 0)   //&& trade.tKdK == trade.tKdKMin9
             wantL += (mmdd >= (trade.grade <= .weak ? "0726" : "0801") && mmdd <= "0815" ? -1 : 0)
             wantL += (mmdd >= "0821" && mmdd <= "0831" && trade.grade <= .weak ? 1 : 0)
+            wantL += (mmdd >= "0801" && mmdd <= "0831" ? 1 : 0)
+            wantL += (trade.grade >= .weak && (trade.tMa60Diff < -30 || trade.tMa20Diff < -30) ? 1 : 0)
+
 
             if wantL >= 5 {  //(trade.grade <= .weak ? 5 : 6) {
                 trade.simRule = "L"
