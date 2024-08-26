@@ -145,7 +145,8 @@ struct stockCell : View {
     }
     
     private func cgWidth(_ CG:[CGFloat]) -> CGFloat {
-        let w:CGFloat = list.widthCG(hClass, CG: CG) * geometry.size.width / 100
+//        let b:CGFloat = !list.doubleColumn && list.currentWidthClass == .compact ? 150 : 100
+        let w:CGFloat = (list.doubleColumn ? CG[0] : list.widthCG(hClass, CG: CG)) * geometry.size.width / 100
 //        NSLog("\(geometry.size.width) \(CG) \(list.widthCG(hClass, CG: CG)) \(w)")
         return (w > 90 ? 90 : w)
     }
@@ -161,11 +162,13 @@ struct stockCell : View {
             Group {
                 Text(stock.sId)
                     .frame(width : (isSearching && stock.group == "" ? 100 : cgWidth([20,10])), alignment: .leading)
+                    .lineLimit(stock.sId.count > 4 ? 2 :1)
                 Text(stock.sName)
                     .frame(width : (isSearching && stock.group == "" ? 100 : cgWidth([30,12])), alignment: .leading)
+                    .lineLimit(stock.sName.count > 4 ? 2 :1)
             }
-                .minimumScaleFactor(0.9)
-                .lineLimit(2)
+//                .minimumScaleFactor(0.9)
+//                .lineLimit(2)
                 .foregroundColor(list.isRunning || ((isChoosing || isSearching) && !self.checkedStocks.contains(self.stock)) ? .gray : .primary)
             if stock.group != "", let trade = stock.lastTrade(stock.context) {
                 Group {
@@ -180,15 +183,15 @@ struct stockCell : View {
                             Text("  ")
                         }
                     }
-                    .frame(width : cgWidth([25,12]), alignment: .center)
+                    .frame(width : cgWidth([30,12]), alignment: .center)
                     .foregroundColor(trade.color(.price, gray: (isChoosing || isSearching)))
                     .background(RoundedRectangle(cornerRadius: 20).fill(trade.color(.ruleB, gray: (isChoosing || isSearching))))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(trade.color(.ruleR, gray: (isSearching)), lineWidth: 1)
                     )
-//                    if list.widthClass(hClass) > .compact {
-                    if !list.doubleColumn {
+                    if list.widthClass(hClass) > .compact && !list.doubleColumn {
+//                    if !list.doubleColumn {
                         Text(trade.simQty.action)
                             .frame(width : cgWidth([6]), alignment: .trailing)
                             .foregroundColor(trade.color(.qty, gray: (isSearching)))
@@ -197,17 +200,17 @@ struct stockCell : View {
                             .foregroundColor(trade.color(.qty, gray: (isSearching)))
                         Text(String(format:"%.1f年",stock.years))
                             .frame(width : cgWidth([7.5]), alignment: .trailing)
-                        if trade.days > 0 {
-                            Text(String(format:"%.f天",trade.days))
+//                        if trade.days > 0 {
+                            Text(trade.days > 0 ? String(format:"%.f天",trade.days) : "")
                                 .foregroundColor(isSearching ? .gray : (stock.simReversed ? .orange : .primary))
                                 .frame(width : cgWidth([7.5]), alignment: .trailing)
-                            Text((trade.rollAmtRoi/stock.years < 10 ? " " : "") + String(format:"%.1f%%",trade.rollAmtRoi/stock.years))
+                            Text(trade.days > 0 ? (trade.rollAmtRoi/stock.years < 10 ? " " : "") + String(format:"%.1f%%",trade.rollAmtRoi/stock.years) : "")
                                 .foregroundColor(isSearching ? .gray : (stock.simInvestUser > 0 ? .orange : .primary))
                                 .frame(width : cgWidth([8.5]), alignment: .trailing)
-                            Text(trade.baseRoi > 0 ? (trade.baseRoi < 10 ? " " : "") + String(format:"%.1f%%",trade.baseRoi) : "")
+                            Text(trade.days > 0 ? (trade.baseRoi > 0 ? (trade.baseRoi < 10 ? " " : "") + String(format:"%.1f%%",trade.baseRoi) : "") : "")
                                 .foregroundColor(.gray)
                                 .frame(width : cgWidth([7]), alignment: .trailing)
-                        }
+//                        }
                     }
                     trade.gradeIcon(gray:isSearching)
                         .frame(width : cgWidth([5,3]), alignment: .center)
