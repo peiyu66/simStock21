@@ -1996,7 +1996,7 @@ class simTechnical {
                 let aRoi30 = trade.simUnitRoi < -30
                 let aRoi25 = trade.simUnitRoi < -25 && (trade.simDays < 180 || trade.simDays > 360)
                 let aRoi15 = trade.simUnitRoi < -15 && trade.simDays >= 180 && trade.simRule == "L"
-                let aRoi = (aRoi30 || aRoi25 || aRoi15) && aWant >= (trade.grade <= .low ? 3 : 4)
+                let aRoi = (aRoi30 || aRoi25 || aRoi15) && aWant >= 3
                 
                 let aLow = trade.simUnitRoi > -10 && trade.simUnitRoi < 1 && trade.simRule == "L" && aWant >= (trade.grade <= .low ? 2 : 3) && trade.simDays < 60
                 
