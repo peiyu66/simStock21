@@ -159,7 +159,7 @@ class simTechnical {
                     NotificationCenter.default.post(name: Notification.Name("requestRunning"), object: nil, userInfo: ["msg":"請等候股群完成資料的下載..."])  //通知股群清單要更新了
                 }
                 let cnyesGroup:DispatchGroup = DispatchGroup()  //這是個股專用的group，等候cnyes下載完成才統計技術數值
-                let allTrades = self.cnyesPrice(stock: stock, cnyesGroup: cnyesGroup) //回傳是否需要從頭重算模擬
+                let allTrades = self.cnyesPrice(stock: stock, cnyesGroup: cnyesGroup, action: action) //回傳是否需要從頭重算模擬
                 let cnyesAction:simTechnicalAction = (allTrades ? .allTrades : action)
                 operation.serialQueue.addOperation {    //q是依序執行simTechnical以避免平行造成crash
                     cnyesGroup.wait()
@@ -815,22 +815,22 @@ class simTechnical {
         task.resume()
      }
      
-    private func cnyesRequest(_ stock:Stock, ymdStart:String, ymdEnd:String, cnyesGroup:DispatchGroup) {
-        if let dtStart = twDateTime.dateFromString(ymdStart) {
-            if let dtEnd = twDateTime.dateFromString(ymdEnd) {
-                self.yahooHistory(stock, dateStart: dtStart, dateEnd: dtEnd, group: cnyesGroup)
-            }
-        }
-//        self.cnyesLegacy(stock, ymdStart: ymdStart, ymdEnd: ymdEnd, cnyesGroup: cnyesGroup)
+    private func cnyesRequest(_ stock:Stock, ymdStart:String, ymdEnd:String, cnyesGroup:DispatchGroup, action:simTechnicalAction) {
+//        if let dtStart = twDateTime.dateFromString(ymdStart) {
+//            if let dtEnd = twDateTime.dateFromString(ymdEnd) {
+//                self.yahooHistory(stock, dateStart: dtStart, dateEnd: dtEnd, group: cnyesGroup)
+//            }
+//        }
+        self.cnyesLegacy(stock, ymdStart: ymdStart, ymdEnd: ymdEnd, cnyesGroup: cnyesGroup)
         return
     }
 
-    private func cnyesPrice(stock:Stock, cnyesGroup:DispatchGroup) -> Bool {
+    private func cnyesPrice(stock:Stock, cnyesGroup:DispatchGroup, action:simTechnicalAction) -> Bool {
         var allTrades:Bool = false      //應重頭更新全部的技術值
         if stock.trades.count == 0 {    //資料庫是空的
             let ymdS = twDateTime.stringFromDate(stock.dateFirst)
             let ymdE = twDateTime.stringFromDate()  //今天
-            cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup)
+            cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup, action:action)
             allTrades = true
         } else {
             let context = coreData.shared.context
@@ -838,7 +838,7 @@ class simTechnical {
                 if firstTrade.stock.dateFirst < firstTrade.date  {    //起日在首日之前
                     let ymdS = twDateTime.stringFromDate(stock.dateFirst)
                     let ymdE = twDateTime.stringFromDate(firstTrade.dateTime)
-                    cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup)
+                    cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup, action:action)
                     allTrades = true
                 }
             }
@@ -846,7 +846,7 @@ class simTechnical {
                 if lastTrade.dateTime < twDateTime.startOfDay()  {    //末日在今天之前
                     let ymdS = twDateTime.stringFromDate(lastTrade.dateTime)
                     let ymdE = twDateTime.stringFromDate(twDateTime.startOfDay())
-                    cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup)
+                    cnyesRequest(stock, ymdStart: ymdS, ymdEnd: ymdE, cnyesGroup: cnyesGroup, action:action)
                 }
             }
         }

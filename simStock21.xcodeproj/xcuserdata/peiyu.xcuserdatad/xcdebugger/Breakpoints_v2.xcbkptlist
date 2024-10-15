@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "818"
             endingLineNumber = "818"
-            landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:)"
+            landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -150,22 +150,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8AD5AFFC-E2BF-47D4-A0C9-41F8704CB423"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "simStock21/simTechnical.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "821"
-            endingLineNumber = "821"
-            landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "91F70952-D637-4C2D-9215-649FD32164D1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -207,7 +191,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "830"
             endingLineNumber = "830"
-            landmarkName = "cnyesPrice(stock:cnyesGroup:)"
+            landmarkName = "cnyesPrice(stock:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "849"
             endingLineNumber = "849"
-            landmarkName = "cnyesPrice(stock:cnyesGroup:)"
+            landmarkName = "cnyesPrice(stock:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,6 +240,22 @@
             startingLineNumber = "575"
             endingLineNumber = "575"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0106F912-5BA2-4A48-9F4B-D207B7BBA0D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "819"
+            endingLineNumber = "819"
+            landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
