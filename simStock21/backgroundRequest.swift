@@ -66,9 +66,16 @@ public class backgroundRequest {
                             self.technical.twseRequest(stock: stock, dateStart: dateStart, stockGroup: stockGroup)
                         }
                         if dateStart == twDateTime.yesterday() {
-                            requests.append(stock)  //復驗是到昨天，可能只有1筆，就再多排一次
+                            requests.append(stock)  //復驗是到昨天，可能只抓今天1筆，就再多排一次
                             rStocks.append(stock)
                             technical.countTWSE = rStocks.count
+                        }
+                        if let last = stock.trades.last {
+                            if let d = twDateTime.calendar.dateComponents([.day], from: stock.dateRequestStart, to: last.date).day, d > 31 {
+                                requests.append(stock)  //起始後缺超過3個月，就再趕一下進度
+                                rStocks.append(stock)
+                                technical.countTWSE = rStocks.count
+                            }
                         }
                         stockGroup.wait()
                         if technical.errorTWSE != errorCount {

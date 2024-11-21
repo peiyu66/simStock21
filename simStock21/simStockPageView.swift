@@ -559,9 +559,9 @@ struct pageTools:View {
                         self.deleteAll = true
                         self.showDeleteAlert = true
                     },
-//                    .default(Text("[TWSE復驗]")) {
-//                        self.list.bgRequest.reviseWithTWSE([self.stock])
-//                    },
+                    .default(Text("[TWSE復驗]")) {
+                        backgroundRequest().reviseWithTWSE([self.stock])
+                    },
                     .destructive(Text("沒事，不用了。"))
                 ])
             }

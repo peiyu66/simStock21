@@ -232,19 +232,27 @@ public class Stock: NSManagedObject {
         return years
     }
     
+    var dateRequestStart:Date { //起始模擬日往前1年，作為分析數值的基礎
+        return twDateTime.calendar.date(byAdding: .year, value: -1, to: self.dateStart) ?? self.dateStart
+    }
+    
     var dateRequestTWSE:Date? {
         let yesterday = (twDateTime.calendar.date(byAdding: .day, value: -1, to: twDateTime.endOfDay()) ?? Date.distantFuture)
+        let twseStart:Date = twDateTime.dateFromString("2010/01/01")! //TWSE只能查到2010之後
+        let dStart:Date = dateRequestStart < twseStart ? twseStart : dateRequestStart
         let context = coreData.shared.context
         if let trade = Trade.fetch(context, stock: self, end: yesterday, TWSE: false, fetchLimit: 1, asc: false).first {
-            if let twseStart:Date = twDateTime.dateFromString("2010/01/01"), trade.date >= twseStart { //2010之前的沒得查
+            if trade.date >= dStart { //2010之前的沒得查
                 return trade.date
             }
-        } else if let trade = self.trades.first {
-            if let d = twDateTime.calendar.dateComponents([.day], from: self.dateStart, to: trade.date).day, d > 10 {
+        } else if let trade = self.trades.last {
+            if let d = twDateTime.calendar.dateComponents([.day], from: dStart, to: trade.date).day, d > 10 {
                 if let s = twDateTime.calendar.date(byAdding: .month, value: -1, to: trade.date), d > 30 {
                     let s0 = twDateTime.startOfMonth(s)
                     return s0
-                    
+                }
+                if let d1 = twDateTime.calendar.dateComponents([.day], from: dStart, to: trade.date).day, d1 > 10 {
+                    return dStart
                 }
             }
         }
