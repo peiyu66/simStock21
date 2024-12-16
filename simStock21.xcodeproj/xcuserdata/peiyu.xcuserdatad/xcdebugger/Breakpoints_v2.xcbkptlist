@@ -14,8 +14,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "818"
-            endingLineNumber = "818"
+            startingLineNumber = "821"
+            endingLineNumber = "821"
             landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "573"
-            endingLineNumber = "573"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
             <Locations>
@@ -157,8 +157,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "599"
-            endingLineNumber = "599"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -173,8 +173,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "600"
-            endingLineNumber = "600"
+            startingLineNumber = "603"
+            endingLineNumber = "603"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -189,8 +189,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "830"
-            endingLineNumber = "830"
+            startingLineNumber = "833"
+            endingLineNumber = "833"
             landmarkName = "cnyesPrice(stock:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -205,8 +205,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "849"
-            endingLineNumber = "849"
+            startingLineNumber = "852"
+            endingLineNumber = "852"
             landmarkName = "cnyesPrice(stock:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -221,8 +221,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "588"
-            endingLineNumber = "588"
+            startingLineNumber = "591"
+            endingLineNumber = "591"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -237,8 +237,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "578"
+            endingLineNumber = "578"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -253,8 +253,8 @@
             filePath = "simStock21/simTechnical.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "819"
-            endingLineNumber = "819"
+            startingLineNumber = "822"
+            endingLineNumber = "822"
             landmarkName = "cnyesRequest(_:ymdStart:ymdEnd:cnyesGroup:action:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -273,176 +273,102 @@
             endingLineNumber = "248"
             landmarkName = "dateRequestTWSE"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2896">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2932">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2916">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2952">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2908">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122356d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "243"
-                  endingLineNumber = "243"
-                  offsetFromSymbolStart = "2944">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122354a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "244"
-                  endingLineNumber = "244"
-                  offsetFromSymbolStart = "3256">
-               </Location>
-               <Location
-                  uuid = "5AC28AB8-9C45-4DAB-9CE8-B3FF45914056 - 1d1c9ee1f122354a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.Stock.dateRequestTWSE.getter : Swift.Optional&lt;Foundation.Date&gt;"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/coreData.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "244"
-                  endingLineNumber = "244"
-                  offsetFromSymbolStart = "3292">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F586B4F2-D3A9-4275-B58D-0DDADFCB05F5"
+            uuid = "B4C780A5-3333-4210-9860-694A2076B378"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "simStock21/backgroundRequest.swift"
+            filePath = "simStock21/coreData.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "requestTWSE(_:bgTask:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "F586B4F2-D3A9-4275-B58D-0DDADFCB05F5 - 1ced011983c90ab5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "requestTWSE(_: Swift.Array&lt;simStock21.Stock&gt;, bgTask: Swift.Optional&lt;__C.BGTask&gt;) -&gt; ()"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/backgroundRequest.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "73"
-                  endingLineNumber = "73"
-                  offsetFromSymbolStart = "4184">
-               </Location>
-               <Location
-                  uuid = "F586B4F2-D3A9-4275-B58D-0DDADFCB05F5 - 1ced011983c90ab5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "requestTWSE(_: Swift.Array&lt;simStock21.Stock&gt;, bgTask: Swift.Optional&lt;__C.BGTask&gt;) -&gt; ()"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/backgroundRequest.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "73"
-                  endingLineNumber = "73"
-                  offsetFromSymbolStart = "4648">
-               </Location>
-            </Locations>
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "dateRequestTWSE"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "496F243D-11B8-4B41-93F0-4FF4B728E2AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1292"
+            endingLineNumber = "1292"
+            landmarkName = "twseRequest(stock:dateStart:stockGroup:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D8497CB-AE68-4195-82C9-FA937375D815"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1279"
+            endingLineNumber = "1279"
+            landmarkName = "twseRequest(stock:dateStart:stockGroup:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B590E3B-DA3E-4851-9F69-E3362060875B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1255"
+            endingLineNumber = "1255"
+            landmarkName = "twseRequest(stock:dateStart:stockGroup:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F15F0C73-46C2-4A88-8498-C269B5728AF6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1288"
+            endingLineNumber = "1288"
+            landmarkName = "twseRequest(stock:dateStart:stockGroup:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE85325C-C7AC-4824-AE83-F73D9EE59393"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "simStock21/simTechnical.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1285"
+            endingLineNumber = "1285"
+            landmarkName = "twseRequest(stock:dateStart:stockGroup:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

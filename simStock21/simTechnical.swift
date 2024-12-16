@@ -166,6 +166,9 @@ class simTechnical {
                     self.technicalUpdate(stock: stock, action: cnyesAction)
                     self.progressNotify(1)
                     self.yahooQuote(stock) //, allGroup: allGroup, twseGroup: twseGroup)
+                    if action == .allTrades {
+                        backgroundRequest().reviseWithTWSE(stocks)
+                    }
                 }   //即使已經收盤後也需要yahoo，才收盤時cnyes未及把當日收盤價納入查詢結果
             }
         }
@@ -1274,8 +1277,12 @@ class simTechnical {
                 var count:Int = 0
                 let context = coreData.shared.context
                 for element in jdata {
-                    if let dt0 = twDateTime.dateFromString(element[0]) {
-                        if let dt = twDateTime.calendar.date(byAdding: .year, value: 1911, to: dt0) {
+                    let dt0 = element[0]
+                    let ymd0 = dt0.components(separatedBy: "/")
+                    if let y0 =  Int(ymd0[0]) {
+                        let sy0 = String(y0 + 1911)
+                        let sdate0 = String(sy0) + "/" + ymd0 [1] + "/" + ymd0[2]
+                        if let dt = twDateTime.dateFromString(sdate0) {
                             if let close = Double(element[6].replacingOccurrences(of: ",", with: "")), close > 0 {
                                 let trade = Trade.trade(context, stock: stock, date: dt)
                                 if trade.dataSource == "TWSE" {
