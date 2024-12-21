@@ -34,53 +34,6 @@
             endingLineNumber = "576"
             landmarkName = "yahooHistory(_:dateStart:dateEnd:group:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DA954FB1-3BAD-46C8-A7EC-DB75A294C2FF - 3b26a5af4a1c592f"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.simTechnical.yahooHistory(_: simStock21.Stock, dateStart: Foundation.Date, dateEnd: Foundation.Date, group: __C.OS_dispatch_group) -&gt; ()"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/simTechnical.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "571"
-                  endingLineNumber = "571"
-                  offsetFromSymbolStart = "872">
-               </Location>
-               <Location
-                  uuid = "DA954FB1-3BAD-46C8-A7EC-DB75A294C2FF - 3b26a5af4a1c592f"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.simTechnical.yahooHistory(_: simStock21.Stock, dateStart: Foundation.Date, dateEnd: Foundation.Date, group: __C.OS_dispatch_group) -&gt; ()"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/simTechnical.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "571"
-                  endingLineNumber = "571"
-                  offsetFromSymbolStart = "1512">
-               </Location>
-               <Location
-                  uuid = "DA954FB1-3BAD-46C8-A7EC-DB75A294C2FF - 3b26a5af4a1c596d"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "simStock21.simTechnical.yahooHistory(_: simStock21.Stock, dateStart: Foundation.Date, dateEnd: Foundation.Date, group: __C.OS_dispatch_group) -&gt; ()"
-                  moduleName = "simStock21"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peiyu/Dropbox/XCode%20Projects/simStock21/simStock21/simTechnical.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "573"
-                  endingLineNumber = "573"
-                  offsetFromSymbolStart = "1060">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
