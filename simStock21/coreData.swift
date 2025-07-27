@@ -20,7 +20,7 @@ public class coreData {
     
     public func switchDatabase(_ yes:Bool=false) {
         if  yes {
-            dbName = "simTest"
+//            dbName = "simTest"
         }
     }
 

@@ -1,133 +1,111 @@
-2024-12-16 07:19:31 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x32b2d70d0; archive(resolved)="<IDEArchive: 0x6000208dc420>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+2025-02-04 01:38:55 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x3a4079950; archive(resolved)="<IDEArchive: 0x600008c67870>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
 	Chain (15, self inclusive):
-	<IDEDistributionProcessingPipelineContext: 0x32b2d70d0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionProcessingPipelineContext: 0x32b2cf220; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x311b07140; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x38a8c96f0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x38a8da790; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x38a8cf710; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x38a5a4cc0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x38a5a0e00; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x32af97380; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x60000336e440; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
-	<IDEDistributionContext: 0x32ad0d7e0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="(null)">
-	<IDEDistributionContext: 0x32ad23ff0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="(null)">
-	<IDEDistributionContext: 0x38a5a4a90; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="(null)">
-	<IDEDistributionContext: 0x16b83b4d0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x60000efec270>", team="(null)">
-	<IDEDistributionContext: 0x32ada6780; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="(null)", team="(null)">
-	<IDEDistributionContext: 0x32ac39cd0; archive = "<IDEArchive: 0x6000208dc420>", distributionMethod="(null)", team="(null)">
-</IDEDistributionProcessingPipelineContext: 0x32b2d70d0>
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCreateDestRootStep
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCopyItemStep
-2024-12-16 07:19:31 +0000  Running /usr/bin/ditto '-V' '/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app'
-2024-12-16 07:19:31 +0000  >>> Copying /Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app 
-2024-12-16 07:19:31 +0000  copying file ./_CodeSignature/CodeResources ... 
-2024-12-16 07:19:31 +0000  7087 bytes for ./_CodeSignature/CodeResources
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/_CodeSignature/CodeResources ... 
-2024-12-16 07:19:31 +0000  3502 bytes for ./PlugIns/simStockEx.appex/_CodeSignature/CodeResources
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/Intents.intentdefinition ... 
-2024-12-16 07:19:31 +0000  17335 bytes for ./PlugIns/simStockEx.appex/Intents.intentdefinition
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock.omo ... 
-2024-12-16 07:19:31 +0000  28616 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock.omo
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom ... 
-2024-12-16 07:19:31 +0000  11785 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom ... 
-2024-12-16 07:19:31 +0000  11889 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist ... 
-2024-12-16 07:19:31 +0000  683 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock.mom ... 
-2024-12-16 07:19:31 +0000  11996 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock.mom
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/embedded.mobileprovision ... 
-2024-12-16 07:19:31 +0000  15385 bytes for ./PlugIns/simStockEx.appex/embedded.mobileprovision
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/simStockEx ... 
-2024-12-16 07:19:31 +0000  174128 bytes for ./PlugIns/simStockEx.appex/simStockEx
-2024-12-16 07:19:31 +0000  copying file ./PlugIns/simStockEx.appex/Info.plist ... 
-2024-12-16 07:19:31 +0000  1067 bytes for ./PlugIns/simStockEx.appex/Info.plist
-2024-12-16 07:19:31 +0000  copying file ./AppIcon60x60@2x.png ... 
-2024-12-16 07:19:31 +0000  3050 bytes for ./AppIcon60x60@2x.png
-2024-12-16 07:19:31 +0000  copying file ./Intents.intentdefinition ... 
-2024-12-16 07:19:31 +0000  17335 bytes for ./Intents.intentdefinition
-2024-12-16 07:19:31 +0000  copying file ./Assets.car ... 
-2024-12-16 07:19:31 +0000  975584 bytes for ./Assets.car
-2024-12-16 07:19:31 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
-2024-12-16 07:19:31 +0000  3795 bytes for ./AppIcon76x76@2x~ipad.png
-2024-12-16 07:19:31 +0000  copying file ./simStock21.momd/simStock.omo ... 
-2024-12-16 07:19:31 +0000  28616 bytes for ./simStock21.momd/simStock.omo
-2024-12-16 07:19:31 +0000  copying file ./simStock21.momd/simStock 2.mom ... 
-2024-12-16 07:19:31 +0000  11785 bytes for ./simStock21.momd/simStock 2.mom
-2024-12-16 07:19:31 +0000  copying file ./simStock21.momd/simStock 3.mom ... 
-2024-12-16 07:19:31 +0000  11889 bytes for ./simStock21.momd/simStock 3.mom
-2024-12-16 07:19:31 +0000  copying file ./simStock21.momd/VersionInfo.plist ... 
-2024-12-16 07:19:31 +0000  683 bytes for ./simStock21.momd/VersionInfo.plist
-2024-12-16 07:19:31 +0000  copying file ./simStock21.momd/simStock.mom ... 
-2024-12-16 07:19:31 +0000  11996 bytes for ./simStock21.momd/simStock.mom
-2024-12-16 07:19:31 +0000  copying file ./simStock21 ... 
-2024-12-16 07:19:31 +0000  1012944 bytes for ./simStock21
-2024-12-16 07:19:31 +0000  copying file ./embedded.mobileprovision ... 
-2024-12-16 07:19:31 +0000  15505 bytes for ./embedded.mobileprovision
-2024-12-16 07:19:31 +0000  copying file ./Info.plist ... 
-2024-12-16 07:19:31 +0000  1943 bytes for ./Info.plist
-2024-12-16 07:19:31 +0000  copying file ./PkgInfo ... 
-2024-12-16 07:19:31 +0000  8 bytes for ./PkgInfo
-2024-12-16 07:19:31 +0000  /usr/bin/ditto exited with 0
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionEmbedProfileStep
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionInfoPlistStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionAppThinningPlistStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCompileBitcodeStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCodeSlimmingStep
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionSymbolsStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionAppThinningStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionArchThinningStep
-2024-12-16 07:19:31 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx' '-verify_arch' 'arm64e'
-2024-12-16 07:19:31 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
-2024-12-16 07:19:31 +0000  Skipping architecture thinning for item "simStockEx" because arch "arm64e" wasn't found
-2024-12-16 07:19:31 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/simStock21' '-verify_arch' 'arm64e'
-2024-12-16 07:19:31 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
-2024-12-16 07:19:31 +0000  Skipping architecture thinning for item "simStock21" because arch "arm64e" wasn't found
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionODRStep
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionStripXattrsStep
-2024-12-16 07:19:31 +0000  Skipping stripping extended attributes because the codesign step will strip them.
-2024-12-16 07:19:31 +0000  Skipping stripping extended attributes because the codesign step will strip them.
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCodesignStep
-2024-12-16 07:19:31 +0000  Entitlements for <IDEDistributionItem: 0x6000208b1da0; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60001467f9c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4190; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577cc00; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
+	<IDEDistributionProcessingPipelineContext: 0x3a4079950; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x12ef39120; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x109045c70; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x3a467a220; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x109125f50; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x109118eb0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x109014ce0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x1090144d0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x108e0ddd0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000139c7c40; teamID='QQP5F43Z2T', teamName='Peiyu Huang', teamType='Individual', username='peiyuhuang@mac.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x108e45b70; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="(null)">
+	<IDEDistributionContext: 0x12ef0e5d0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="(null)">
+	<IDEDistributionContext: 0x12ef2d5d0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="(null)">
+	<IDEDistributionContext: 0x12ef0a990; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x600006546d20>", team="(null)">
+	<IDEDistributionContext: 0x10f92d9c0; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="(null)", team="(null)">
+	<IDEDistributionContext: 0x10fd94d50; archive = "<IDEArchive: 0x600008c67870>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x3a4079950>
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionCreateDestRootStep
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionCopyItemStep
+2025-02-04 01:38:55 +0000  Running /usr/bin/ditto '-V' '/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app'
+2025-02-04 01:38:55 +0000  >>> Copying /Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app 
+2025-02-04 01:38:55 +0000  copying file ./_CodeSignature/CodeResources ... 
+2025-02-04 01:38:55 +0000  7087 bytes for ./_CodeSignature/CodeResources
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/_CodeSignature/CodeResources ... 
+2025-02-04 01:38:55 +0000  3502 bytes for ./PlugIns/simStockEx.appex/_CodeSignature/CodeResources
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/Intents.intentdefinition ... 
+2025-02-04 01:38:55 +0000  17335 bytes for ./PlugIns/simStockEx.appex/Intents.intentdefinition
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock.omo ... 
+2025-02-04 01:38:55 +0000  28616 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock.omo
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom ... 
+2025-02-04 01:38:55 +0000  11785 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom ... 
+2025-02-04 01:38:55 +0000  11889 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist ... 
+2025-02-04 01:38:55 +0000  659 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStock21.momd/simStock.mom ... 
+2025-02-04 01:38:55 +0000  11996 bytes for ./PlugIns/simStockEx.appex/simStock21.momd/simStock.mom
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/embedded.mobileprovision ... 
+2025-02-04 01:38:55 +0000  15466 bytes for ./PlugIns/simStockEx.appex/embedded.mobileprovision
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/simStockEx ... 
+2025-02-04 01:38:55 +0000  174400 bytes for ./PlugIns/simStockEx.appex/simStockEx
+2025-02-04 01:38:55 +0000  copying file ./PlugIns/simStockEx.appex/Info.plist ... 
+2025-02-04 01:38:55 +0000  1135 bytes for ./PlugIns/simStockEx.appex/Info.plist
+2025-02-04 01:38:55 +0000  copying file ./AppIcon60x60@2x.png ... 
+2025-02-04 01:38:55 +0000  3050 bytes for ./AppIcon60x60@2x.png
+2025-02-04 01:38:55 +0000  copying file ./Intents.intentdefinition ... 
+2025-02-04 01:38:55 +0000  17335 bytes for ./Intents.intentdefinition
+2025-02-04 01:38:55 +0000  copying file ./Assets.car ... 
+2025-02-04 01:38:55 +0000  975584 bytes for ./Assets.car
+2025-02-04 01:38:55 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2025-02-04 01:38:55 +0000  3795 bytes for ./AppIcon76x76@2x~ipad.png
+2025-02-04 01:38:55 +0000  copying file ./simStock21.momd/simStock.omo ... 
+2025-02-04 01:38:55 +0000  28616 bytes for ./simStock21.momd/simStock.omo
+2025-02-04 01:38:55 +0000  copying file ./simStock21.momd/simStock 2.mom ... 
+2025-02-04 01:38:55 +0000  11785 bytes for ./simStock21.momd/simStock 2.mom
+2025-02-04 01:38:55 +0000  copying file ./simStock21.momd/simStock 3.mom ... 
+2025-02-04 01:38:55 +0000  11889 bytes for ./simStock21.momd/simStock 3.mom
+2025-02-04 01:38:55 +0000  copying file ./simStock21.momd/VersionInfo.plist ... 
+2025-02-04 01:38:55 +0000  659 bytes for ./simStock21.momd/VersionInfo.plist
+2025-02-04 01:38:55 +0000  copying file ./simStock21.momd/simStock.mom ... 
+2025-02-04 01:38:55 +0000  11996 bytes for ./simStock21.momd/simStock.mom
+2025-02-04 01:38:55 +0000  copying file ./simStock21 ... 
+2025-02-04 01:38:55 +0000  996624 bytes for ./simStock21
+2025-02-04 01:38:55 +0000  copying file ./embedded.mobileprovision ... 
+2025-02-04 01:38:55 +0000  15586 bytes for ./embedded.mobileprovision
+2025-02-04 01:38:55 +0000  copying file ./Info.plist ... 
+2025-02-04 01:38:55 +0000  1945 bytes for ./Info.plist
+2025-02-04 01:38:55 +0000  copying file ./PkgInfo ... 
+2025-02-04 01:38:55 +0000  8 bytes for ./PkgInfo
+2025-02-04 01:38:55 +0000  /usr/bin/ditto exited with 0
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionEmbedProfileStep
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionInfoPlistStep
+2025-02-04 01:38:55 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2025-02-04 01:38:55 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2025-02-04 01:38:55 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionSymbolsStep
+2025-02-04 01:38:55 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionAppThinningStep
+2025-02-04 01:38:55 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionArchThinningStep
+2025-02-04 01:38:55 +0000  Item /Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2025-02-04 01:38:55 +0000  Archs to thin for item /Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex are ["arm64e"]
+2025-02-04 01:38:55 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx' '-verify_arch' 'arm64e'
+2025-02-04 01:38:55 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2025-02-04 01:38:55 +0000  Skipping architecture thinning for item "simStockEx" because arch "arm64e" wasn't found
+2025-02-04 01:38:55 +0000  Item /Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2025-02-04 01:38:55 +0000  Archs to thin for item /Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app are ["arm64e"]
+2025-02-04 01:38:55 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/simStock21' '-verify_arch' 'arm64e'
+2025-02-04 01:38:55 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2025-02-04 01:38:55 +0000  Skipping architecture thinning for item "simStock21" because arch "arm64e" wasn't found
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionODRStep
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionStripXattrsStep
+2025-02-04 01:38:55 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2025-02-04 01:38:55 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2025-02-04 01:38:55 +0000  Processing step: IDEDistributionCodesignStep
+2025-02-04 01:38:55 +0000  Entitlements for <IDEDistributionItem: 0x600010213900; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60000ccecc40:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c08d810; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000052458c0; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
     "1.2.840.113635.100.6.1.12",
     "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
         "group.com.mystock.simStock21"
     );
     "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60001460f790:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'>: {
-    "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
-    "com.apple.developer.team-identifier" = QQP5F43Z2T;
-    "com.apple.security.application-groups" =     (
-        "group.com.mystock.simStock21"
-    );
-    "get-task-allow" = 1;
-}
-2024-12-16 07:19:31 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
-2024-12-16 07:19:31 +0000  Entitlements for <IDEDistributionItem: 0x6000208b1da0; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60001467f9c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4190; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577c300; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
-    "1.2.840.113635.100.6.1.12",
-    "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
-    "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
-    "com.apple.developer.team-identifier" = QQP5F43Z2T;
-    "com.apple.security.application-groups" =     (
-        "group.com.mystock.simStock21"
-    );
-    "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60001460f790:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'> are: {
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60000c2d1920:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'>: {
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
@@ -135,32 +113,61 @@
     );
     "get-task-allow" = 1;
 }
-2024-12-16 07:19:31 +0000  Writing entitlements for <IDEDistributionItem: 0x6000208b1da0; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60001467f9c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4190; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577f000; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
+2025-02-04 01:38:55 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2025-02-04 01:38:55 +0000  Entitlements for <IDEDistributionItem: 0x600010213900; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60000ccecc40:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c08d810; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x600005245740; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
     "1.2.840.113635.100.6.1.12",
     "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
         "group.com.mystock.simStock21"
     );
     "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60001460f790:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'> to: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/entitlements~~~7SxpFB
-2024-12-16 07:19:31 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E' '--entitlements' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/entitlements~~~7SxpFB' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/PlugIns/simStockEx.appex'
-2024-12-16 07:19:31 +0000  /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/PlugIns/simStockEx.appex: replacing existing signature
-2024-12-16 07:19:31 +0000  /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/PlugIns/simStockEx.appex: signed bundle with Mach-O thin (arm64) [com.mystock.simStock21.simStockEx]
-2024-12-16 07:19:31 +0000  /usr/bin/codesign exited with 0
-2024-12-16 07:19:31 +0000  Entitlements for <IDEDistributionItem: 0x6000208b1440; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x60001467ca80:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4140; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577cc00; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60000c2d1920:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
+    "com.apple.developer.team-identifier" = QQP5F43Z2T;
+    "com.apple.security.application-groups" =     (
+        "group.com.mystock.simStock21"
+    );
+    "get-task-allow" = 1;
+}
+2025-02-04 01:38:55 +0000  Writing entitlements for <IDEDistributionItem: 0x600010213900; bundleID='com.mystock.simStock21.simStockEx', path='<DVTFilePath:0x60000ccecc40:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c08d810; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000052412c0; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
     "1.2.840.113635.100.6.1.12",
     "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
+    "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21.simStockEx";
+    "com.apple.developer.team-identifier" = QQP5F43Z2T;
+    "com.apple.security.application-groups" =     (
+        "group.com.mystock.simStock21"
+    );
+    "get-task-allow" = 1;
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21.simStockEx', executablePath='<DVTFilePath:0x60000c2d1920:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/PlugIns/simStockEx.appex/simStockEx'>', hardenedRuntime='0'>'> to: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/entitlements~~~0smgEG
+2025-02-04 01:38:55 +0000  invoking codesign: <NSConcreteTask: 0x6000104d46e0; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    A610A2357D3CF43CF766A0108B56559A2D2C0988,
+    "--entitlements",
+    "/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/entitlements~~~0smgEG",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/PlugIns/simStockEx.appex"
+)'>
+2025-02-04 01:38:58 +0000  codesign output: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/PlugIns/simStockEx.appex: replacing existing signature
+/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/PlugIns/simStockEx.appex: signed bundle with Mach-O thin (arm64) [com.mystock.simStock21.simStockEx]
+2025-02-04 01:38:58 +0000  Entitlements for <IDEDistributionItem: 0x6000102116e0; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x6000103339c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c690f50; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000529ac40; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
         "group.com.mystock.simStock21"
     );
     "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x60001467ff00:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'>: {
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x6000103326a0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'>: {
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
@@ -168,18 +175,18 @@
     );
     "get-task-allow" = 1;
 }
-2024-12-16 07:19:31 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
-2024-12-16 07:19:31 +0000  Entitlements for <IDEDistributionItem: 0x6000208b1440; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x60001467ca80:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4140; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577c300; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
+2025-02-04 01:38:58 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2025-02-04 01:38:58 +0000  Entitlements for <IDEDistributionItem: 0x6000102116e0; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x6000103339c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c690f50; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000529aa00; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
     "1.2.840.113635.100.6.1.12",
     "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
         "group.com.mystock.simStock21"
     );
     "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x60001467ff00:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'> are: {
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x6000103326a0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'> are: {
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
@@ -187,79 +194,89 @@
     );
     "get-task-allow" = 1;
 }
-2024-12-16 07:19:31 +0000  Writing entitlements for <IDEDistributionItem: 0x6000208b1440; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x60001467ca80:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600030af4140; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000577f000; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E', serialNumber='7D22791FE20BCE65D5CBA7E108238EE3', certificateKinds='(
+2025-02-04 01:38:58 +0000  Writing entitlements for <IDEDistributionItem: 0x6000102116e0; bundleID='com.mystock.simStock21', path='<DVTFilePath:0x6000103339c0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60000c690f50; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000052d4900; name='Apple Development: Peiyu Huang (NG65P7TM5V)', hash='A610A2357D3CF43CF766A0108B56559A2D2C0988', serialNumber='27C0C9AEA3F55AFE7293FCCDABC62EB2', certificateKinds='(
     "1.2.840.113635.100.6.1.12",
     "1.2.840.113635.100.6.1.2"
-), issueDate='2024-01-24 07:23:41 +0000''>', entitlements='{
+), issueDate='2025-02-04 01:26:55 +0000''>', entitlements='{
     "application-identifier" = "QQP5F43Z2T.com.mystock.simStock21";
     "com.apple.developer.team-identifier" = QQP5F43Z2T;
     "com.apple.security.application-groups" =     (
         "group.com.mystock.simStock21"
     );
     "get-task-allow" = 1;
-}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x60001467ff00:'/Users/peiyu/Library/Developer/Xcode/Archives/2024-12-16/simStock21 2024-12-16, 3.19 PM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'> to: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/entitlements~~~YckYny
-2024-12-16 07:19:31 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E' '--entitlements' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/entitlements~~~YckYny' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app'
-2024-12-16 07:19:31 +0000  /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app: replacing existing signature
-2024-12-16 07:19:31 +0000  /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app: signed app bundle with Mach-O thin (arm64) [com.mystock.simStock21]
-2024-12-16 07:19:31 +0000  /usr/bin/codesign exited with 0
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionZipODRItemStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCreateIPAStep
-2024-12-16 07:19:31 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Packages/simStock21.ipa'
-2024-12-16 07:19:31 +0000  >>> Copying /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root 
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/_CodeSignature/CodeResources ... 
-2024-12-16 07:19:31 +0000  7087 bytes for ./Payload/simStock21.app/_CodeSignature/CodeResources
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/_CodeSignature/CodeResources ... 
-2024-12-16 07:19:31 +0000  3502 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/_CodeSignature/CodeResources
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/Intents.intentdefinition ... 
-2024-12-16 07:19:31 +0000  17335 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/Intents.intentdefinition
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.omo ... 
-2024-12-16 07:19:31 +0000  28616 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.omo
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom ... 
-2024-12-16 07:19:31 +0000  11785 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom ... 
-2024-12-16 07:19:31 +0000  11889 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist ... 
-2024-12-16 07:19:31 +0000  683 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.mom ... 
-2024-12-16 07:19:31 +0000  11996 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/embedded.mobileprovision ... 
-2024-12-16 07:19:31 +0000  15385 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/embedded.mobileprovision
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx ... 
-2024-12-16 07:19:31 +0000  174128 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/Info.plist ... 
-2024-12-16 07:19:31 +0000  1067 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/Info.plist
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/AppIcon60x60@2x.png ... 
-2024-12-16 07:19:31 +0000  3050 bytes for ./Payload/simStock21.app/AppIcon60x60@2x.png
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/Intents.intentdefinition ... 
-2024-12-16 07:19:31 +0000  17335 bytes for ./Payload/simStock21.app/Intents.intentdefinition
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/Assets.car ... 
-2024-12-16 07:19:31 +0000  975584 bytes for ./Payload/simStock21.app/Assets.car
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/AppIcon76x76@2x~ipad.png ... 
-2024-12-16 07:19:31 +0000  3795 bytes for ./Payload/simStock21.app/AppIcon76x76@2x~ipad.png
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock.omo ... 
-2024-12-16 07:19:31 +0000  28616 bytes for ./Payload/simStock21.app/simStock21.momd/simStock.omo
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock 2.mom ... 
-2024-12-16 07:19:31 +0000  11785 bytes for ./Payload/simStock21.app/simStock21.momd/simStock 2.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock 3.mom ... 
-2024-12-16 07:19:31 +0000  11889 bytes for ./Payload/simStock21.app/simStock21.momd/simStock 3.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21.momd/VersionInfo.plist ... 
-2024-12-16 07:19:31 +0000  683 bytes for ./Payload/simStock21.app/simStock21.momd/VersionInfo.plist
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock.mom ... 
-2024-12-16 07:19:31 +0000  11996 bytes for ./Payload/simStock21.app/simStock21.momd/simStock.mom
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/simStock21 ... 
-2024-12-16 07:19:31 +0000  1012944 bytes for ./Payload/simStock21.app/simStock21
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/embedded.mobileprovision ... 
-2024-12-16 07:19:31 +0000  15505 bytes for ./Payload/simStock21.app/embedded.mobileprovision
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/Info.plist ... 
-2024-12-16 07:19:31 +0000  1943 bytes for ./Payload/simStock21.app/Info.plist
-2024-12-16 07:19:31 +0000  copying file ./Payload/simStock21.app/PkgInfo ... 
-8 bytes for ./Payload/simStock21.app/PkgInfo
-2024-12-16 07:19:31 +0000  /usr/bin/ditto exited with 0
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionAppStoreInformationStep
-2024-12-16 07:19:31 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
-2024-12-16 07:19:31 +0000  IDEDistributionItem init <DVTFilePath:0x600014596990:'/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app/PlugIns/simStockEx.appex'>
-2024-12-16 07:19:31 +0000  IDEDistributionItem init <DVTFilePath:0x600014596d10:'/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~dkNIi4/Root/Payload/simStock21.app'>
-2024-12-16 07:19:31 +0000  Processing step: IDEDistributionCreateManifestStep
+}', teamID='QQP5F43Z2T', identifier='com.mystock.simStock21', executablePath='<DVTFilePath:0x6000103326a0:'/Users/peiyu/Library/Developer/Xcode/Archives/2025-02-04/simStock21 2025-2-4, 9.38 AM.xcarchive/Products/Applications/simStock21.app/simStock21'>', hardenedRuntime='0'>'> to: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/entitlements~~~P5mWD3
+2025-02-04 01:38:58 +0000  invoking codesign: <NSConcreteTask: 0x60000c4e76b0; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    A610A2357D3CF43CF766A0108B56559A2D2C0988,
+    "--entitlements",
+    "/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/entitlements~~~P5mWD3",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app"
+)'>
+2025-02-04 01:39:00 +0000  codesign output: /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app: replacing existing signature
+/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app: signed app bundle with Mach-O thin (arm64) [com.mystock.simStock21]
+2025-02-04 01:39:00 +0000  Processing step: IDEDistributionZipODRItemStep
+2025-02-04 01:39:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2025-02-04 01:39:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2025-02-04 01:39:00 +0000  Processing step: IDEDistributionCreateIPAStep
+2025-02-04 01:39:00 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root' '/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Packages/simStock21.ipa'
+2025-02-04 01:39:00 +0000  >>> Copying /var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root 
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/_CodeSignature/CodeResources ... 
+2025-02-04 01:39:00 +0000  7087 bytes for ./Payload/simStock21.app/_CodeSignature/CodeResources
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/_CodeSignature/CodeResources ... 
+2025-02-04 01:39:00 +0000  3502 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/_CodeSignature/CodeResources
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/Intents.intentdefinition ... 
+2025-02-04 01:39:00 +0000  17335 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/Intents.intentdefinition
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.omo ... 
+2025-02-04 01:39:00 +0000  28616 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.omo
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom ... 
+2025-02-04 01:39:00 +0000  11785 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 2.mom
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom ... 
+2025-02-04 01:39:00 +0000  11889 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock 3.mom
+copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist ... 
+2025-02-04 01:39:00 +0000  659 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/VersionInfo.plist
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.mom ... 
+2025-02-04 01:39:00 +0000  11996 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStock21.momd/simStock.mom
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/embedded.mobileprovision ... 
+2025-02-04 01:39:00 +0000  15466 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/embedded.mobileprovision
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx ... 
+2025-02-04 01:39:00 +0000  174400 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/simStockEx
+copying file ./Payload/simStock21.app/PlugIns/simStockEx.appex/Info.plist ... 
+1135 bytes for ./Payload/simStock21.app/PlugIns/simStockEx.appex/Info.plist
+copying file ./Payload/simStock21.app/AppIcon60x60@2x.png ... 
+3050 bytes for ./Payload/simStock21.app/AppIcon60x60@2x.png
+copying file ./Payload/simStock21.app/Intents.intentdefinition ... 
+2025-02-04 01:39:00 +0000  17335 bytes for ./Payload/simStock21.app/Intents.intentdefinition
+copying file ./Payload/simStock21.app/Assets.car ... 
+2025-02-04 01:39:00 +0000  975584 bytes for ./Payload/simStock21.app/Assets.car
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/AppIcon76x76@2x~ipad.png ... 
+2025-02-04 01:39:00 +0000  3795 bytes for ./Payload/simStock21.app/AppIcon76x76@2x~ipad.png
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock.omo ... 
+2025-02-04 01:39:00 +0000  28616 bytes for ./Payload/simStock21.app/simStock21.momd/simStock.omo
+copying file ./Payload/simStock21.app/simStock21.momd/simStock 2.mom ... 
+2025-02-04 01:39:00 +0000  11785 bytes for ./Payload/simStock21.app/simStock21.momd/simStock 2.mom
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/simStock21.momd/simStock 3.mom ... 
+2025-02-04 01:39:00 +0000  11889 bytes for ./Payload/simStock21.app/simStock21.momd/simStock 3.mom
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/simStock21.momd/VersionInfo.plist ... 
+659 bytes for ./Payload/simStock21.app/simStock21.momd/VersionInfo.plist
+copying file ./Payload/simStock21.app/simStock21.momd/simStock.mom ... 
+2025-02-04 01:39:00 +0000  11996 bytes for ./Payload/simStock21.app/simStock21.momd/simStock.mom
+copying file ./Payload/simStock21.app/simStock21 ... 
+2025-02-04 01:39:00 +0000  996624 bytes for ./Payload/simStock21.app/simStock21
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/embedded.mobileprovision ... 
+2025-02-04 01:39:00 +0000  15586 bytes for ./Payload/simStock21.app/embedded.mobileprovision
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/Info.plist ... 
+2025-02-04 01:39:00 +0000  1945 bytes for ./Payload/simStock21.app/Info.plist
+2025-02-04 01:39:00 +0000  copying file ./Payload/simStock21.app/PkgInfo ... 
+2025-02-04 01:39:00 +0000  8 bytes for ./Payload/simStock21.app/PkgInfo
+2025-02-04 01:39:00 +0000  /usr/bin/ditto exited with 0
+2025-02-04 01:39:00 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2025-02-04 01:39:00 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2025-02-04 01:39:00 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2025-02-04 01:39:00 +0000  IDEDistributionItem init <DVTFilePath:0x60000ccc6f40:'/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app/PlugIns/simStockEx.appex'>
+2025-02-04 01:39:00 +0000  IDEDistributionItem init <DVTFilePath:0x6000102c8cc0:'/var/folders/c4/rvdxvx6s5w7bsjlwddfc373w0000gn/T/XcodeDistPipeline.~~~Ao9HAX/Root/Payload/simStock21.app'>
+2025-02-04 01:39:00 +0000  Processing step: IDEDistributionCreateManifestStep

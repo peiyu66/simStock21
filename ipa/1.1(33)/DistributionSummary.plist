@@ -14,9 +14,9 @@
 			<key>certificate</key>
 			<dict>
 				<key>SHA1</key>
-				<string>1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E</string>
+				<string>A610A2357D3CF43CF766A0108B56559A2D2C0988</string>
 				<key>dateExpires</key>
-				<string>2025/1/23</string>
+				<string>2026/2/4</string>
 				<key>type</key>
 				<string>Apple Development</string>
 			</dict>
@@ -27,12 +27,14 @@
 					<array>
 						<string>arm64</string>
 					</array>
+					<key>buildNumber</key>
+					<string>33</string>
 					<key>certificate</key>
 					<dict>
 						<key>SHA1</key>
-						<string>1EA30BB8F7F56C45AA46F7EBE36C3A4AE5BB2E9E</string>
+						<string>A610A2357D3CF43CF766A0108B56559A2D2C0988</string>
 						<key>dateExpires</key>
-						<string>2025/1/23</string>
+						<string>2026/2/4</string>
 						<key>type</key>
 						<string>Apple Development</string>
 					</dict>
@@ -54,9 +56,9 @@
 					<key>profile</key>
 					<dict>
 						<key>UUID</key>
-						<string>17e057d5-4eb4-4341-accb-b6e909c60a46</string>
+						<string>be687c68-4d30-42f0-8e96-6a054ede4850</string>
 						<key>dateExpires</key>
-						<string>2025/2/3</string>
+						<string>2026/2/4</string>
 						<key>name</key>
 						<string>iOS Team Provisioning Profile: com.mystock.simStock21.simStockEx</string>
 					</dict>
@@ -67,6 +69,8 @@
 						<key>name</key>
 						<string>Peiyu Huang</string>
 					</dict>
+					<key>versionNumber</key>
+					<string>1.1</string>
 				</dict>
 			</array>
 			<key>entitlements</key>
@@ -87,9 +91,9 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>9d5bde90-0a40-4c13-8f16-f379c21ea10f</string>
+				<string>cd084720-097e-4e27-9741-3e7ffaf9ea60</string>
 				<key>dateExpires</key>
-				<string>2025/2/3</string>
+				<string>2026/2/4</string>
 				<key>name</key>
 				<string>iOS Team Provisioning Profile: com.mystock.simStock21</string>
 			</dict>
