@@ -8,7 +8,7 @@
     * 上列[[點這裡]](itms-services://?action=download-manifest&url=https://github.com/peiyu66/simStock21/releases/download/latest/manifest.plist)的連結要在iOS設備連上[github-pages](https://peiyu66.github.io/simStock21/)，才能點出確認安裝的對話方塊。
 
 ## 策略要求
-   既定的策略，純技術面的短期投機買賣：
+   既定的規則，純技術面的短期投機買賣：
 1. 低買高賣賺取價差，不考慮股息股利。
 1. 致力縮短買賣[週期](doc/週期.md)，但也與提升[報酬率](doc/報酬率.md)取平衡。
 1. 保本小賺維持現金流，不追求偶爾大賺。
