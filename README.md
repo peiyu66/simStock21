@@ -28,16 +28,15 @@
 
 ## Q&A
 ### 誰適合使用小確幸？
-* ✐✐✐ [小確幸適性評估](https://docs.google.com/forms/d/e/1FAIpQLSdzNyfMl5NP1sCSHSxoSCWqqdeAPSQbw4kAiwlCv0pzJkjgrg/viewform?usp=sf_link) ✐✐✐
-
 小確幸的主人是：
 * 認同策略規則。
 * 幾乎每天看盤，幾乎每月、甚至每週執行買賣。
 * 有閒錢兩年內不虞急用，能忍受「未實現損益」總是負損。
+  * 「未實現損益」總是負損，若當下全部變現了而與「已實現損益」合計，很可能是小賺的。
+  * 閒錢越多越穩。雖然以小資本投入小確幸、依照同樣的邏輯徹底執行，也可得到大約相同的報酬率，但收益額度太小則無感，不成確幸。
 
-閒錢越多越穩。雖然以小資本投入小確幸、依照同樣的邏輯徹底執行，也可得到大約相同的報酬率，但收益額度太小則無感，不成確幸。
+✐✐✐ [小確幸適性評估](https://docs.google.com/forms/d/e/1FAIpQLSdzNyfMl5NP1sCSHSxoSCWqqdeAPSQbw4kAiwlCv0pzJkjgrg/viewform?usp=sf_link) ✐✐✐
 
-一年後，雖然「未實現損益」總是負損，若當下全部變現了而與「已實現損益」合計，很可能是小賺的。
 
 ### 小確幸沒有在App Store上架？
 * App Store自2017年已不允許「個人」開發者上架含有「模擬賭博」內容的App。
