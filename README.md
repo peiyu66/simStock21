@@ -31,7 +31,8 @@
 * ✐✐✐ [小確幸適性評估](https://docs.google.com/forms/d/e/1FAIpQLSdzNyfMl5NP1sCSHSxoSCWqqdeAPSQbw4kAiwlCv0pzJkjgrg/viewform?usp=sf_link) ✐✐✐
 
 小確幸的主人是：
-* 幾乎每天看盤，幾乎每月、甚至每週執行買賣的人。
+* 認同策略規則。
+* 幾乎每天看盤，幾乎每月、甚至每週執行買賣。
 * 有閒錢兩年內不虞急用，能忍受「未實現損益」總是負損。
 
 閒錢越多越穩。雖然以小資本投入小確幸、依照同樣的邏輯徹底執行，也可得到大約相同的報酬率，但收益額度太小則無感，不成確幸。
