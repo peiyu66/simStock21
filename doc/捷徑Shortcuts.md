@@ -1,5 +1,5 @@
 # 捷徑Shortcuts
-這只是為了好玩，為了喜歡寫程式的人。
+這只是為了好玩，為了喜歡資料處理的人。
 
 小確幸提供iOS的[捷徑(Shortcuts)](https://support.apple.com/zh-tw/guide/shortcuts/welcome/ios)有「尋找股票」和「取得股票日交易資料」這2個Actions。
 
