@@ -7,7 +7,7 @@
 
 若如[Charty for Shortcuts](https://apps.apple.com/tw/app/charty-for-shortcuts/id1494386093)，可接收小確幸的輸出CSV數值，繪製成圖表。
 
-[觀看展示動畫]([https://github.com/peiyu66/simStock21/issues/1#issue-2128120046](https://github.com/user-attachments/assets/65e7bbc3-94db-4f46-982e-e7e3b38368fb))
+[觀看展示動畫]([[https://github.com/peiyu66/simStock21/issues/1#issue-2128120046](https://github.com/user-attachments/assets/65e7bbc3-94db-4f46-982e-e7e3b38368fb)](https://github.com/user-attachments/assets/65e7bbc3-94db-4f46-982e-e7e3b38368fb))
 
 ## 尋找股票
 
